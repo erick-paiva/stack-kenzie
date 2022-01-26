@@ -1,9 +1,15 @@
+import { ChakraProvider } from "@chakra-ui/react";
+import Routes from "./routes/route";
+
+
 
 function App() {
   return (
-    <div className="App">
-      aplicaçao
-    </div>
+   <ChakraProvider>
+      <Routes />
+    </ChakraProvider>
+      
+   
   );
 }
 
