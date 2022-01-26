@@ -1,8 +1,11 @@
+import ModalChakra from "./components/Modal";
 
 function App() {
   return (
     <div className="App">
-      aplicaçao
+      <ModalChakra title={"alouuuu"}>
+        <div>alouuu</div>
+      </ModalChakra>
     </div>
   );
 }
