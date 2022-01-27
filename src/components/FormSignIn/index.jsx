@@ -46,7 +46,6 @@ export default function FormSignIn() {
 
   const handleSignIn = (data) => {
     signIn(data.email, data.password);
-    console.log(data);
   };
 
   return (
@@ -163,7 +162,7 @@ export default function FormSignIn() {
                 background: "gray.50",
               }}
               fontSize="16px"
-              // onClick={() => handleClickRegister()}
+              onClick={() => history.push("/signup")}
             >
               Cadastre-se
             </Button>

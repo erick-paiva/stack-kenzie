@@ -1,4 +1,5 @@
 import { createContext, useCallback, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { api } from "../../../services/api";
 
 const AuthContext = createContext({});
@@ -17,6 +18,8 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const history = useHistory();
+
   //Função Login
   const signIn = async (email, password) => {
     await api
@@ -33,23 +36,20 @@ const AuthProvider = ({ children }) => {
 
         setAccessToken(response.data.accessToken);
         setUser(response.data.user);
+        history.push("/dashboard")
       })
       .catch((err) => alert(err.message));
   };
 
   //Função Cadastrar
-  const signUp = async (name, email, password, bio, module, coach = false) => {
+  const signUp = async (data) => {
     await api
-      .post("/register", {
-        name,
-        email,
-        password,
-        bio,
-        module,
-        coach,
-      })
-      .then((response) => {
-        alert(`Cadastrado com sucesso o: ${response.data.user.name}`);
+      .post("/register",
+        data
+      )
+      .then(() => {
+        signIn(data.email, data.password)
+        
       })
       .catch((err) => {
         alert(err.message);

@@ -23,6 +23,7 @@ import { useState } from "react";
 
 export default function FormSignUp() {
   const { signUp } = useAuth();
+  const [value, setValue] = useState("");
 
   const history = useHistory();
 
@@ -57,19 +58,15 @@ export default function FormSignUp() {
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const handleSignUp = (data) => {
-    signUp(
-      data.name,
-      data.email,
-      data.slack,
-      data.module,
-      data.password,
-      data.passwordConfirm
-
-      //inserir slack
-    );
+    signUp({
+      name: data.name,
+      email: data.email,
+      slack: data.slack,
+      module: data.module,
+      password: data.password,
+    });
+    console.log("chamou")
   };
-
-  const [value, setValue] = useState("");
 
   return (
     <>
@@ -197,10 +194,10 @@ export default function FormSignUp() {
                 ml="10px"
                 color="theme.colors"
               >
-                <Radio>Q1</Radio>
-                <Radio>Q2</Radio>
-                <Radio>Q3</Radio>
-                <Radio>Q4</Radio>
+                <Radio value={"Q1"}>Q1</Radio>
+                <Radio value={"Q2"}>Q2</Radio>
+                <Radio value={"Q3"}>Q3</Radio>
+                <Radio value={"Q4"}>Q4</Radio>
               </Stack>
             </RadioGroup>
           </Box>
@@ -261,7 +258,7 @@ export default function FormSignUp() {
               background: "#3333FF",
             }}
           >
-            Logar
+            Cadastrar
           </Button>
 
           <Box w="100%">
@@ -279,6 +276,7 @@ export default function FormSignUp() {
               _hover={{
                 background: "gray.50",
               }}
+              onClick={() => history.push("/signin")}
             >
               Ir para o login
             </Button>

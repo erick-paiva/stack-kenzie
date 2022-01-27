@@ -5,7 +5,7 @@ import ExampleContext from "../pages/ExampleContext";
 
 import { Stack, Text } from "@chakra-ui/react";
 import SignIn from "../pages/SignIn";
-import Signup from "../pages/Signup/SignUpForm";
+import SignUp from "../pages/Signup";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -107,7 +107,7 @@ const AllRoutes = () => {
       {/* PRINCIPAIS ROTAS */}
       {/* <Route exact path="/" component={LeadPage} /> */}
       <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/signup" component={SignUp} />
 
       {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />
