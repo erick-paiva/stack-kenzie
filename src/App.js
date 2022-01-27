@@ -1,16 +1,10 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import Routes from "./routes/route";
 
-
-
-function App() {
+export default function App() {
   return (
-   <ChakraProvider>
-      <Routes />
-    </ChakraProvider>
-      
-   
+    <div className="App">
+      aplicaçao
+    </div>
   );
-}
 
-export default App;
