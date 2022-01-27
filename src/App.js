@@ -1,4 +1,5 @@
-
+import { ChakraProvider } from "@chakra-ui/react";
+import Routes from "./routes/route";
 
 export default function App() {
   return (
@@ -6,3 +7,4 @@ export default function App() {
       aplicaçao
     </div>
   );
+
