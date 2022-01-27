@@ -4,7 +4,7 @@ import { useQuestions } from "../../../providers/hooks";
 
 const QuestionsTest = () => {
   const { questions } = useQuestions();
-
+  console.log(questions)
   return (
     <Box
       rounded={"lg"}
@@ -19,12 +19,11 @@ const QuestionsTest = () => {
         ? questions.map((res) => (
             <Box align="left">
               <Text as="h2">EndPoint allThese</Text>
-              <b>Título:</b> {res.question.title} <br />
-              <b>Criador:</b> {res.question.creator.name}
+              {/* <b>Título:</b> {res.question.title} <br />
               <br />
               <b>Curtidas:</b> {res.question.likes} (Erick, kkkk)
               <br />
-              <b>Comentários:</b> {res.question.allComments.length}
+              <b>Comentários:</b> {res.question.allComments.length} */}
             </Box>
           ))
         : "Sem questões"}
