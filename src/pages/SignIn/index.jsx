@@ -9,7 +9,7 @@ import {
 
 import FormSignIn from "../../components/FormSignIn";
 
-function Login() {
+function SignIn() {
   return (
     <>
       <Flex
@@ -98,4 +98,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;

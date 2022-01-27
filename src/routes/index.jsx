@@ -2,7 +2,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import ExampleContext from "../pages/ExampleContext";
 
+
 import { Stack, Text } from "@chakra-ui/react";
+import SignIn from "../pages/SignIn";
+import Signup from "../pages/Signup/SignUpForm";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -22,51 +25,51 @@ const RouteProtected = ({ component: Component, ...rest }) => {
   );
 };
 
-const LeadPage = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="orange"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela da LeadPage
-      </Text>
-    </Stack>
-  );
-};
-const SignIn = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="purple"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela de Login
-      </Text>
-    </Stack>
-  );
-};
-const SignUp = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="gray"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela de Cadastro
-      </Text>
-    </Stack>
-  );
-};
+// const LeadPage = () => {
+//   return (
+//     <Stack
+//       w="100vw"
+//       h="100vh"
+//       align="center"
+//       justifyContent="center"
+//       color="orange"
+//     >
+//       <Text margin="auto" fontSize="10rem" align="center">
+//         Tela da LeadPage
+//       </Text>
+//     </Stack>
+//   );
+// };
+// const SignIn = () => {
+//   return (
+//     <Stack
+//       w="100vw"
+//       h="100vh"
+//       align="center"
+//       justifyContent="center"
+//       color="purple"
+//     >
+//       <Text margin="auto" fontSize="10rem" align="center">
+//         Tela de Login
+//       </Text>
+//     </Stack>
+//   );
+// };
+// const SignUp = () => {
+//   return (
+//     <Stack
+//       w="100vw"
+//       h="100vh"
+//       align="center"
+//       justifyContent="center"
+//       color="gray"
+//     >
+//       <Text margin="auto" fontSize="10rem" align="center">
+//         Tela de Cadastro
+//       </Text>
+//     </Stack>
+//   );
+// };
 const Dashboard = () => {
   return (
     <Stack
@@ -102,9 +105,9 @@ const AllRoutes = () => {
   return (
     <Switch>
       {/* PRINCIPAIS ROTAS */}
-      <Route exact path="/" component={LeadPage} />
+      {/* <Route exact path="/" component={LeadPage} /> */}
       <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
+      <Route path="/signup" component={Signup} />
 
       {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />

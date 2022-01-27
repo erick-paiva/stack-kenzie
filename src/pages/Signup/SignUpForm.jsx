@@ -2,7 +2,7 @@ import { Flex, Grid, Heading, Text, Button } from "@chakra-ui/react";
 
 import FormSignUp from "../../components/FormSignUp";
 
-function Login() {
+function Signup() {
   return (
     <>
       <Flex
@@ -87,4 +87,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

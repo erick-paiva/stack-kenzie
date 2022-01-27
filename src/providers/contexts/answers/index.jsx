@@ -17,7 +17,7 @@ const AnswerProvider = ({ children }) => {
     api.get("/answers").then((response) => {
       setAnswers(response.data);
     });
-  }, [answers]);
+  }, []);
 
   //Criar uma questão
   const createAnswer = async (data) => {};
