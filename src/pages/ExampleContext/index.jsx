@@ -6,7 +6,15 @@ import QuestionsTest from "./QuestionsTest";
 import CommentsTest from "./CommentsTest";
 import AnswersTest from "./AnswersTest";
 
+import {useAnswers, useComments, useQuestions} from "../../providers/hooks"
+
+
 const ExampleContext = () => {
+
+  const {answers} = useAnswers();
+  const {questions} = useQuestions();
+  const {comments} = useComments();
+
   return (
     <HStack
       spacing={4}
@@ -20,11 +28,11 @@ const ExampleContext = () => {
       <RegisterTest />
       <VStack align="flex-start" spacing={8}>
         <LoginTest />
-        <QuestionsTest />
-        <CommentsTest />
+        <QuestionsTest questions={questions} />
+        <CommentsTest comments={comments}/>
       </VStack>
       <VStack align="flex-start" spacing={8}>
-        <AnswersTest />
+        <AnswersTest answers={answers}/>
       </VStack>
     </HStack>
   );

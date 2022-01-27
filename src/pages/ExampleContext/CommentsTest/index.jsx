@@ -2,9 +2,7 @@ import { Box, Heading } from "@chakra-ui/react";
 
 import { useComments } from "../../../providers/hooks";
 
-const CommentsTest = () => {
-  const { comments } = useComments();
-
+const CommentsTest = ({ comments }) => {
   return (
     <Box
       rounded={"lg"}
