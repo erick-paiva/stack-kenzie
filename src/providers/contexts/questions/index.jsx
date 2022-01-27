@@ -7,7 +7,7 @@ const QuestionProvider = ({ children }) => {
   const [questions, SetQuestions] = useState([]);
 
   useEffect(() => {
-    api.get("/allThese").then((response) => {
+    api.get("/questions").then((response) => {
       SetQuestions(response.data);
     });
   }, []);
