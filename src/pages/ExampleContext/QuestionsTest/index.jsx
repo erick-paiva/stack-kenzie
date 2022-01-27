@@ -4,7 +4,7 @@ import { useQuestions } from "../../../providers/hooks";
 
 const QuestionsTest = () => {
   const { questions } = useQuestions();
-
+  console.log(questions)
   return (
     <Box
       rounded={"lg"}
@@ -31,6 +31,7 @@ const QuestionsTest = () => {
               {res.question.tags.map((tag) => (
                 <strong key={tag}> | {tag}</strong>
               ))}
+
             </Box>
           ))
         : "Sem questões"}
