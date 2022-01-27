@@ -3,11 +3,8 @@ import {
   Heading,
   Text,
   VStack,
-  Input,
   Image,
   Box,
-  FormErrorMessage,
-  Grid,
 } from "@chakra-ui/react";
 
 import { useHistory } from "react-router-dom";
@@ -16,6 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Logo from "../../assets/logo1.svg";
 import { useAuth } from "../../providers/hooks";
+import { InputChakra } from "../InputChakra";
 
 export default function FormSignIn() {
   const { signIn } = useAuth();
@@ -45,6 +43,7 @@ export default function FormSignIn() {
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const handleSignIn = (data) => {
+    console.log(data)
     signIn(data.email, data.password);
   };
 
@@ -62,6 +61,8 @@ export default function FormSignIn() {
       boxShadow="md"
       p="6"
       rounded="md"
+      as="form"
+      onSubmit={handleSubmit(handleSignIn)}
     >
       <Heading
         background="#0001FF"
@@ -85,52 +86,30 @@ export default function FormSignIn() {
 
       <VStack
         alignItems="flex-start"
-        as="form"
         mt="6"
         spacing={4}
-        onSubmit={handleSubmit(handleSignIn)}
+       
       >
-        <Box w="100%">
-          <Text ml="1" mt="1" color="gray.600">
-            Email
-          </Text>
-          <Input
+          <InputChakra
             w="100%"
             h="40px"
-            borderRadius="6px"
-            fontSize="16px"
-            border="1px solid #E2E8F0"
-            color="#2D3748"
-            name="email"
             placeholder="email@email.com.br"
             label="Login"
-            error={errors.email?.message}
+            error={errors?.email}
             {...register("email")}
           />
-          {errors.email?.message && (
-            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-          )}
-        </Box>
 
-        <Box w="100%">
-          <Text color="gray.600">Senha</Text>
-          <Input
+          <InputChakra
             w="100%"
             h="40px"
-            borderRadius="6px"
-            fontSize="16px"
-            border="1px solid #E2E8F0"
-            color="#2D3748"
-            name="password"
             type="password"
             placeholder="sua senha"
             label="Senha"
-            error={errors.password?.message}
+            error={errors?.password}
             {...register("password")}
           />
-        </Box>
+
         
-        <Box w="100%">
           <Button
             type="submit"
             bg="#0001FF"
@@ -147,7 +126,7 @@ export default function FormSignIn() {
             Logar
           </Button>
 
-          <Box w="100%">
+
             <Text ml="1" mt="1" color="gray.600">
               Não tem conta? Cadastre
             </Text>
@@ -166,8 +145,6 @@ export default function FormSignIn() {
             >
               Cadastre-se
             </Button>
-          </Box>
-          </Box>
         
       </VStack>
     </Box>
