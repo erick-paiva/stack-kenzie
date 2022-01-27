@@ -1,14 +1,10 @@
-import { 
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  
-} from "@chakra-ui/react";
-
 import FormSignIn from "../../components/FormSignIn";
 
+<<<<<<< HEAD
+export default function SignIn() {
+  return <FormSignIn />;
+}
+=======
 function SignIn() {
   return (
     <>
@@ -99,3 +95,4 @@ function SignIn() {
 }
 
 export default SignIn;
+>>>>>>> d6bb7426e485ce5411f4f51fd06120532b69f309
