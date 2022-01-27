@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { api } from "../../../services/api";
 
 const QuestionContext = createContext({});
@@ -7,7 +7,7 @@ const QuestionProvider = ({ children }) => {
   const [questions, SetQuestions] = useState([]);
 
   useEffect(() => {
-    api.get("/allThese").then((response) => {
+    api.get("/questions").then((response) => {
       SetQuestions(response.data);
     });
   }, []);

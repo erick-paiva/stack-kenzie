@@ -1,5 +1,7 @@
+import AllRoutes from "./routes";
+
 function App() {
-  return <div>Aplicação</div>;
+  return <AllRoutes />;
 }
 
 export default App;
