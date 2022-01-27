@@ -1,10 +1,5 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import Routes from "./routes/route";
+import AllRoutes from "./routes";
 
 export default function App() {
-  return (
-    <div className="App">
-      aplicaçao
-    </div>
-  );
-
+  return <AllRoutes />;
+}

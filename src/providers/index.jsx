@@ -1,5 +1,9 @@
+import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
 import { QuestionProvider } from "./contexts/questions";
+import { AnswerProvider } from "./contexts/answers";
+import { CommentProvider } from "./contexts/comments";
+import { ThemeProvider } from "./contexts/theme";
 
 const composeProviders =
   (...providers) =>
@@ -10,7 +14,14 @@ const composeProviders =
     );
 
 //Após importar o provider, adicione ele na função aqui.
-export const AllProviders = composeProviders(AuthProvider, QuestionProvider);
+export const AllProviders = composeProviders(
+  ThemeProvider,
+  BrowserRouter,
+  AuthProvider,
+  QuestionProvider,
+  AnswerProvider,
+  CommentProvider
+);
 //ATENÇÃO => A FUNÇÃO LER O PROVIDER DA DIREITA PARA ESQUERDA.
 
 /* 
