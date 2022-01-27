@@ -1,15 +1,5 @@
-import SignUp from "./pages/Signup";
-import SignIn from "./pages/SignIn";
-import { ChakraProvider } from '@chakra-ui/react';
+import AllRoutes from "./routes";
 
-
-function App() {
-  return <>
-  <ChakraProvider>
-  <SignIn />;
-  <SignUp />;
-  </ChakraProvider>
-  </>
+export default function App() {
+  return <AllRoutes />;
 }
-
-export default App;

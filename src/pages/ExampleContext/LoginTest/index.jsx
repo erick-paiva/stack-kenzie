@@ -28,25 +28,24 @@ export default function LoginTest() {
     <Box
       as="form"
       rounded={"lg"}
-      bg="#4B0082"
-      color="white"
       boxShadow={"lg"}
-      p={10}
-      borderRadius="10px"
+      p={2}
+      borderRadius="5px"
       align={"center"}
       onSubmit={handleForm}
       w="300px"
+      bgGradient="radial(gray.300, yellow.400, pink.200)"
     >
       <Stack align={"center"}>
         <Heading fontSize={"4xl"}>Test Login</Heading>
       </Stack>
-      <Stack spacing={4}>
+      <Stack spacing={2}>
         <FormControl id="email">
           <FormLabel>Email address</FormLabel>
           <Input
             type="email"
             w="90%"
-            p={8}
+            p={1}
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
@@ -55,19 +54,11 @@ export default function LoginTest() {
           <Input
             type="password"
             w="90%"
-            p={8}
+            p={1}
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
-        <Button
-          bg={"red"}
-          color={"white"}
-          _hover={{
-            bg: "blue",
-          }}
-          p={8}
-          type="submit"
-        >
+        <Button p={2} type="submit" colorScheme="facebook" border="none">
           Entrar
         </Button>
       </Stack>
