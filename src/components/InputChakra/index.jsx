@@ -5,9 +5,8 @@ import {
   Input as ChakraInput,
   InputLeftElement,
   InputGroup,
-  ChakraProvider,
 } from "@chakra-ui/react";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, forwardRef } from "react";
 
 const inputVariation = {
   error: "red.500",
@@ -16,8 +15,8 @@ const inputVariation = {
   filled: "green.500",
 };
 
-export const InputChakra = (
-  { name, label, icon: Icon, error = null, ...rest }
+const InputBase = (
+  { name, label, icon: Icon, error = null, ...rest },ref
 ) => {
   const [value, setValue] = useState("");
   const [variation, setVariation] = useState("default");
@@ -42,7 +41,7 @@ export const InputChakra = (
 
   return (
       <FormControl isInvalid={!!error}>
-        {!!label && <FormLabel color="gray.400">{label}</FormLabel>}
+        {!!label && <FormLabel color="gray.700">{label}</FormLabel>}
 
         <InputGroup flexDirection="column">
           {Icon && (
@@ -59,7 +58,7 @@ export const InputChakra = (
             onFocus={handleInputFocus}
             borderColor={inputVariation[variation]}
             color={inputVariation[variation]}
-            bg="gray.50"
+            bg="white"
             variant="outline"
             _hover={{ bgColor: "gray.100" }}
             _placeholder={{ color: "gray.300" }}
@@ -68,7 +67,7 @@ export const InputChakra = (
             }}
             size="lg"
             h="60px"
-            
+            ref={ref}
             {...rest}
           />
 
@@ -79,3 +78,5 @@ export const InputChakra = (
       </FormControl>
   );
 };
+
+export const InputChakra = forwardRef(InputBase);

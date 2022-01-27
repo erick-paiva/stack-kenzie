@@ -7,7 +7,7 @@ import {
     InputGroup,
     ChakraProvider,
   } from "@chakra-ui/react";
-  import { useState, useCallback, useEffect } from "react";
+  import { useState, useCallback, useEffect, forwardRef } from "react";
   
   const inputVariation = {
     error: "red.500",
@@ -16,8 +16,8 @@ import {
     filled: "green.500",
   };
   
-  export const TextAreaChakra = (
-    { name, label, icon: Icon, error = null, ...rest }
+const TextBase = (
+    { name, label, icon: Icon, error = null, ...rest }, ref
   ) => {
     const [value, setValue] = useState("");
     const [variation, setVariation] = useState("default");
@@ -68,7 +68,7 @@ import {
               }}
               size="lg"
               h="60px"
-              
+              ref={ref}
               {...rest}
             />
   
@@ -79,4 +79,5 @@ import {
         </FormControl>
     );
   };
-  
+
+  export const TextAreaChakra = forwardRef(TextBase);
