@@ -1,13 +1,8 @@
-import ModalChakra from "./components/Modal";
 
-function App() {
+
+export default function App() {
   return (
     <div className="App">
-      <ModalChakra title={"alouuuu"}>
-        <div>alouuu</div>
-      </ModalChakra>
+      aplicaçao
     </div>
   );
-}
-
-export default App;
