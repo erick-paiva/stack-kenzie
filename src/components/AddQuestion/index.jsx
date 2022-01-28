@@ -13,9 +13,9 @@ export default function AddQuestion() {
   const getHours = () => {
     const date = new Date();
     const dia = date.getDate();
-    const mes = date.getMonth(); // 0-11 (zero=janeiro)
-    const ano = date.getFullYear(); // 4 dígitos
-    const hora = date.getHours(); // 0-23
+    const mes = date.getMonth();
+    const ano = date.getFullYear();
+    const hora = date.getHours(); 
     const min = date.getMinutes();
 
     return { day: dia, month: mes, year: ano, hour: hora, minutes: min };
