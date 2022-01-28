@@ -4,6 +4,7 @@ import { useQuestions } from "../../providers/hooks";
 import ImaDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
+import DisplayStatus from "../DisplayStatus";
 
 export default function CardDoubts({ question }) {
   const { questions } = useQuestions();
@@ -72,23 +73,8 @@ export default function CardDoubts({ question }) {
         flexDirection="column"
         alignItems="flex-start"
       >
-        <Text
-          fontSize="12px"
-          fontWeight="700"
-          color="white"
-          bg={
-            answers.some((ele) => ele.postId === question?.id)
-              ? "#48BB78"
-              : "#E53E3E"
-          }
-          textAlign="center"
-          padding="6px 4px"
-          borderRadius="2px"
-        >
-          {answers.some((ele) => ele.postId === question?.id)
-            ? "RESPONDIDO"
-            : "SEM RESPOSTA"}
-        </Text>
+        <DisplayStatus answers={answers} question={question} />
+
         <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
         <Text fontSize="14px">{comments?.length} comentários</Text>
       </VStack>
