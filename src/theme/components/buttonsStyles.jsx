@@ -12,6 +12,7 @@ export const ButtonStyles = {
         bg: whiten("primary", 20),
         transform: "scale(1.02)",
       },
+      fontFamily: "Roboto, Inter, sans-serif",
     },
     ButtonBorderedWhite: {
       size: "lg",
@@ -23,6 +24,7 @@ export const ButtonStyles = {
       _hover: {
         transform: "scale(1.02)",
       },
+      fontFamily: "Roboto, Inter, sans-serif",
     },
     ButtonBorderedSmall: {
       size: "sm",
@@ -34,6 +36,7 @@ export const ButtonStyles = {
       _hover: {
         transform: "scale(1.02)",
       },
+      fontFamily: "Roboto, Inter, sans-serif",
     },
   },
 };

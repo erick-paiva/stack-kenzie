@@ -5,7 +5,7 @@ import ImaDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
 
-export default function CardDoubts({question}) {
+export default function CardDoubts({ question }) {
   const { questions } = useQuestions();
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
