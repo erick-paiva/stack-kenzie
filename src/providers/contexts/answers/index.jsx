@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { createContext, useState, useEffect } from "react";
 import { api } from "../../../services/api";
 import { useAuth } from "../../hooks";
@@ -5,6 +6,7 @@ import { useAuth } from "../../hooks";
 const AnswerContext = createContext({});
 
 const AnswerProvider = ({ children }) => {
+  const toast = useToast();
   const [answers, setAnswers] = useState([]);
 
   const { accessToken } = useAuth();
@@ -20,7 +22,16 @@ const AnswerProvider = ({ children }) => {
   }, []);
 
   //Criar uma questão
-  const createAnswer = async (data) => {};
+  const createAnswer = async (data) => {
+    api.post("/answers", data, tokenBearer).then(() => {
+      toast({
+        title: "Resposta adicionada!",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    });
+  };
 
   //Pegar todos as resposta
   const getAnswers = async (userId, postId) => {
