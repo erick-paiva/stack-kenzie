@@ -12,4 +12,8 @@ export const theme = extendTheme({
   components: {
     Button,
   },
+  fonts: {
+    body: "Prompt, Inter, sans-serif",
+    heading: "Roboto, Inter, sans-serif",
+  },
 });
