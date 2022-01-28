@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
 
         setAccessToken(response.data.accessToken);
         setUser(response.data.user);
-        history.push("/dashboard")
+        history.push("/dashboard");
       })
       .catch((err) => alert(err.message));
   };
@@ -44,12 +44,9 @@ const AuthProvider = ({ children }) => {
   //Função Cadastrar
   const signUp = async (data) => {
     await api
-      .post("/register",
-        data
-      )
+      .post("/signup", data)
       .then(() => {
-        signIn(data.email, data.password)
-        
+        signIn(data.email, data.password);
       })
       .catch((err) => {
         alert(err.message);

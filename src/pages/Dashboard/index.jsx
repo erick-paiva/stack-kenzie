@@ -1,3 +1,4 @@
+
 import { Box, Flex, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
@@ -29,6 +30,13 @@ export default function Dashboard() {
           <CardDoubts question={ele} key={ele.id} />
         ))}
       </VStack>
+
+      <ModalChakra title="Modal pergunta" buttonName="Modal pergunta">
+        <CardDoubts />
+        <AddComment />
+        <AddAnswer />
+      </ModalChakra>
     </Box>
+
   );
 }

@@ -2,6 +2,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+
   Input as ChakraInput,
   InputLeftElement,
   InputGroup,
@@ -19,20 +20,25 @@ const TextAreaBase = (
   useEffect(() => {
     if (error) {
       return setVariation("red.500");
+
     }
   }, [error]);
 
   const handleInputFocus = useCallback(() => {
     if (!error) {
+
       setVariation("purple.800");
+
     }
   }, [error]);
 
   const handleInputBlur = useCallback(() => {
     if (value.length > 1 && !error) {
+
       return setVariation("green.500");
     }else{
       setVariation(defaultBorder)
+
     }
   }, [error, value]);
 
@@ -77,3 +83,4 @@ const TextAreaBase = (
 };
 
 export const TextAreaChakra = forwardRef(TextAreaBase);
+

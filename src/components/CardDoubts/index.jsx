@@ -4,13 +4,15 @@ import { useQuestions } from "../../providers/hooks";
 import ImaDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
-export default function CardDoubts({question}) {
-  const [answers, setAnswers] = useState([])
-  const [comments, setComments] = useState([])
-  const history = useHistory()
-  const [update, setUptade] = useState(true)
 
- 
+
+export default function CardDoubts(question) {
+  const { questions } = useQuestions();
+  const [answers, setAnswers] = useState([]);
+  const [comments, setComments] = useState([]);
+  const history = useHistory();
+  const [update, setUptade] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setUptade(!update)
@@ -20,6 +22,7 @@ export default function CardDoubts({question}) {
 
    
   },[update])
+
 
   return (
     <Flex
@@ -32,9 +35,11 @@ export default function CardDoubts({question}) {
       padding="15px 20px"
       onClick={() => history}
     >
-      <Box as="figure" textAlign="center" >
+      <Box as="figure" textAlign="center">
         <Image src={ImaDefault} />
-        <Text as="figcaption" fontSize="14px">Kenzinho</Text>
+        <Text as="figcaption" fontSize="14px">
+          Kenzinho
+        </Text>
       </Box>
 
       <Box padding="0 15px" h="100%" minW="320px">
@@ -45,18 +50,31 @@ export default function CardDoubts({question}) {
           {question?.question.body}
         </Text>
         <Flex marginTop="15px">
-          {question?.question?.tags.map((ele) => (
-            <Flex key={ele} border="1px solid #718096" mr="10px" h="18px" paddingX="10px" alignItems="center">
-              <Text fontSize="12px" fontWeight="700" color="#718096" margin="0">{ele}</Text>
+
+          {questions[0]?.question.tags.map((ele) => (
+            <Flex
+              key={ele}
+              border="1px solid #718096"
+              mr="10px"
+              h="18px"
+              paddingX="10px"
+              alignItems="center"
+            >
+              <Text fontSize="12px" fontWeight="700" color="#718096" margin="0">
+                {ele}
+              </Text>
+
             </Flex>
           ))}
         </Flex>
       </Box>
+
         <VStack w="200px" spacing="4" display="flex" flexDirection="column" alignItems="flex-start">
             <Text fontSize="12px" fontWeight="700" color="white" bg={answers.some(ele => ele.postId === question?.id) ? "#48BB78" : "#E53E3E"} textAlign="center" padding="6px 4px" borderRadius="2px" >{answers.some(ele => ele.postId === question?.id) ? "RESPONDIDO" : "SEM RESPOSTA"}</Text>
             <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
             <Text fontSize="14px">{comments.length} comentários</Text>
         </VStack>
+
 
     </Flex>
   );

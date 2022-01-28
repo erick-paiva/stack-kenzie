@@ -9,12 +9,14 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+
 function ModalChakra({ children, title , isOpenProps, onCloseProps, ButtonText }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       {ButtonText && <Button onClick={onOpen}>{ButtonText}</Button>}
       <Modal isOpen={isOpenProps ? isOpenProps : isOpen} onClose={onCloseProps ? onCloseProps : onClose}>
+
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
