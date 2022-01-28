@@ -7,6 +7,8 @@ import CreateQuestionButton from "../../components/CreateQuestion button";
 import { Header } from "../../components/Header";
 import ModalChakra from "../../components/Modal";
 import { useQuestions } from "../../providers/hooks";
+import AddComment from "../AddComment"
+import AddAnswer from "../AddAnswer"
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();

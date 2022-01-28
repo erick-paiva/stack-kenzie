@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
-import Dashboard from "../pages/Dashboard";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
