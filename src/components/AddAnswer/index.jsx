@@ -2,14 +2,11 @@ import { Button, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAnswers, useAuth } from "../../providers/hooks";
 
-function AddAnswer() {
+function AddAnswer({ postId }) {
   const [value, setValue] = useState("");
   const handleChange = (event) => setValue(event.target.value);
   const { user } = useAuth();
   const { createAnswer } = useAnswers();
-
-  // MOCKADO - recebe por props
-  const postId = 4;
 
   const data = {
     userId: user.id,
@@ -21,7 +18,7 @@ function AddAnswer() {
       hour: 8,
       minutes: 21,
     },
-    comment: "value",
+    comment: value,
   };
 
   const handleSubmit = () => {

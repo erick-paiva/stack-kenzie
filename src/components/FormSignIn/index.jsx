@@ -1,11 +1,4 @@
-import {
-  Button,
-  Heading,
-  Text,
-  VStack,
-  Image,
-  Box,
-} from "@chakra-ui/react";
+import { Button, Heading, Text, VStack, Image, Box } from "@chakra-ui/react";
 
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -19,14 +12,6 @@ export default function FormSignIn() {
   const { signIn } = useAuth();
 
   const history = useHistory();
-
-  // // function handleClickLogin() {
-  // //   history.push("/dashboard");
-  // // }
-
-  // function handleClickRegister() {
-  //   history.push("/register");
-  // }
 
   const formSchema = yup.object().shape({
     email: yup
@@ -43,7 +28,7 @@ export default function FormSignIn() {
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const handleSignIn = (data) => {
-    console.log(data)
+    console.log(data);
     signIn(data.email, data.password);
   };
 
@@ -84,68 +69,60 @@ export default function FormSignIn() {
         />
       </Heading>
 
-      <VStack
-        alignItems="flex-start"
-        mt="6"
-        spacing={4}
-       
-      >
-          <InputChakra
-            w="100%"
-            h="40px"
-            placeholder="email@email.com.br"
-            label="Login"
-            error={errors?.email}
-            {...register("email")}
-          />
+      <VStack alignItems="flex-start" mt="6" spacing={4}>
+        <InputChakra
+          w="100%"
+          h="40px"
+          placeholder="email@email.com.br"
+          label="Login"
+          error={errors?.email}
+          {...register("email")}
+        />
 
-          <InputChakra
-            w="100%"
-            h="40px"
-            type="password"
-            placeholder="sua senha"
-            label="Senha"
-            error={errors?.password}
-            {...register("password")}
-          />
+        <InputChakra
+          w="100%"
+          h="40px"
+          type="password"
+          placeholder="sua senha"
+          label="Senha"
+          error={errors?.password}
+          {...register("password")}
+        />
 
-        
-          <Button
-            type="submit"
-            bg="#0001FF"
-            color="#FFFFFF"
-            w="100%"
-            h="40px"
-            borderRadius="6px"
-            _hover={{
-              background: "#3333FF",
-            }}
-            fontSize="16px"
-            mb="50px"
-          >
-            Logar
-          </Button>
+        <Button
+          type="submit"
+          bg="#0001FF"
+          color="#FFFFFF"
+          w="100%"
+          h="40px"
+          borderRadius="6px"
+          _hover={{
+            background: "#3333FF",
+          }}
+          fontSize="16px"
+          mb="50px"
+        >
+          Logar
+        </Button>
 
-
-            <Text ml="1" mt="1" color="gray.600">
-              Não tem conta? Cadastre
-            </Text>
-            <Button
-              bg="#FFFFFF"
-              color="#0001FF"
-              border="1px solid #0001FF"
-              w="100%"
-              h="40px"
-              borderRadius="6px"
-              _hover={{
-                background: "gray.50",
-              }}
-              fontSize="16px"
-              onClick={() => history.push("/signup")}
-            >
-              Cadastre-se
-            </Button>
-        
+        <Text ml="1" mt="1" color="gray.600">
+          Não tem conta? Cadastre
+        </Text>
+        <Button
+          bg="#FFFFFF"
+          color="#0001FF"
+          border="1px solid #0001FF"
+          w="100%"
+          h="40px"
+          borderRadius="6px"
+          _hover={{
+            background: "gray.50",
+          }}
+          fontSize="16px"
+          onClick={() => history.push("/signup")}
+        >
+          Cadastre-se
+        </Button>
       </VStack>
     </Box>
   );
