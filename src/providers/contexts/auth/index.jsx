@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../../../services/api";
 

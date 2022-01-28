@@ -12,11 +12,9 @@ import { useAuth, useQuestions } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
-import ModalQuestion from "../ModalQuestion";
-import PopoverChakra from "../PopoverChakra";
-import { BsThreeDotsVertical } from "react-icons/bs";
-
-export default function CardDoubts({ question, scale = 0, callback }) {
+import DisplayStatus from "../DisplayStatus";
+import ModalQuestion from "../ModalQuestion"
+export default function CardDoubts({ question, callback }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [time, setTime] = useState(0)
@@ -116,7 +114,6 @@ export default function CardDoubts({ question, scale = 0, callback }) {
       padding="15px 20px"
       onClick={() => history}
       boxSize="border-box"
-      transform={scale}
       cursor="pointer"
       justifyContent="space-between"
       width="100%"
@@ -161,34 +158,8 @@ export default function CardDoubts({ question, scale = 0, callback }) {
         alignItems="flex-start"
         // onClick={onOpen}
       >
-       {question.userId === user.id && <PopoverChakra
-          jsx={
-            <Box>
-              <BsThreeDotsVertical />
-            </Box>
-          }
-        >
-          <Button onClick={deleteQuestion}>deletar questão</Button>
-        </PopoverChakra>}
-        <Box
-          fontSize="12px"
-          fontWeight="700"
-          color="white"
-          boxSize="border-box"
-          bg={
-            answers.some((ele) => ele.postId === question?.id)
-              ? "#48BB78"
-              : "#E53E3E"
-          }
-          textAlign="center"
-          padding="6px 4px"
-          borderRadius="2px"
-          width="105px"
-        >
-          {answers.some((ele) => ele.postId === question?.id)
-            ? "RESPONDIDO"
-            : "SEM RESPOSTA"}
-        </Box>
+        <DisplayStatus answers={answers} question={question} />
+
         <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
         <Text fontSize="14px">{comments?.length} comentários</Text>
         {question.question.likes.some((ele) => ele.userId === user.id) ? (
