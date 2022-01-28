@@ -1,9 +1,19 @@
+import { useToast } from "@chakra-ui/react";
 import { createContext, useState, useEffect } from "react";
 import { api } from "../../../services/api";
+import { useAuth } from "../../hooks";
 
 const CommentContext = createContext({});
 
 const CommentProvider = ({ children }) => {
+  const { accessToken } = useAuth();
+
+  const tokenBearer = {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  };
+
+  const toast = useToast();
+
   const [comments, SetComments] = useState([]);
 
   useEffect(() => {
@@ -13,7 +23,16 @@ const CommentProvider = ({ children }) => {
   }, []);
 
   //Criar uma questão
-  const createComment = async () => {};
+  const createComment = async (data) => {
+    api.post("/comments", data, tokenBearer).then(() => {
+      toast({
+        title: "Comentário adicionado!",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    });
+  };
 
   //Pegar todos as questões
   const getAllComments = async () => {

@@ -46,10 +46,9 @@ export default function FormSignUp() {
       .string()
       .min(6, "Mínimo de 6 caracteres!")
       .required("Senha Obrigatória!"),
-    passwordConfirm: yup.string().oneOf(
-      [yup.ref("password"), null],
-      "As Senhas devem ser iguais!"
-    ),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "As Senhas devem ser iguais!"),
 
     //Atenção Inserir o input do slack
   });
@@ -239,7 +238,7 @@ export default function FormSignUp() {
             _hover={{
               background: "gray.50",
             }}
-            onClick={() => history.push("/signin")}
+            onClick={() => history.push("/")}
           >
             Ir para o login
           </Button>
