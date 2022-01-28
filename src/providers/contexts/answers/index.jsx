@@ -11,9 +11,7 @@ const AnswerProvider = ({ children }) => {
 
   const { accessToken } = useAuth();
 
-  const tokenBearer = {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  };
+  const tokenBearer = { headers: { Authorization: `Bearer ${accessToken}` } };
 
   useEffect(() => {
     api.get("/answers").then((response) => {

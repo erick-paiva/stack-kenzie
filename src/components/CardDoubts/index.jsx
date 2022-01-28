@@ -5,7 +5,6 @@ import ImaDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
 
-
 export default function CardDoubts(question) {
   const { questions } = useQuestions();
   const [answers, setAnswers] = useState([]);
@@ -15,14 +14,13 @@ export default function CardDoubts(question) {
 
   useEffect(() => {
     setTimeout(() => {
-      setUptade(!update)
-      api.get("/answers").then(resp => setAnswers(resp.data))
-      api.get(`/comments?postId=${question?.id}`).then(resp => setComments(resp.data))
+      setUptade(!update);
+      api.get("/answers").then((resp) => setAnswers(resp.data));
+      api
+        .get(`/comments?postId=${question?.id}`)
+        .then((resp) => setComments(resp.data));
     }, 5000);
-
-   
-  },[update])
-
+  }, [update]);
 
   return (
     <Flex
@@ -50,7 +48,6 @@ export default function CardDoubts(question) {
           {question?.question.body}
         </Text>
         <Flex marginTop="15px">
-
           {questions[0]?.question.tags.map((ele) => (
             <Flex
               key={ele}
@@ -63,19 +60,38 @@ export default function CardDoubts(question) {
               <Text fontSize="12px" fontWeight="700" color="#718096" margin="0">
                 {ele}
               </Text>
-
             </Flex>
           ))}
         </Flex>
       </Box>
 
-        <VStack w="200px" spacing="4" display="flex" flexDirection="column" alignItems="flex-start">
-            <Text fontSize="12px" fontWeight="700" color="white" bg={answers.some(ele => ele.postId === question?.id) ? "#48BB78" : "#E53E3E"} textAlign="center" padding="6px 4px" borderRadius="2px" >{answers.some(ele => ele.postId === question?.id) ? "RESPONDIDO" : "SEM RESPOSTA"}</Text>
-            <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
-            <Text fontSize="14px">{comments.length} comentários</Text>
-        </VStack>
-
-
+      <VStack
+        w="200px"
+        spacing="4"
+        display="flex"
+        flexDirection="column"
+        alignItems="flex-start"
+      >
+        <Text
+          fontSize="12px"
+          fontWeight="700"
+          color="white"
+          bg={
+            answers.some((ele) => ele.postId === question?.id)
+              ? "#48BB78"
+              : "#E53E3E"
+          }
+          textAlign="center"
+          padding="6px 4px"
+          borderRadius="2px"
+        >
+          {answers.some((ele) => ele.postId === question?.id)
+            ? "RESPONDIDO"
+            : "SEM RESPOSTA"}
+        </Text>
+        {/* <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
+        <Text fontSize="14px">{comments?.length} comentários</Text> */}
+      </VStack>
     </Flex>
   );
 }
