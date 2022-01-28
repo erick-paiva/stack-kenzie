@@ -6,6 +6,7 @@ import ExampleContext from "../pages/ExampleContext";
 import { Stack, Text } from "@chakra-ui/react";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
+import Dashboard from "../pages/Dashboard";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -70,21 +71,21 @@ const RouteProtected = ({ component: Component, ...rest }) => {
 //     </Stack>
 //   );
 // };
-const Dashboard = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="green"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela do Dashboard
-      </Text>
-    </Stack>
-  );
-};
+// const Dashboard = () => {
+//   return (
+//     <Stack
+//       w="100vw"
+//       h="100vh"
+//       align="center"
+//       justifyContent="center"
+//       color="green"
+//     >
+//       <Text margin="auto" fontSize="10rem" align="center">
+//         Tela do Dashboard
+//       </Text>
+//     </Stack>
+//   );
+// };
 const PageError = () => {
   return (
     <Stack

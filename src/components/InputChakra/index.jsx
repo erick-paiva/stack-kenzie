@@ -8,34 +8,30 @@ import {
 } from "@chakra-ui/react";
 import { useState, useCallback, useEffect, forwardRef } from "react";
 
-const inputVariation = {
-  error: "red.500",
-  default: "gray.200",
-  focus: "purple.800",
-  filled: "green.500",
-};
 
 const InputBase = (
-  { name, label, icon: Icon, error = null, ...rest },ref
+  { name, label, icon: Icon, error = null, defaultBorder = "gray.200", ...rest },ref
 ) => {
   const [value, setValue] = useState("");
-  const [variation, setVariation] = useState("default");
+  const [variation, setVariation] = useState(defaultBorder);
 
   useEffect(() => {
     if (error) {
-      return setVariation("error");
+      return setVariation("red.500");
     }
   }, [error]);
 
   const handleInputFocus = useCallback(() => {
     if (!error) {
-      setVariation("focus");
+      setVariation("purple.800");
     }
   }, [error]);
 
   const handleInputBlur = useCallback(() => {
     if (value.length > 1 && !error) {
-      return setVariation("filled");
+      return setVariation("green.500");
+    }else{
+      setVariation(defaultBorder)
     }
   }, [error, value]);
 
@@ -45,7 +41,7 @@ const InputBase = (
 
         <InputGroup flexDirection="column">
           {Icon && (
-            <InputLeftElement color={inputVariation[variation]} mt="2.5">
+            <InputLeftElement color={variation} mt="2.5">
               <Icon />
             </InputLeftElement>
           )}
@@ -56,12 +52,12 @@ const InputBase = (
             onChangeCapture={(e) => setValue(e.currentTarget.value)}
             onBlurCapture={handleInputBlur}
             onFocus={handleInputFocus}
-            borderColor={inputVariation[variation]}
-            color={inputVariation[variation]}
+            borderColor={variation}
+            color={variation}
             bg="white"
             variant="outline"
             _hover={{ bgColor: "gray.100" }}
-            _placeholder={{ color: "gray.300" }}
+            _placeholder={variation}
             _focus={{
               bg: "gray.100",
             }}

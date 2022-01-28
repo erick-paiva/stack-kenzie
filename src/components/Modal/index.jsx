@@ -3,19 +3,18 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
 
-function ModalChakra({ children, title }) {
+function ModalChakra({ children, title , isOpenProps, onCloseProps, ButtonText }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      {ButtonText && <Button onClick={onOpen}>{ButtonText}</Button>}
+      <Modal isOpen={isOpenProps ? isOpenProps : isOpen} onClose={onCloseProps ? onCloseProps : onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
