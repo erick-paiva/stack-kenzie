@@ -1,5 +1,4 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -43,7 +42,25 @@ export default function Dashboard() {
         </ModalChakra>
       </Flex>
 
-      <Box h="63vh" overflowY="auto">
+      <Box
+        h="63vh"
+        overflowY="auto"
+        m={"10px"}
+        sx={{
+          "&::-webkit-scrollbar": {
+            width: "25px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "30px",
+            borderRadius: "50px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            border: "3px solid #0001FF",
+            background: "white",
+            borderRadius: "50px",
+          },
+        }}
+      >
         {!!nameSearch
           ? questionFilter?.map((ele) => (
               <CardDoubts
