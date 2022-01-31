@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import AddAnswer from "../../components/AddAnswer";
@@ -31,8 +31,6 @@ export default function Dashboard() {
           <AddQuestion />
         </ModalChakra>
       </Flex>
-      <Heading size="small-xl">aaaaaaaaa</Heading>
-      <Heading size="xl">aaaaaaaaa</Heading>
       <VStack mt="30px">
         {questions.map((ele) => (
           <Box key={ele.id}>
