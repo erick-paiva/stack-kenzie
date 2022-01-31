@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -31,57 +31,69 @@ export default function Dashboard() {
     <Box as="section">
       <Header setNameSearch={setNameSearch} />
       <Flex
-        justifyContent="space-between"
-        h="90px"
-        alignItems="center"
-        paddingX="30px"
+        flexDirection={"row-reverse"}
+        margin={"5px"}
+        height={"250px"}
+        justifyContent={"center"}
       >
-        <DropDownButton itens={["data", "hora"]} />
-        <ModalChakra title="Fazer uma pergunta" ButtonText="Fazer uma pergunta">
-          <AddQuestion />
-        </ModalChakra>
-      </Flex>
+        <Flex
+          flexDirection={"column"}
+          justifyContent="space-between"
+          padding="40px"
+        >
+          <ModalChakra
+            title="Fazer uma pergunta"
+            ButtonText="Fazer uma pergunta"
+          >
+            <AddQuestion />
+          </ModalChakra>
+          <DropDownButton padding="10px" itens={["data", "hora"]} />
+          <Box margin={"20px"}>
+            <Heading size={"sm"}>Tags</Heading>
+          </Box>
+        </Flex>
 
-      <Box
-        h="63vh"
-        overflowY="auto"
-        m={"10px"}
-        sx={{
-          "&::-webkit-scrollbar": {
-            width: "25px",
-          },
-          "&::-webkit-scrollbar-track": {
-            width: "30px",
-            borderRadius: "50px",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            border: "3px solid #0001FF",
-            background: "white",
-            borderRadius: "50px",
-          },
-        }}
-      >
-        {!!nameSearch
-          ? questionFilter?.map((ele) => (
-              <CardDoubts
-                question={ele}
-                callback={getAllQuestions}
-                key={ele.id}
-              />
-            ))
-          : questions.map((ele) => (
-              <CardDoubts
-                question={ele}
-                callback={getAllQuestions}
-                key={ele.id}
-              />
-            ))}
-        {questionFilter.length === 0 && (
-          <Text color="primary" fontWeight="bold" fontSize="24px">
-            Resultado não encontrado
-          </Text>
-        )}
-      </Box>
+        <Box
+          h="63vh"
+          overflowY="auto"
+          m={"10px"}
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "25px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "30px",
+              borderRadius: "50px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              border: "3px solid #0001FF",
+              background: "white",
+              borderRadius: "50px",
+            },
+          }}
+        >
+          {!!nameSearch
+            ? questionFilter?.map((ele) => (
+                <CardDoubts
+                  question={ele}
+                  callback={getAllQuestions}
+                  key={ele.id}
+                />
+              ))
+            : questions.map((ele) => (
+                <CardDoubts
+                  question={ele}
+                  callback={getAllQuestions}
+                  key={ele.id}
+                />
+              ))}
+          {questionFilter.length === 0 && (
+            <Text color="primary" fontWeight="bold" fontSize="24px">
+              Resultado não encontrado
+            </Text>
+          )}
+        </Box>
+      </Flex>
     </Box>
   );
 }
