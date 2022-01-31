@@ -9,7 +9,6 @@ import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
 
-import Avatar from "../../components/Avatar";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();

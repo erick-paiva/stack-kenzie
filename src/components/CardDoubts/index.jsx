@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import DisplayStatus from "../DisplayStatus";
 import ModalQuestion from "../ModalQuestion";
 import { BiLike } from "react-icons/bi";
+import Avatar from "../Avatar";
 export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
@@ -156,7 +157,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Box>
+        {/* <Box>
           <Image
             src={!!userCreator?.image ? userCreator.image : ImgDefault}
             h="80px"
@@ -165,7 +166,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
           <Text as="figcaption" fontSize="14px">
             {userCreator?.name}
           </Text>
-        </Box>
+        </Box> */}
+         <Avatar userCreator={user}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
             <DisplayStatus answers={answers} question={question} />

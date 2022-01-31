@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
+import Avatar from "../Avatar";
 export default function BasicCardDoubts({
   question,
   ImgDefault,
@@ -51,7 +52,7 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Box>
+        {/* <Box>
           <Image
             src={!!user?.image ? user.image : ImgDefault}
             h="80px"
@@ -60,7 +61,8 @@ export default function BasicCardDoubts({
           <Text as="figcaption" fontSize="14px">
             {user?.name}
           </Text>
-        </Box>
+        </Box> */}
+        <Avatar userCreator={user}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
             {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
