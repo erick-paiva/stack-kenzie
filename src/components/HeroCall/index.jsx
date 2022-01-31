@@ -22,7 +22,7 @@ export default function HeroCall() {
         <Flex alignItems={"center"}>
           <BlueDot />
           <Text w="100%">
-            Curta as dúvidas mais interessantes <br /> para colocar em evidência
+            Curta as dúvidas mais interessantes para colocar em evidência
           </Text>{" "}
         </Flex>
         <Box
