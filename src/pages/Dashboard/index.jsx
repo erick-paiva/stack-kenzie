@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
-import ModalChakra from "../../components/Modal";
+import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
+import DropDownButton from "../../components/DropDownButton";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
@@ -27,16 +28,21 @@ export default function Dashboard() {
 
   return (
     <Box as="section">
+      
       <Header setNameSearch={setNameSearch} />
-      <Flex>
+      <Flex  justifyContent="space-between" h="90px" alignItems="center" paddingX="30px">
+      <DropDownButton itens={["data","hora"]} />
         <ModalChakra
-          title="Modal pergunta"
-          ButtonText="Modal adicionar pergunta"
+          title="Fazer uma pergunta"
+          ButtonText="Fazer uma pergunta"
         >
           <AddQuestion />
+          
+          
         </ModalChakra>
       </Flex>
-      <VStack mt="30px">
+
+      <Box h="63vh" overflowY="auto">
         {!!nameSearch
           ? questionFilter?.map((ele) => (
               <CardDoubts
@@ -52,7 +58,8 @@ export default function Dashboard() {
                 key={ele.id}
               />
             ))}
-      </VStack>
+            {questionFilter.length === 0 && <Text color="primary" fontWeight="bold" fontSize="24px">Resultado não encontrado</Text>}
+      </Box>
     </Box>
   );
 }
