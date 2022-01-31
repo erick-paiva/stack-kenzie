@@ -104,7 +104,7 @@ export default function FormSignIn() {
         </Button>
 
         <Text ml="1" mt="1" color="gray.600">
-          Não tem conta? Cadastre
+          Não tem conta?
         </Text>
         <Button
           bg="#FFFFFF"
