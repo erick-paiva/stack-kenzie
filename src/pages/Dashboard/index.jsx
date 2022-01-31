@@ -1,5 +1,4 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -8,6 +7,8 @@ import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
+
+import Avatar from "../../components/Avatar";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
@@ -28,21 +29,38 @@ export default function Dashboard() {
 
   return (
     <Box as="section">
-      
       <Header setNameSearch={setNameSearch} />
-      <Flex  justifyContent="space-between" h="90px" alignItems="center" paddingX="30px">
-      <DropDownButton itens={["data","hora"]} />
-        <ModalChakra
-          title="Fazer uma pergunta"
-          ButtonText="Fazer uma pergunta"
-        >
+      <Flex
+        justifyContent="space-between"
+        h="90px"
+        alignItems="center"
+        paddingX="30px"
+      >
+        <DropDownButton itens={["data", "hora"]} />
+        <ModalChakra title="Fazer uma pergunta" ButtonText="Fazer uma pergunta">
           <AddQuestion />
-          
-          
         </ModalChakra>
       </Flex>
 
-      <Box h="63vh" overflowY="auto">
+      <Box
+        h="63vh"
+        overflowY="auto"
+        m={"10px"}
+        sx={{
+          "&::-webkit-scrollbar": {
+            width: "25px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "30px",
+            borderRadius: "50px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            border: "3px solid #0001FF",
+            background: "white",
+            borderRadius: "50px",
+          },
+        }}
+      >
         {!!nameSearch
           ? questionFilter?.map((ele) => (
               <CardDoubts
@@ -58,7 +76,11 @@ export default function Dashboard() {
                 key={ele.id}
               />
             ))}
-            {questionFilter.length === 0 && <Text color="primary" fontWeight="bold" fontSize="24px">Resultado não encontrado</Text>}
+        {questionFilter.length === 0 && (
+          <Text color="primary" fontWeight="bold" fontSize="24px">
+            Resultado não encontrado
+          </Text>
+        )}
       </Box>
     </Box>
   );

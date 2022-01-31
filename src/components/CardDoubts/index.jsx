@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Image,
   Text,
   useBreakpointValue,
@@ -51,7 +52,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
     getData();
   }, []);
 
-  const like = () => {
+  const like = (e) => {
+    e.stopPropagation();
     callback();
     const filter = question.question?.likes.filter(
       (ele) => ele.userId !== user.id
@@ -84,7 +86,9 @@ export default function CardDoubts({ question, callback, disable = false }) {
     }
   };
 
-  const deslike = () => {
+  const deslike = (e) => {
+    e.stopPropagation();
+
     callback();
     const filter = question.question.likes.filter(
       (ele) => ele.userId !== user.id
@@ -116,20 +120,21 @@ export default function CardDoubts({ question, callback, disable = false }) {
         });
     }
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const deleteQuestion = () => {
     onClose();
-    api.delete(
-      `/questions/${question.id}`,
+    api
+      .delete(
+        `/questions/${question.id}`,
 
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    ).then(() => callback())
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then(() => callback());
   };
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
@@ -147,6 +152,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       justifyContent="space-between"
       width="100%"
       flexDirection={["column", "column", "row"]}
+      onClick={!disable && onOpen}
     >
       <Flex
         as="figure"
@@ -179,7 +185,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
       <Flex
         paddingX={["0", "0", "15px"]}
-        onClick={!disable && onOpen}
         flexDirection="column"
         justifyContent="space-between"
         h="100%"
@@ -229,31 +234,19 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
         {liked ? (
           <Button
-            onClick={deslike}
+            onClick={(e) => deslike(e)}
             Button
-            variant="ButtonFilledBlue"
-            w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
+            variant="ButtonFilledSmall"
           >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
-              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+            <HStack alignItems={"flex-end"}>
+              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+            </HStack>
           </Button>
         ) : (
-          <Button
-            onClick={like}
-            Button
-            variant="ButtonBorderedWhite"
-            w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
-          >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
+          <Button onClick={(e) => like(e)} Button variant="ButtonBorderedSmall">
+            <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+            </HStack>
           </Button>
         )}
       </VStack>
