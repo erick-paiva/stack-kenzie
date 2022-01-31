@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
+import Error404 from "../pages/Error404";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -32,7 +33,7 @@ const AllRoutes = () => {
       <RouteProtected path="/dashboard" component={Dashboard} />
 
       {/* ROTAS NÃO ENCONTRADAS */}
-      {/* <Route path="/*" component={PageError} /> */}
+      <Route path="/*" component={Error404} />
     </Switch>
   );
 };
