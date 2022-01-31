@@ -1,4 +1,6 @@
+
 import { Box, Flex, useDisclosure, VStack } from "@chakra-ui/react";
+
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -38,7 +40,6 @@ export default function Dashboard() {
           <AddQuestion />
         </ModalChakra>
       </Flex>
-
       <VStack mt="30px">
         {!!nameSearch
           ? questionFilter?.map((ele) => (
