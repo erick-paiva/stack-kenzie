@@ -1,6 +1,7 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAnswers, useAuth } from "../../providers/hooks";
+import { FaUserGraduate } from "react-icons/fa";
 
 function AddAnswer({ postId }) {
   const [value, setValue] = useState("");
@@ -32,7 +33,12 @@ function AddAnswer({ postId }) {
         placeholder="Escreva sua resposta"
         size="sm"
       />
-      <Button onClick={handleSubmit}>Adicionar resposta</Button>
+      <Button variant={"ButtonBorderedSmall"} onClick={handleSubmit}>
+        <HStack alignItems={"center"}>
+          <Text>Responder</Text>
+          <FaUserGraduate />
+        </HStack>
+      </Button>
     </div>
   );
 }

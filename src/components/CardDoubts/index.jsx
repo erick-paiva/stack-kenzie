@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
   Image,
   Text,
   useDisclosure,
@@ -13,16 +14,17 @@ import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
 import DisplayStatus from "../DisplayStatus";
-import ModalQuestion from "../ModalQuestion"
+import ModalQuestion from "../ModalQuestion";
+import { FaThumbsUp } from "react-icons/fa";
+
 export default function CardDoubts({ question, callback }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [time, setTime] = useState(0)
+  const [time, setTime] = useState(0);
   const history = useHistory();
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
-  const [userCreator, setUserCreator] = useState({})
-
+  const [userCreator, setUserCreator] = useState({});
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,13 +33,14 @@ export default function CardDoubts({ question, callback }) {
       api
         .get(`/comments?postId=${question?.id}`)
         .then((resp) => setComments(resp.data));
-        setTime(6000)
+      setTime(6000);
     }, time);
   }, [update]);
   useEffect(() => {
-    api.get(`/users/${question.userId}`).then(resp => setUserCreator(resp.data))
-
-  },[])
+    api
+      .get(`/users/${question.userId}`)
+      .then((resp) => setUserCreator(resp.data));
+  }, []);
 
   const like = () => {
     callback();
@@ -95,7 +98,7 @@ export default function CardDoubts({ question, callback }) {
 
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -119,7 +122,11 @@ export default function CardDoubts({ question, callback }) {
       width="100%"
     >
       <Box as="figure" textAlign="center">
-        <Image src={!!userCreator?.image ? userCreator.image : ImgDefault} h="80px" w="auto" />
+        <Image
+          src={!!userCreator?.image ? userCreator.image : ImgDefault}
+          h="80px"
+          w="auto"
+        />
         <Text as="figcaption" fontSize="14px">
           {userCreator?.name}
         </Text>
@@ -163,12 +170,18 @@ export default function CardDoubts({ question, callback }) {
         <Text fontSize="14px">{question?.question.likes.length} curtidas</Text>
         <Text fontSize="14px">{comments?.length} comentários</Text>
         {question.question.likes.some((ele) => ele.userId === user.id) ? (
-          <Button onClick={deslike} bg="blue">
-            deslike
+          <Button variant={"ButtonFilledSmall"} onClick={deslike}>
+            <HStack alignItems={"baseline"}>
+              <Text>Curtido</Text>
+              <FaThumbsUp style={{ style: "Regular" }} />
+            </HStack>
           </Button>
         ) : (
-          <Button onClick={like} bg="white">
-            Curtir
+          <Button variant={"ButtonBorderedSmall"} onClick={like}>
+            <HStack alignItems={"baseline"}>
+              <Text>Curtir</Text>
+              <FaThumbsUp />
+            </HStack>
           </Button>
         )}
       </VStack>

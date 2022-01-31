@@ -2,12 +2,14 @@ import {
   Box,
   Button,
   Flex,
+  HStack,
   Image,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaThumbsUp } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/hooks";
 import PopoverChakra from "../PopoverChakra";
@@ -26,7 +28,7 @@ export default function BasicCardDoubts({
   const history = useHistory();
   // const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(question, user.id)
+  console.log(question, user.id);
   return (
     <Flex
       minH="200px"
@@ -84,7 +86,9 @@ export default function BasicCardDoubts({
         // onClick={onOpen}
       >
         {question?.userId === user.id && (
-          <Button bg="red" onClick={deleteQuestion}>deletar questão</Button>
+          <Button bg="red" onClick={deleteQuestion}>
+            deletar questão
+          </Button>
         )}
         <Box
           fontSize="12px"
@@ -110,12 +114,18 @@ export default function BasicCardDoubts({
         </Text>
         <Text fontSize="14px">{comments?.length} comentários</Text>
         {question.question?.likes.some((ele) => ele.userId === user.id) ? (
-          <Button onClick={deslike} bg="blue">
-            deslike
+          <Button variant={"ButtonFilledSmall"} onClick={deslike}>
+            <HStack alignItems={"baseline"}>
+              <Text>Curtido</Text>
+              <FaThumbsUp style={{ style: "Regular" }} />
+            </HStack>
           </Button>
         ) : (
-          <Button onClick={like} bg="white">
-            Curtir
+          <Button variant={"ButtonBorderedSmall"} onClick={like}>
+            <HStack alignItems={"baseline"}>
+              <Text>Curtir</Text>
+              <FaThumbsUp />
+            </HStack>
           </Button>
         )}
       </VStack>

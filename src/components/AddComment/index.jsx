@@ -1,6 +1,7 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAuth, useComments } from "../../providers/hooks";
+import { FaCommentDots } from "react-icons/fa";
 
 function AddComment({ postId }) {
   const [value, setValue] = useState("");
@@ -32,7 +33,12 @@ function AddComment({ postId }) {
         placeholder="Escreva seu comentário"
         size="sm"
       />
-      <Button onClick={handleSubmit}>Adicionar comentário</Button>
+      <Button variant={"ButtonBorderedSmall"} onClick={handleSubmit}>
+        <HStack>
+          <Text>Comentar</Text>
+          <FaCommentDots />
+        </HStack>
+      </Button>
     </div>
   );
 }
