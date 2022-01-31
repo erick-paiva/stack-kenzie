@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Image,
   Text,
   useBreakpointValue,
@@ -65,7 +66,11 @@ export default function BasicCardDoubts({
         <Avatar userCreator={user}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
-            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
+            {question.userId === user.id && (
+              <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
+                Deletar
+              </Button>
+            )}
             <DisplayStatus answers={answers} question={question} />
             <Text fontSize="14px">
               {question?.question.likes.length} curtidas
@@ -116,7 +121,11 @@ export default function BasicCardDoubts({
       >
         {is800px && (
           <Box color="primary">
-            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
+            {question.userId === user.id && (
+              <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
+                Deletar
+              </Button>
+            )}
             <DisplayStatus answers={answers} question={question} />
             <Text fontSize="14px">
               {question?.question.likes.length} curtidas
@@ -127,31 +136,29 @@ export default function BasicCardDoubts({
 
         {liked ? (
           <Button
-            onClick={() => {deslike();setLiked(false)}}
+            onClick={() => {
+              deslike();
+              setLiked(false);
+            }}
             Button
-            variant="ButtonFilledBlue"
-            // w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
+            variant="ButtonFilledSmall"
           >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
-              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+            <HStack alignItems={"flex-end"}>
+              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+            </HStack>
           </Button>
         ) : (
           <Button
-            onClick={() => {like();setLiked(true)}}
+            onClick={() => {
+              like();
+              setLiked(true);
+            }}
             Button
             variant="ButtonBorderedSmall"
-            // w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
           >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
+            <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+            </HStack>
           </Button>
         )}
       </VStack>
