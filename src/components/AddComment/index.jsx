@@ -1,5 +1,6 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { BiCommentDots } from "react-icons/bi";
 import { useAuth, useComments } from "../../providers/hooks";
 
 function AddComment({ postId }) {
@@ -32,7 +33,12 @@ function AddComment({ postId }) {
         placeholder="Escreva seu comentário"
         size="sm"
       />
-      <Button onClick={handleSubmit}>Adicionar comentário</Button>
+      <Button onClick={handleSubmit} variant={"ButtonBorderedSmall"}>
+        <HStack alignItems={"flex-end"}>
+          <Text mr="5px">Comentar </Text>
+          <BiCommentDots fontSize="20px" />
+        </HStack>
+      </Button>
     </div>
   );
 }

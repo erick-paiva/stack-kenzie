@@ -34,8 +34,6 @@ export default function FormSignIn() {
 
   return (
     <Box
-      mt="50px"
-      ml="50px"
       width="434px"
       height="552px"
       padding="15px 15px"
@@ -106,7 +104,7 @@ export default function FormSignIn() {
         </Button>
 
         <Text ml="1" mt="1" color="gray.600">
-          Não tem conta? Cadastre
+          Não possui uma conta?
         </Text>
         <Button
           bg="#FFFFFF"

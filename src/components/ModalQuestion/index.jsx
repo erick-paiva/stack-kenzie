@@ -11,6 +11,7 @@ import {
 import AddAnswer from "../AddAnswer";
 import AddComment from "../AddComment";
 import BasicCardDoubts from "../BasicCardDoubts";
+import CardDoubts from "../CardDoubts";
 
 function ModalChakra({
   isOpen,
@@ -48,6 +49,7 @@ function ModalChakra({
                 comments={comments}
                 user={user}
               />
+              {/* <CardDoubts question={question} disable callback={callback} /> */}
             </Flex>
             <AddComment postId={question.id} />
             <AddAnswer postId={question.id} />
