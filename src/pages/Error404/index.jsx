@@ -1,8 +1,11 @@
 import { Box, VStack, Image, Text, Button, Stack } from "@chakra-ui/react";
 import Logo from "../../assets/logo1.svg";
 import ghost from "../../assets/ghost.svg";
+import { useHistory } from "react-router-dom";
 
 export default function Error404() {
+  const history = useHistory();
+
   return (
     <Box as="section" p="10px">
       <VStack
@@ -37,7 +40,9 @@ export default function Error404() {
             Página não encontrada! Procure um coach.
           </Text>
         </Stack>
-        <Button variant="ButtonBorderedWhite">Voltar</Button>
+        <Button onClick={() => history.push("/")} variant="ButtonBorderedWhite">
+          Voltar
+        </Button>
       </VStack>
     </Box>
   );
