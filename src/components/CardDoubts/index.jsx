@@ -150,6 +150,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       justifyContent="space-between"
       width="100%"
       flexDirection={["column", "column", "row"]}
+      onClick={!disable && onOpen}
     >
       <Flex
         as="figure"
@@ -182,7 +183,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
       <Flex
         paddingX={["0", "0", "15px"]}
-        onClick={!disable && onOpen}
         flexDirection="column"
         justifyContent="space-between"
         h="100%"
