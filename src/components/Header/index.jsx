@@ -21,7 +21,7 @@ export function Header({setNameSearch}) {
       
       :
       <>
-      <Box minW="320px" maxW="100%">
+      <Box minW="50vw" maxW="100%">
       <InputChakra
         placeholder="Pesquise sua dúvida"
         border="2px solid red"
@@ -40,7 +40,7 @@ export function Header({setNameSearch}) {
      
     </Flex>
     {!is800px && 
-    <Flex width="80%" justifyContent="center">
+    <Flex width="82%" justifyContent="center">
     <InputChakra
       mt="15px"
       placeholder="Pesquise sua dúvida"

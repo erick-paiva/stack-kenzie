@@ -2,31 +2,31 @@ import {
   Box,
   Button,
   Flex,
+  Heading,
   Image,
   Text,
+  useBreakpointValue,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../../providers/hooks";
-import PopoverChakra from "../PopoverChakra";
-
+import { useState } from "react";
+import DisplayStatus from "../DisplayStatus";
+import { BiLike } from "react-icons/bi";
 export default function BasicCardDoubts({
-  question = [],
-  scale,
+  question,
   ImgDefault,
   deleteQuestion,
-  answers = [],
+  answers,
   deslike,
-  comments = [],
   like,
+  comments,
   user,
 }) {
-  const history = useHistory();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const [liked, setLiked] = useState(
+    question.question.likes.some((ele) => ele.userId === user.id)
+  );
+  const is800px = useBreakpointValue({ base: false, md: true });
 
-  console.log(question, user.id)
   return (
     <Flex
       minH="200px"
@@ -36,44 +36,73 @@ export default function BasicCardDoubts({
       alignItems="center"
       boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
       padding="15px 20px"
-      onClick={() => history}
+      // onClick={() => history}
       boxSize="border-box"
-      transform={scale}
       cursor="pointer"
       justifyContent="space-between"
       width="100%"
+      flexDirection={["column", "column", "row"]}
     >
-      <Box as="figure" textAlign="center">
-        <Image src={ImgDefault} h="80px" w="auto" />
-        <Text as="figcaption" fontSize="14px">
-          {user?.name}
-        </Text>
-      </Box>
+      <Flex
+        as="figure"
+        w={["100%", "100%", "auto"]}
+        textAlign="center"
+        flexDirection={["row", "row", "column"]}
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Box>
+          <Image
+            src={!!user?.image ? user.image : ImgDefault}
+            h="80px"
+            w="auto"
+          />
+          <Text as="figcaption" fontSize="14px">
+            {user?.name}
+          </Text>
+        </Box>
+        {!is800px && (
+          <VStack spacing="2" color="primary">
+            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
+            <DisplayStatus answers={answers} question={question} />
+            <Text fontSize="14px">
+              {question?.question.likes.length} curtidas
+            </Text>
+            <Text fontSize="14px">{comments?.length} comentários</Text>
+          </VStack>
+        )}
+      </Flex>
 
-      <Box padding="0 15px" h="100%">
-        <Text fontSize="30px" fontWeight="700" margin="0">
-          {question?.question.title}
-        </Text>
+      <Flex
+        paddingX={["0", "0", "15px"]}
+        flexDirection="column"
+        justifyContent="space-between"
+        h="100%"
+        w="100%"
+      >
+        <Heading>{question?.question.title}</Heading>
         <Text fontSize="16px" fontWeight="400" lineHeight="24px">
           {question?.question.body}
         </Text>
-        <Flex marginTop="15px">
-          {question?.question?.tags?.map((ele) => (
+        <Flex marginTop="15px" flexWrap="wrap">
+          {question?.tags?.map((ele) => (
             <Flex
               key={ele}
-              border="1px solid #718096"
+              border="1px solid"
+              borderColor="grayTag"
               mr="10px"
               h="18px"
               paddingX="10px"
               alignItems="center"
+              mt="10px"
             >
-              <Text fontSize="12px" fontWeight="700" color="#718096" margin="0">
+              <Text fontSize="12px" fontWeight="700" color="grayTag" margin="0">
                 {ele}
               </Text>
             </Flex>
           ))}
         </Flex>
-      </Box>
+      </Flex>
 
       <VStack
         // w="200px"
@@ -83,39 +112,44 @@ export default function BasicCardDoubts({
         alignItems="flex-start"
         // onClick={onOpen}
       >
-        {question?.userId === user.id && (
-          <Button bg="red" onClick={deleteQuestion}>deletar questão</Button>
+        {is800px && (
+          <Box color="primary">
+            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
+            <DisplayStatus answers={answers} question={question} />
+            <Text fontSize="14px">
+              {question?.question.likes.length} curtidas
+            </Text>
+            <Text fontSize="14px">{comments?.length} comentários</Text>
+          </Box>
         )}
-        <Box
-          fontSize="12px"
-          fontWeight="700"
-          color="white"
-          boxSize="border-box"
-          bg={
-            answers?.some((ele) => ele?.postId === question?.id)
-              ? "#48BB78"
-              : "#E53E3E"
-          }
-          textAlign="center"
-          padding="6px 4px"
-          borderRadius="2px"
-          width="105px"
-        >
-          {answers.some((ele) => ele.postId === question?.id)
-            ? "RESPONDIDO"
-            : "SEM RESPOSTA"}
-        </Box>
-        <Text fontSize="14px">
-          {question?.question?.likes?.length} curtidas
-        </Text>
-        <Text fontSize="14px">{comments?.length} comentários</Text>
-        {question.question?.likes.some((ele) => ele.userId === user.id) ? (
-          <Button onClick={deslike} bg="blue">
-            deslike
+
+        {liked ? (
+          <Button
+            onClick={() => {deslike();setLiked(false)}}
+            Button
+            variant="ButtonFilledBlue"
+            // w="100px"
+            h="32px"
+            paddingX="10px"
+            mt={["15px", "17px", "0"]}
+          >
+            <Flex w="100%" alignItems="flex-end" justifyContent="center">
+              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
+            </Flex>
           </Button>
         ) : (
-          <Button onClick={like} bg="white">
-            Curtir
+          <Button
+            onClick={() => {like();setLiked(true)}}
+            Button
+            variant="ButtonBorderedSmall"
+            // w="100px"
+            h="32px"
+            paddingX="10px"
+            mt={["15px", "17px", "0"]}
+          >
+            <Flex w="100%" alignItems="flex-end" justifyContent="center">
+              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
+            </Flex>
           </Button>
         )}
       </VStack>
