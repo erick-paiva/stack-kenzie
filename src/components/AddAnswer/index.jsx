@@ -1,5 +1,6 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { BiCommentDots, BiCommentEdit } from "react-icons/bi";
 import { useAnswers, useAuth } from "../../providers/hooks";
 
 function AddAnswer({ postId }) {
@@ -32,7 +33,12 @@ function AddAnswer({ postId }) {
         placeholder="Escreva sua resposta"
         size="sm"
       />
-      <Button onClick={handleSubmit}>Adicionar resposta</Button>
+      <Button variant={"ButtonBorderedSmall"}>
+        <HStack alignItems={"flex-end"}>
+          <Text mr="5px">Responder </Text>
+          <BiCommentEdit fontSize="20px" />
+        </HStack>
+      </Button>
     </div>
   );
 }

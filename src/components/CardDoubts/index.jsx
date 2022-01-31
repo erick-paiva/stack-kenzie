@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Image,
   Text,
   useBreakpointValue,
@@ -118,15 +119,17 @@ export default function CardDoubts({ question, callback, disable = false }) {
   };
   const deleteQuestion = () => {
     onClose();
-    api.delete(
-      `/questions/${question.id}`,
+    api
+      .delete(
+        `/questions/${question.id}`,
 
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    ).then(() => callback())
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then(() => callback());
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -228,32 +231,16 @@ export default function CardDoubts({ question, callback, disable = false }) {
         )}
 
         {liked ? (
-          <Button
-            onClick={deslike}
-            Button
-            variant="ButtonFilledBlue"
-            w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
-          >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
-              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+          <Button onClick={deslike} Button variant="ButtonFilledSmall">
+            <HStack alignItems={"flex-end"}>
+              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+            </HStack>
           </Button>
         ) : (
-          <Button
-            onClick={like}
-            Button
-            variant="ButtonBorderedWhite"
-            w="100px"
-            h="32px"
-            paddingX="10px"
-            mt={["15px", "17px", "0"]}
-          >
-            <Flex w="100%" alignItems="flex-end" justifyContent="center">
+          <Button onClick={like} Button variant="ButtonBorderedSmall">
+            <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </Flex>
+            </HStack>
           </Button>
         )}
       </VStack>
