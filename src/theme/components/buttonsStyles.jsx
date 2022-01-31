@@ -38,5 +38,17 @@ export const ButtonStyles = {
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },
+    ButtonFilledSmall: {
+      size: "sm",
+      variant: "solid",
+      bg: "primary",
+      color: "white",
+      width: "150px",
+      _hover: {
+        bg: whiten("primary", 20),
+        transform: "scale(1.02)",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
   },
 };
