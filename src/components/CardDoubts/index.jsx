@@ -16,8 +16,12 @@ import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
 import DisplayStatus from "../DisplayStatus";
-import ModalQuestion from "../ModalQuestion";
 import { BiLike } from "react-icons/bi";
+import ModalChakra from "../ModalChakra";
+import BasicCardDoubts from "../BasicCardDoubts";
+import AddComment from "../AddComment";
+import AddAnswer from "../AddAnswer";
+
 export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
@@ -26,9 +30,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
+
   const [liked, setLiked] = useState(
     question.question.likes.some((ele) => ele.userId === user.id)
   );
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const is800px = useBreakpointValue({ base: false, md: true });
 
   const getData = () => {
@@ -120,7 +128,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         });
     }
   };
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const deleteQuestion = () => {
     onClose();
     api
@@ -250,19 +258,23 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Button>
         )}
       </VStack>
-      <ModalQuestion
-        onClose={onClose}
-        isOpen={isOpen}
-        title="Modal pergunta"
-        question={question}
-        ImgDefault={!!userCreator?.image ? userCreator.image : ImgDefault}
-        deleteQuestion={deleteQuestion}
-        answers={answers}
-        deslike={deslike}
-        comments={comments}
-        like={like}
-        user={user}
-      />
+
+      <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
+        <Flex>
+          <BasicCardDoubts
+            question={question}
+            ImgDefault={!!userCreator?.image ? userCreator.image : ImgDefault}
+            deleteQuestion={deleteQuestion}
+            answers={answers}
+            deslike={deslike}
+            like={like}
+            comments={comments}
+            user={user}
+          />
+        </Flex>
+        <AddComment postId={question.id} />
+        <AddAnswer postId={question.id} />
+      </ModalChakra>
     </Flex>
   );
 }
