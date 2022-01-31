@@ -1,4 +1,5 @@
-import { Box, Flex, Text, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Flex, VStack } from "@chakra-ui/react";
+
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -12,15 +13,12 @@ export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
   const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
-  const questionFilter = questions.filter(
-    (ele) =>
-      ele.question.title
-        .toLowerCase()
-        .includes(nameSearch.toLowerCase()) ||
-      ele.question.body
-        .toLowerCase()
-        .includes(nameSearch.toLowerCase())
-  ) || []
+  const questionFilter =
+    questions.filter(
+      (ele) =>
+        ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
+        ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+    ) || [];
   useEffect(() => {
     setTimeout(() => {
       setUpdate(!update);
