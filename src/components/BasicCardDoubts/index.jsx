@@ -27,7 +27,6 @@ export default function BasicCardDoubts({
   );
   const is800px = useBreakpointValue({ base: false, md: true });
 
-
   return (
     <Flex
       minH="200px"
@@ -64,6 +63,7 @@ export default function BasicCardDoubts({
         </Box>
         {!is800px && (
           <VStack spacing="2" color="primary">
+            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
             <DisplayStatus answers={answers} question={question} />
             <Text fontSize="14px">
               {question?.question.likes.length} curtidas
@@ -114,6 +114,7 @@ export default function BasicCardDoubts({
       >
         {is800px && (
           <Box color="primary">
+            {question.userId === user.id && <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>Deletar</Button>}
             <DisplayStatus answers={answers} question={question} />
             <Text fontSize="14px">
               {question?.question.likes.length} curtidas
@@ -127,7 +128,7 @@ export default function BasicCardDoubts({
             onClick={() => {deslike();setLiked(false)}}
             Button
             variant="ButtonFilledBlue"
-            w="100px"
+            // w="100px"
             h="32px"
             paddingX="10px"
             mt={["15px", "17px", "0"]}
@@ -140,8 +141,8 @@ export default function BasicCardDoubts({
           <Button
             onClick={() => {like();setLiked(true)}}
             Button
-            variant="ButtonBorderedWhite"
-            w="100px"
+            variant="ButtonBorderedSmall"
+            // w="100px"
             h="32px"
             paddingX="10px"
             mt={["15px", "17px", "0"]}

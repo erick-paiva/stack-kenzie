@@ -43,7 +43,7 @@ export default function Dashboard() {
         </ModalChakra>
       </Flex>
 
-      <VStack>
+      <Box h="63vh" overflowY="auto">
         {!!nameSearch
           ? questionFilter?.map((ele) => (
               <CardDoubts
@@ -60,7 +60,7 @@ export default function Dashboard() {
               />
             ))}
             {questionFilter.length === 0 && <Text color="primary" fontWeight="bold" fontSize="24px">Resultado não encontrado</Text>}
-      </VStack>
+      </Box>
     </Box>
   );
 }

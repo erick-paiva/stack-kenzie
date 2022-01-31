@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
 import DisplayStatus from "../DisplayStatus";
 import ModalQuestion from "../ModalQuestion";
 import { BiLike } from "react-icons/bi";
-export default function CardDoubts({ question, callback, disable=false }) {
+export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [time, setTime] = useState(1000000);
@@ -40,7 +40,7 @@ export default function CardDoubts({ question, callback, disable=false }) {
     setTimeout(() => {
       setUptade(!update);
       getData();
-      setTime(1000000);
+      setTime(10000);
     }, time);
   }, [update]);
 
@@ -53,61 +53,68 @@ export default function CardDoubts({ question, callback, disable=false }) {
 
   const like = () => {
     callback();
-    setLiked(true);
-    api
-      .patch(
-        `/questions/${question.id}`,
-        {
-          question: {
-            title: question.question.title,
-            body: question.question.body,
-            likes: [...question.question.likes, { userId: user.id }],
-            tags: question.question.tags,
+    const filter = question.question?.likes.filter(
+      (ele) => ele.userId !== user.id
+    );
+    if (!liked) {
+      setLiked(true);
+      api
+        .patch(
+          `/questions/${question.id}`,
+          {
+            question: {
+              title: question.question.title,
+              body: question.question.body,
+              likes: [...filter, { userId: user.id }],
+              tags: question.question.tags,
+            },
           },
-        },
 
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      .then(() => callback())
-      .catch((err) => {
-        console.log(err);
-        setLiked(false);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then(() => callback())
+        .catch((err) => {
+          console.log(err);
+          setLiked(false);
+        });
+    }
   };
 
   const deslike = () => {
     callback();
-    setLiked(false);
     const filter = question.question.likes.filter(
       (ele) => ele.userId !== user.id
     );
-    api
-      .patch(
-        `/questions/${question.id}`,
-        {
-          question: {
-            title: question.question.title,
-            body: question.question.body,
-            likes: filter,
-            tags: question.question.tags,
+    if (liked) {
+      setLiked(false);
+      api
+        .patch(
+          `/questions/${question.id}`,
+          {
+            question: {
+              title: question.question.title,
+              body: question.question.body,
+              likes: filter,
+              tags: question.question.tags,
+            },
           },
-        },
 
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      .then(() => callback())
-      .catch((err) => {
-        console.log(err);
-        setLiked(true);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then(() => callback())
+        .catch((err) => {
+          console.log(err);
+          setLiked(true);
+        });
+    }
   };
   const deleteQuestion = () => {
     onClose();
@@ -119,7 +126,7 @@ export default function CardDoubts({ question, callback, disable=false }) {
           Authorization: `Bearer ${accessToken}`,
         },
       }
-    );
+    ).then(() => callback())
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -134,6 +141,7 @@ export default function CardDoubts({ question, callback, disable=false }) {
       boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
       padding="15px 20px"
       // onClick={() => history}
+      mt="20px"
       boxSize="border-box"
       cursor="pointer"
       justifyContent="space-between"
@@ -170,7 +178,7 @@ export default function CardDoubts({ question, callback, disable=false }) {
       </Flex>
 
       <Flex
-        paddingX={["0","0","15px"]}
+        paddingX={["0", "0", "15px"]}
         onClick={!disable && onOpen}
         flexDirection="column"
         justifyContent="space-between"
