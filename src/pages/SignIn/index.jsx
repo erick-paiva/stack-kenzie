@@ -6,9 +6,10 @@ export default function SignIn() {
   return (
     <Flex
       alignItems={"center"}
-      justifyContent={"center"}
+      justifyContent={"space-between"}
       mt="50px"
-      flexWrap={"wrap"}
+      mx="auto"
+      w={"800px"}
     >
       <FormSignIn />
       <HeroCall />

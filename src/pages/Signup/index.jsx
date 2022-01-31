@@ -5,12 +5,13 @@ export default function SignUp() {
   return (
     <Flex
       alignItems={"center"}
-      justifyContent={"center"}
+      justifyContent={"space-between"}
       mt="50px"
-      flexWrap={"wrap"}
+      mx="auto"
+      w={"800px"}
     >
-      <FormSignUp />
       <HeroCall />
+      <FormSignUp />
     </Flex>
   );
 }
