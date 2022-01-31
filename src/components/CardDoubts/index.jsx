@@ -253,7 +253,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       <ModalQuestion
         onClose={onClose}
         isOpen={isOpen}
-        title="Modal pergunta"
+        title="Pergunta"
         question={question}
         ImgDefault={!!userCreator?.image ? userCreator.image : ImgDefault}
         deleteQuestion={deleteQuestion}
