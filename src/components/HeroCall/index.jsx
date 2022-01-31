@@ -22,15 +22,15 @@ export default function HeroCall() {
         <Flex alignItems={"center"}>
           <BlueDot />
           <Text w="100%">
-            Comente as postagens dos colegas e ajude a tirar dúvidas
+            Curta as dúvidas mais interessantes <br /> para colocar em evidência
           </Text>{" "}
         </Flex>
         <Box
-          h={"160px"}
+          h={"180px"}
           w={"5px"}
           bg={"primary"}
           position={"absolute"}
-          right="295px"
+          right="294px"
           top={"40px"}
         />
       </VStack>
