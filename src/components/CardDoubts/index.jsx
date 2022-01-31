@@ -52,7 +52,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
     getData();
   }, []);
 
-  const like = () => {
+  const like = (e) => {
+    e.stopPropagation();
     callback();
     const filter = question.question?.likes.filter(
       (ele) => ele.userId !== user.id
@@ -85,7 +86,9 @@ export default function CardDoubts({ question, callback, disable = false }) {
     }
   };
 
-  const deslike = () => {
+  const deslike = (e) => {
+    e.stopPropagation();
+
     callback();
     const filter = question.question.likes.filter(
       (ele) => ele.userId !== user.id
@@ -117,6 +120,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         });
     }
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const deleteQuestion = () => {
     onClose();
     api
@@ -131,8 +135,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
       )
       .then(() => callback());
   };
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
@@ -231,13 +233,17 @@ export default function CardDoubts({ question, callback, disable = false }) {
         )}
 
         {liked ? (
-          <Button onClick={deslike} Button variant="ButtonFilledSmall">
+          <Button
+            onClick={(e) => deslike(e)}
+            Button
+            variant="ButtonFilledSmall"
+          >
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
-          <Button onClick={like} Button variant="ButtonBorderedSmall">
+          <Button onClick={(e) => like(e)} Button variant="ButtonBorderedSmall">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
             </HStack>
