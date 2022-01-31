@@ -1,4 +1,4 @@
-import { Box, Flex, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
@@ -28,17 +28,16 @@ export default function Dashboard() {
 
   return (
     <Box as="section">
-      
       <Header setNameSearch={setNameSearch} />
-      <Flex  justifyContent="space-between" h="90px" alignItems="center" paddingX="30px">
-      <DropDownButton itens={["data","hora"]} />
-        <ModalChakra
-          title="Fazer uma pergunta"
-          ButtonText="Fazer uma pergunta"
-        >
+      <Flex
+        justifyContent="space-between"
+        h="90px"
+        alignItems="center"
+        paddingX="30px"
+      >
+        <DropDownButton itens={["data", "hora"]} />
+        <ModalChakra title="Fazer uma pergunta" ButtonText="Fazer uma pergunta">
           <AddQuestion />
-          
-          
         </ModalChakra>
       </Flex>
 
@@ -58,7 +57,11 @@ export default function Dashboard() {
                 key={ele.id}
               />
             ))}
-            {questionFilter.length === 0 && <Text color="primary" fontWeight="bold" fontSize="24px">Resultado não encontrado</Text>}
+        {questionFilter.length === 0 && (
+          <Text color="primary" fontWeight="bold" fontSize="24px">
+            Resultado não encontrado
+          </Text>
+        )}
       </Box>
     </Box>
   );
