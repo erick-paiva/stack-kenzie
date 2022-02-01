@@ -7,7 +7,6 @@ import {
   Image,
   Text,
   useBreakpointValue,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -138,7 +137,6 @@ export default function BasicCardDoubts({
               deslike();
               setLiked(false);
             }}
-            Button
             variant="ButtonFilledSmall"
           >
             <HStack alignItems={"flex-end"}>
@@ -151,7 +149,6 @@ export default function BasicCardDoubts({
               like();
               setLiked(true);
             }}
-            Button
             variant="ButtonBorderedSmall"
           >
             <HStack alignItems={"flex-end"}>

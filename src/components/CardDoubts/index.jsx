@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useAuth, useQuestions } from "../../providers/hooks";
+import { useAuth } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
@@ -241,17 +241,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
         )}
 
         {liked ? (
-          <Button
-            onClick={(e) => deslike(e)}
-            Button
-            variant="ButtonFilledSmall"
-          >
+          <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
-          <Button onClick={(e) => like(e)} Button variant="ButtonBorderedSmall">
+          <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
             </HStack>
