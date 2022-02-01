@@ -6,13 +6,12 @@ import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
-import ModalChakra from "../../components/ModalChakra";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
   const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
-
+  const [options, setOption] = useState([])
   const questionFilter =
     questions.filter(
       (ele) =>
@@ -20,12 +19,17 @@ export default function Dashboard() {
         ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
     ) || [];
 
-  useEffect(() => {
-    setTimeout(() => {
-      setUpdate(!update);
-      getAllQuestions();
-    }, 5000);
-  }, [update]);
+    // useEffect(() => {console.log("aulterou", options[0])},[options])
+
+
+
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUpdate(!update);
+  //     getAllQuestions();
+  //   }, 5000);
+  // }, [update]);
 
   return (
     <Box as="section">
@@ -43,7 +47,7 @@ export default function Dashboard() {
         >
           <AddQuestion />
 
-          <DropDownButton padding="10px" itens={["Data", "Curtidas"]} />
+          <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
           <Box margin={"20px"}>
             <Heading size={"sm"}>Tags</Heading>
             <Button variant={"TagButton"}>JAVASCRIPT</Button>
@@ -78,7 +82,7 @@ export default function Dashboard() {
                   key={ele.id}
                 />
               ))
-            : questions.map((ele) => (
+            : (options.length > 0 ? options : questions).map((ele) => (
                 <CardDoubts
                   question={ele}
                   callback={getAllQuestions}

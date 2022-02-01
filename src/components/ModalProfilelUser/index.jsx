@@ -32,13 +32,7 @@ import imdDefault from "../../assets/imgDefault.svg";
 const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
   const [module, setModule] = useState(user.module);
-  //   const [newUser, setNewUser] = useState({
-  //       name: user.name,
-  //       email: user.email,
-  //       linkedin: user?.linkedin || "",
-  //       module: user.module,
-  //       image: user?.image || ""
-  //   })
+  const history = useHistory();
   const formSchema = yup.object().shape({
     name: yup.string(),
     email: yup.string().email("Precisa ser um E-mail"),
@@ -46,8 +40,6 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
     // module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     linkedin: yup.string(),
     image: yup.string(),
-
-    //Atenção Inserir o input do slack
   });
 
   const {
@@ -56,7 +48,6 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
     handleSubmit,
   } = useForm({ resolver: yupResolver(formSchema) });
 
-  const history = useHistory();
   const updateProfile = (value) => {
     api
       .patch(`/users/${user.id}`, value, {
@@ -87,6 +78,11 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
       updateProfile({ linkedin: data.linkedin });
     }
   };
+  const logOut = () => {
+    localStorage.removeItem("@StackKenzie:accessToken");
+    localStorage.removeItem("@StackKenzie:user");
+    history.push("/")
+  }
 
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
@@ -123,7 +119,7 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
               )}
             </HStack>
           </Flex>
-          <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)}>
+          <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)} mb="20px">
             <InputChakra
               placeholder="seu nome"
               label="Nome do usuário"
@@ -177,6 +173,9 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
               type="submit"
             >
               ATUALIZAR
+            </Button>
+            <Button variant="ButtonBorderedWhite" w="100%" onClick={logOut}>
+              SAIR DA CONTA
             </Button>
           </VStack>
         </ModalBody>
