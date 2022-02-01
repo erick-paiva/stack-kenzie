@@ -13,12 +13,7 @@ import {
 import { useState } from "react";
 import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
-export default function BasicCardDoubts({
-  question,
-  ImgDefault,
-  comments,
-  user,
-}) {
+export default function CardComment({ question, ImgDefault, comments, user }) {
   console.log(comments);
   return (
     <Flex
