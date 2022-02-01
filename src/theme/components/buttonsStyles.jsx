@@ -7,7 +7,6 @@ export const ButtonStyles = {
       variant: "solid",
       bg: "primary",
       color: "white",
-
       width: "100%",
       margin: "auto",
       _hover: {
@@ -18,7 +17,6 @@ export const ButtonStyles = {
     },
     ButtonBorderedWhite: {
       size: "lg",
-
       width: "100%",
       bg: "transparent",
       color: "primary",
@@ -36,8 +34,8 @@ export const ButtonStyles = {
       color: "primary",
       border: "1px solid",
       borderColor: "primary",
-      maxWidth: "150px",
       width: "100%",
+      height: "30px",
       _hover: {
         transform: "scale(1.02)",
         bg: blacken("white", 5),
@@ -51,6 +49,7 @@ export const ButtonStyles = {
       color: "white",
       maxWidth: "150px",
       width: "100%",
+      height: "30px",
       _hover: {
         bg: blacken("primary", 40),
         transform: "scale(1.02)",

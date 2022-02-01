@@ -1,8 +1,10 @@
 import { Container } from "@chakra-ui/react";
 
-export default function ContainerBase({ children, w }) {
+export default function ContainerBase({ children, w, onClick, onHover }) {
   return (
     <Container
+      onClick={onClick}
+      _hover={onHover}
       maxW={w}
       padding="15px"
       border="1px solid "

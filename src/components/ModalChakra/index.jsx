@@ -12,13 +12,7 @@ function ModalChakra({ children, title, buttonText, isOpen, onClose, onOpen }) {
   return (
     <>
       {buttonText && (
-        <Button
-          variant="ButtonFilledBlue"
-          onClick={onOpen}
-          w={["50%", "50%", "auto"]}
-          fontSize={["12px", "18px", "20px"]}
-          ml={["10px", "15px", "0"]}
-        >
+        <Button variant="ButtonFilledBlue" onClick={onOpen}>
           {buttonText}
         </Button>
       )}

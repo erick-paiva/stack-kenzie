@@ -5,15 +5,14 @@ import {
   Heading,
   HStack,
   Text,
-  useBreakpointValue,
   useDisclosure,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
-import { useHistory } from "react-router-dom";
 import DataDisplay from "../DataDisplay";
 import { BiLike } from "react-icons/bi";
 import ModalChakra from "../ModalChakra";
@@ -23,12 +22,12 @@ import AddAnswer from "../AddAnswer";
 import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
+import ContainerBase from "../ContainerBase/Index";
 
 export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [time, setTime] = useState(1000000);
-  // const history = useHistory();
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
@@ -44,7 +43,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
     onClose: onCloseUsers,
   } = useDisclosure();
 
-  const is800px = useBreakpointValue({ base: false, md: true });
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
     api.get("/answers").then((resp) => setAnswers(resp.data));
@@ -152,38 +151,21 @@ export default function CardDoubts({ question, callback, disable = false }) {
   };
 
   return (
-    <Flex
-      minH="200px"
-      // minW="320px"
-      // maxW="600px"
-      borderRadius="6px"
-      alignItems="center"
-      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
-      padding="15px 20px"
-      // onClick={() => history}
-      mt="20px"
-      boxSize="border-box"
-      cursor="pointer"
-      justifyContent="space-between"
-      width="100%"
-      flexDirection={["column", "column", "row"]}
+    <ContainerBase
+      w="100%"
       onClick={!disable && onOpen}
-      _hover={{
-        bg: "whiten(primary, 20)",
-        transform: "scale(1.02)",
-        transition: "0.1s",
-      }}
+      onHover={{ cursor: "pointer" }}
     >
       <Flex
         as="figure"
-        w={["100%", "100%", "auto"]}
         textAlign="center"
-        flexDirection={["row", "row", "column"]}
+        flexDirection={isMobile ? "column" : "row"}
+        maxWidth={isMobile ? "340px" : "1000px"}
         alignItems="center"
         justifyContent="space-between"
       >
         <Avatar userCreator={userCreator} callback={onOpenUsers} />
-        {!is800px && <DataDisplay answers={answers} question={question} />}
+        {!isMobile && <DataDisplay answers={answers} question={question} />}
       </Flex>
 
       <Flex
@@ -218,14 +200,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
       </Flex>
 
       <VStack
-        // w="200px"
+        w="200px"
         spacing="4"
         display="flex"
         flexDirection="column"
         alignItems="flex-start"
-        // onClick={onOpen}
       >
-        {is800px && (
+        {isMobile && (
           <Box color="primary">
             <DataDisplay
               answers={answers}
@@ -239,13 +220,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
         {liked ? (
           <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
             <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+              <Text>Curtido</Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
           <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
             <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
+              <Text>Curtir</Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         )}
@@ -321,6 +302,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
         onClose={onCloseUsers}
         user={userCreator}
       />
-    </Flex>
+    </ContainerBase>
   );
 }
