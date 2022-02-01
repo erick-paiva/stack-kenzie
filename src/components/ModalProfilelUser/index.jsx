@@ -1,25 +1,17 @@
 import {
-  Box,
   Button,
-  Flex,
-  HStack,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Radio,
   RadioGroup,
   Stack,
-  Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/hooks";
-import Avatar from "../Avatar";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
@@ -27,27 +19,18 @@ import { api } from "../../services/api";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import imdDefault from "../../assets/imgDefault.svg";
+import CardPerfil from "../CardPerfil";
 
 const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
   const [module, setModule] = useState(user.module);
-  //   const [newUser, setNewUser] = useState({
-  //       name: user.name,
-  //       email: user.email,
-  //       linkedin: user?.linkedin || "",
-  //       module: user.module,
-  //       image: user?.image || ""
-  //   })
+
   const formSchema = yup.object().shape({
     name: yup.string(),
     email: yup.string().email("Precisa ser um E-mail"),
     slack: yup.string(),
-    // module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     linkedin: yup.string(),
     image: yup.string(),
-
-    //Atenção Inserir o input do slack
   });
 
   const {
@@ -95,34 +78,7 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
         <ModalHeader>Perfil</ModalHeader>
         <ModalCloseButton />
         <ModalBody paddingX="30px">
-          <Flex
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            {/* <Avatar userCreator={user} /> */}
-            <Image
-              src={user.image ? user.image : imdDefault}
-              h="100px"
-              borderRadius="full"
-            />
-            <Text>{user?.linkedin}</Text>
-            <Text>{user.name}</Text>
-            <Text>{user.email}</Text>
-            <HStack spacing="6" margin="20px 20px">
-              <Button variant="ButtonBorderedWhite" w="80px">
-                {user.coach ? "COACH" : "ALUNO"}
-              </Button>
-              <Button variant="ButtonBorderedWhite" w="80px">
-                {user.module}
-              </Button>
-              {user?.linkedin && (
-                <Button variant="ButtonBorderedWhite" w="80px">
-                  LINKEDIN
-                </Button>
-              )}
-            </HStack>
-          </Flex>
+          <CardPerfil user={user} />
           <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)}>
             <InputChakra
               placeholder="seu nome"

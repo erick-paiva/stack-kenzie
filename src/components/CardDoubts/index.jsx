@@ -1,20 +1,19 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
-  useBreakpointValue,
   useDisclosure,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
-import { useHistory } from "react-router-dom";
 import DataDisplay from "../DataDisplay";
 import { BiLike } from "react-icons/bi";
 import ModalChakra from "../ModalChakra";
@@ -24,12 +23,12 @@ import AddAnswer from "../AddAnswer";
 import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
+import ContainerBase from "../ContainerBase/Index";
 
 export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [time, setTime] = useState(1000000);
-  const history = useHistory();
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
@@ -39,11 +38,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isOpenUsers, onOpen:onOpenUsers, onClose:onCloseUsers } = useDisclosure();
+  const {
+    isOpen: isOpenUsers,
+    onOpen: onOpenUsers,
+    onClose: onCloseUsers,
+  } = useDisclosure();
 
-  
-
-  const is800px = useBreakpointValue({ base: false, md: true });
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
     api.get("/answers").then((resp) => setAnswers(resp.data));
@@ -151,102 +152,99 @@ export default function CardDoubts({ question, callback, disable = false }) {
   };
 
   return (
-    <Flex
-      minH="200px"
-      // minW="320px"
-      // maxW="600px"
-      borderRadius="6px"
-      alignItems="center"
-      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
-      padding="15px 20px"
-      // onClick={() => history}
-      mt="20px"
-      boxSize="border-box"
-      cursor="pointer"
-      justifyContent="space-between"
-      width="100%"
-      flexDirection={["column", "column", "row"]}
+    <ContainerBase
+      w="100%"
       onClick={!disable && onOpen}
-      _hover= {{
-        bg: "whiten(primary, 20)",
-        transform: "scale(1.02)",
-        transition: "0.1s"
-      }}
+      onHover={{ cursor: "pointer" }}
     >
-      <Flex
-        as="figure"
-        w={["100%", "100%", "auto"]}
-        textAlign="center"
-        flexDirection={["row", "row", "column"]}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-         <Avatar userCreator={userCreator} callback={onOpenUsers}  />
-        {!is800px && (
+      {isMobile ? (
+        <Box>
+          <Flex justifyContent={"space-between"} mb="20px">
+            <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
             <DataDisplay answers={answers} question={question} />
-            
-        )}
-      </Flex>
-
-      <Flex
-        paddingX={["0", "0", "15px"]}
-        flexDirection="column"
-        justifyContent="space-between"
-        h="100%"
-        w="100%"
-      >
-        <Heading>{question?.question.title}</Heading>
-        <Text fontSize="16px" fontWeight="400" lineHeight="24px">
-          {question?.question.body}
-        </Text>
-        <Flex marginTop="15px" flexWrap="wrap">
-          {question?.tags?.map((ele) => (
-            <Flex
-              key={ele}
-              border="1px solid"
-              borderColor="grayTag"
-              mr="10px"
-              h="18px"
-              paddingX="10px"
-              alignItems="center"
-              mt="10px"
-            >
-              <Text fontSize="12px" fontWeight="700" color="grayTag" margin="0">
-                {ele}
-              </Text>
+          </Flex>
+          <Box>
+            <Heading>{question?.question.title}</Heading>
+            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+              {question?.question.body}
+            </Text>
+            <Flex my="20px" flexWrap="wrap">
+              {question?.tags?.map((tag) => (
+                <Button variant={"TagButton"} mx="5px" mb="5px">
+                  {tag}
+                </Button>
+              ))}
             </Flex>
-          ))}
-        </Flex>
-      </Flex>
-
-      <VStack
-        // w="200px"
-        spacing="4"
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-        // onClick={onOpen}
-      >
-        {is800px && (
-          <Box color="primary">
-            <DataDisplay answers={answers} question={question} likes={question?.question.likes.length} comments={comments?.length} />
+            <Flex m="auto" w="fit-content">
+              {liked ? (
+                <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                  <HStack alignItems={"flex-end"}>
+                    <Text>Curtido</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              ) : (
+                <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                  <HStack alignItems={"flex-end"}>
+                    <Text>Curtir</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              )}
+            </Flex>
           </Box>
-        )}
+        </Box>
+      ) : (
+        <Flex w="100%">
+          <Avatar userCreator={userCreator} callback={onOpenUsers} />
+          <Box ml="20px" w="full">
+            <Heading>{question?.question.title}</Heading>
 
-        {liked ? (
-          <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
-            <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
-            </HStack>
-          </Button>
-        ) : (
-          <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
-            <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
-            </HStack>
-          </Button>
-        )}
-      </VStack>
+            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+              {question?.question.body}
+            </Text>
+
+            <Flex marginTop="15px" flexWrap="wrap">
+              {question?.tags?.map((tags) => (
+                <Flex
+                  key={tags}
+                  border="1px solid"
+                  borderColor="grayTag"
+                  mr="10px"
+                  h="18px"
+                  paddingX="10px"
+                  alignItems="center"
+                  mt="10px"
+                >
+                  <Text
+                    fontSize="12px"
+                    fontWeight="700"
+                    color="grayTag"
+                    margin="0"
+                  >
+                    {tags}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Box>
+
+          <Box mt="10px">
+            <DataDisplay answers={answers} question={question} />
+            {liked ? (
+              <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                <HStack alignItems={"flex-end"}>
+                  <Text>Curtido</Text> <BiLike fontSize="20px" />
+                </HStack>
+              </Button>
+            ) : (
+              <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                <HStack alignItems={"flex-end"}>
+                  <Text>Curtir</Text> <BiLike fontSize="20px" />
+                </HStack>
+              </Button>
+            )}
+          </Box>
+        </Flex>
+      )}
 
       <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
         <Flex flexDirection={"column"}>
@@ -313,7 +311,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <AddComment postId={question.id} />
         <AddAnswer postId={question.id} />
       </ModalChakra>
-      <ModalProfileUsers isOpen={isOpenUsers} onClose={onCloseUsers} user={userCreator} />
-    </Flex>
+
+      <ModalProfileUsers
+        isOpen={isOpenUsers}
+        onClose={onCloseUsers}
+        user={userCreator}
+      />
+    </ContainerBase>
   );
 }

@@ -4,7 +4,7 @@ import BlueDot from "../BlueDot";
 
 export default function HeroCall() {
   return (
-    <Box w={"310px"}>
+    <Box w={"310px"} minW={"310px"} m="auto">
       <Heading color={"primary"}>ENCONTRE A RESPOSTA DAS SUAS DÚVIDAS</Heading>
       <VStack pos="relative" spacing={"40px"}>
         <Flex alignItems={"center"} mt={"50px"}>

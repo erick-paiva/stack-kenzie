@@ -1,18 +1,22 @@
 import { Flex } from "@chakra-ui/react";
 import FormSignIn from "../../components/FormSignIn";
 import HeroCall from "../../components/HeroCall";
+import { useMediaQuery } from "@chakra-ui/media-query";
 
 export default function SignIn() {
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
   return (
-    <Flex
-      alignItems={"center"}
-      justifyContent={"space-between"}
-      mt="50px"
-      mx="auto"
-      w={"800px"}
-    >
-      <FormSignIn />
-      <HeroCall />
-    </Flex>
+    <>
+      {isMobile ? (
+        <Flex m="10px">
+          <FormSignIn />
+        </Flex>
+      ) : (
+        <Flex alignItems={"center"} mt="50px" w="900px" mx="auto">
+          <FormSignIn />
+          <HeroCall />
+        </Flex>
+      )}
+    </>
   );
 }

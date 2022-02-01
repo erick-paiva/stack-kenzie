@@ -1,20 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  useBreakpointValue,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
-import { useState } from "react";
-import DisplayStatus from "../DisplayStatus";
-import { BiLike } from "react-icons/bi";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
+
 export default function CardComment({ question, ImgDefault, comments, user }) {
-  console.log(comments);
   return (
     <Flex
       minH="150px"
