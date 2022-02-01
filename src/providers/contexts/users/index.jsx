@@ -7,8 +7,8 @@ const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
 
-  useEffect(async () => {
-    await api
+  useEffect(() => {
+    api
       .post("/users")
       .then((response) => {
         setUsers(response.data);
