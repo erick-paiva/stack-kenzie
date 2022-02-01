@@ -2,6 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import CardAnswer from "../../components/CardAnswer";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
+import DesplayTags from "../../components/DisplayTags";
 import { useQuestions, useComments, useAnswers } from "../../providers/hooks";
 
 const Dashboard = () => {
@@ -20,7 +21,7 @@ const Dashboard = () => {
         {answers && answers.map((answer) => <CardAnswer answer={answer} />)}
       </GridItem>
       <GridItem rowSpan={2} colSpan={4} h="100px" bg="tomato">
-        sdsa
+        <DesplayTags />
       </GridItem>
     </Grid>
   );
