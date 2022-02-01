@@ -41,13 +41,9 @@ export default function Dashboard() {
           justifyContent="space-between"
           padding="40px"
         >
-          <ModalChakra
-            title="Fazer uma pergunta"
-            ButtonText="Fazer uma pergunta"
-          >
-            <AddQuestion />
-          </ModalChakra>
-          <DropDownButton padding="10px" itens={["data", "hora"]} />
+          <AddQuestion />
+
+          <DropDownButton padding="10px" itens={["Data", "Curtidas"]} />
           <Box margin={"20px"}>
             <Heading size={"sm"}>Tags</Heading>
           </Box>
