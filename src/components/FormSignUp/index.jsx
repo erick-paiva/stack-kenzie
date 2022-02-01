@@ -212,7 +212,7 @@ export default function FormSignUp() {
         </Button>
 
         <Text ml="1" mt="2" mb="2" color="gray.600">
-          Não tem conta? Cadastre
+          Não possui uma conta?
         </Text>
         <Button
           fontSize="16px"
