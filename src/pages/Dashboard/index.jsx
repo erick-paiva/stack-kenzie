@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -6,6 +6,7 @@ import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
+import ModalChakra from "../../components/ModalChakra";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
