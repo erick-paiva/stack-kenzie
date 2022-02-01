@@ -61,7 +61,6 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
     api.patch(`/users/${user.id}`,value, {headers: {Authorization: `Bearer ${accessToken}`}}).then(() => api.get(`/users/${user.id}`).then((resp) => setUser(resp.data)))
   }
 
-  console.log(user)
 
   const editProfile = (data) => {
 

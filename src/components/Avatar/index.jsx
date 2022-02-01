@@ -3,7 +3,6 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import ImgDefault from "../../assets/imgDefault.svg";
 
 export default function Avatar({ userCreator }) {
-  console.log(userCreator)
   return (
     <>
       <Box as="figure" textAlign="center">
