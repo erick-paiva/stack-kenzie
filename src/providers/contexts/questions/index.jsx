@@ -23,14 +23,15 @@ const QuestionProvider = ({ children }) => {
 
   //Criar uma questão
   const createQuestion = async (data) => {
-    api.post("/questions", data, tokenBearer).then(() =>
+    api.post("/questions", data, tokenBearer).then(() => {
       toast({
         title: "Resposta adicionada!",
         status: "success",
         duration: 9000,
         isClosable: true,
-      })
-    );
+      });
+      getAllQuestions();
+    });
   };
 
   //Pegar todos as questões

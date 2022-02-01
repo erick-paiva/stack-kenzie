@@ -1,4 +1,4 @@
-import { whiten } from "@chakra-ui/theme-tools";
+import { whiten, blacken } from "@chakra-ui/theme-tools";
 
 export const ButtonStyles = {
   variants: {
@@ -9,7 +9,7 @@ export const ButtonStyles = {
       color: "white",
       w: "315px",
       _hover: {
-        bg: whiten("primary", 20),
+        bg: blacken("primary", 40),
         transform: "scale(1.02)",
       },
       fontFamily: "Roboto, Inter, sans-serif",
@@ -23,6 +23,7 @@ export const ButtonStyles = {
       borderColor: "primary",
       _hover: {
         transform: "scale(1.02)",
+        bg: blacken("white", 5),
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },
@@ -34,6 +35,19 @@ export const ButtonStyles = {
       borderColor: "primary",
       width: "150px",
       _hover: {
+        transform: "scale(1.02)",
+        bg: blacken("white", 5),
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
+    ButtonFilledSmall: {
+      size: "sm",
+      variant: "solid",
+      bg: "primary",
+      color: "white",
+      width: "150px",
+      _hover: {
+        bg: blacken("primary", 40),
         transform: "scale(1.02)",
       },
       fontFamily: "Roboto, Inter, sans-serif",
