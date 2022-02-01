@@ -52,5 +52,22 @@ export const ButtonStyles = {
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },
+    TagButton: {
+      size: "sm",
+      bg: "transparent",
+      color: "gray.300",
+      border: "1px solid",
+      borderColor: "gray.300",
+      width: "fit-content",
+      height: "fit-content",
+      padding: "4px",
+      _hover: {
+        transform: "scale(1.02)",
+        bg: blacken("white", 5),
+        color: "primary",
+        borderColor: "primary",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
   },
 };

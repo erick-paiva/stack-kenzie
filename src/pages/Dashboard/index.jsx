@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -41,21 +41,19 @@ export default function Dashboard() {
           justifyContent="space-between"
           padding="40px"
         >
-          <ModalChakra
-            title="Fazer uma pergunta"
-            ButtonText="Fazer uma pergunta"
-          >
-            <AddQuestion />
-          </ModalChakra>
-          <DropDownButton padding="10px" itens={["data", "hora"]} />
+          <AddQuestion />
+
+          <DropDownButton padding="10px" itens={["Data", "Curtidas"]} />
           <Box margin={"20px"}>
             <Heading size={"sm"}>Tags</Heading>
+            <Button variant={"TagButton"}>JAVASCRIPT</Button>
           </Box>
         </Flex>
 
         <Box
           h="63vh"
           overflowY="auto"
+          overflowX="hidden"
           m={"10px"}
           sx={{
             "&::-webkit-scrollbar": {
