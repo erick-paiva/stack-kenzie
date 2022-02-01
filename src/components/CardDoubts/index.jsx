@@ -143,7 +143,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       // maxW="600px"
       borderRadius="6px"
       alignItems="center"
-      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
+      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
       padding="15px 20px"
       // onClick={() => history}
       mt="20px"
