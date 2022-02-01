@@ -25,11 +25,12 @@ const QuestionProvider = ({ children }) => {
   const createQuestion = async (data) => {
     api.post("/questions", data, tokenBearer).then(() => {
       toast({
-        title: "Resposta adicionada!",
-        status: "success",
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
         duration: 9000,
         isClosable: true,
-      });
+      })
       getAllQuestions();
     });
   };

@@ -53,6 +53,7 @@ export default function Dashboard() {
         <Box
           h="63vh"
           overflowY="auto"
+          overflowX="hidden"
           m={"10px"}
           sx={{
             "&::-webkit-scrollbar": {
