@@ -53,7 +53,7 @@ export default function Dashboard() {
   }, [update]);
 
   return (
-    <Box as="section">
+    <Box>
       <Header setNameSearch={setNameSearch} />
 
       <Flex
@@ -62,7 +62,14 @@ export default function Dashboard() {
         flexDir={isMobile && "column-reverse"}
         alignItems={isMobile && "center"}
       >
-        <Box w="100%" h="75vh" overflowY="auto" overflowX="hidden" sx={scroll}>
+        <Box
+          maxWidth={isMobile && "340px"}
+          h="75vh"
+          w="100%"
+          overflowY="auto"
+          overflowX="hidden"
+          sx={scroll}
+        >
           {!!nameSearch
             ? questionFilter?.map((ele) => (
                 <CardDoubts
@@ -102,12 +109,16 @@ export default function Dashboard() {
           <AddQuestion />
 
           <Box margin={"20px"} w="320px">
-            <DropDownButton />
-
             {isMobile ? (
-              <Button variant={"ButtonBorderedSmall"}>Tags</Button>
+              <Flex>
+                <DropDownButton />
+                <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                  Tags
+                </Button>
+              </Flex>
             ) : (
               <>
+                <DropDownButton />
                 <Heading size={"sm"}>Tags</Heading>
                 <Button variant={"TagButton"}>JAVASCRIPT</Button>
               </>

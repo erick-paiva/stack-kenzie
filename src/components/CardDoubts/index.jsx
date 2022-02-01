@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Heading,
   HStack,
@@ -156,81 +157,94 @@ export default function CardDoubts({ question, callback, disable = false }) {
       onClick={!disable && onOpen}
       onHover={{ cursor: "pointer" }}
     >
-      <Flex
-        as="figure"
-        textAlign="center"
-        flexDirection={isMobile ? "column" : "row"}
-        maxWidth={isMobile ? "340px" : "1000px"}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Avatar userCreator={userCreator} callback={onOpenUsers} />
-        {!isMobile && <DataDisplay answers={answers} question={question} />}
-      </Flex>
-
-      <Flex
-        paddingX={["0", "0", "15px"]}
-        flexDirection="column"
-        justifyContent="space-between"
-        h="100%"
-        w="100%"
-      >
-        <Heading>{question?.question.title}</Heading>
-        <Text fontSize="16px" fontWeight="400" lineHeight="24px">
-          {question?.question.body}
-        </Text>
-        <Flex marginTop="15px" flexWrap="wrap">
-          {question?.tags?.map((ele) => (
-            <Flex
-              key={ele}
-              border="1px solid"
-              borderColor="grayTag"
-              mr="10px"
-              h="18px"
-              paddingX="10px"
-              alignItems="center"
-              mt="10px"
-            >
-              <Text fontSize="12px" fontWeight="700" color="grayTag" margin="0">
-                {ele}
-              </Text>
+      {isMobile ? (
+        <Box>
+          <Flex justifyContent={"space-between"} mb="20px">
+            <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
+            <DataDisplay answers={answers} question={question} />
+          </Flex>
+          <Box>
+            <Heading>{question?.question.title}</Heading>
+            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+              {question?.question.body}
+            </Text>
+            <Flex my="20px" flexWrap="wrap">
+              {question?.tags?.map((tag) => (
+                <Button variant={"TagButton"} mx="5px" mb="5px">
+                  {tag}
+                </Button>
+              ))}
             </Flex>
-          ))}
-        </Flex>
-      </Flex>
-
-      <VStack
-        w="200px"
-        spacing="4"
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-      >
-        {isMobile && (
-          <Box color="primary">
-            <DataDisplay
-              answers={answers}
-              question={question}
-              likes={question?.question.likes.length}
-              comments={comments?.length}
-            />
+            <Flex m="auto" w="fit-content">
+              {liked ? (
+                <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                  <HStack alignItems={"flex-end"}>
+                    <Text>Curtido</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              ) : (
+                <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                  <HStack alignItems={"flex-end"}>
+                    <Text>Curtir</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              )}
+            </Flex>
           </Box>
-        )}
+        </Box>
+      ) : (
+        <Flex w="100%">
+          <Avatar userCreator={userCreator} callback={onOpenUsers} />
+          <Box ml="20px" w="full">
+            <Heading>{question?.question.title}</Heading>
 
-        {liked ? (
-          <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
-            <HStack alignItems={"flex-end"}>
-              <Text>Curtido</Text> <BiLike fontSize="20px" />
-            </HStack>
-          </Button>
-        ) : (
-          <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
-            <HStack alignItems={"flex-end"}>
-              <Text>Curtir</Text> <BiLike fontSize="20px" />
-            </HStack>
-          </Button>
-        )}
-      </VStack>
+            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+              {question?.question.body}
+            </Text>
+
+            <Flex marginTop="15px" flexWrap="wrap">
+              {question?.tags?.map((tags) => (
+                <Flex
+                  key={tags}
+                  border="1px solid"
+                  borderColor="grayTag"
+                  mr="10px"
+                  h="18px"
+                  paddingX="10px"
+                  alignItems="center"
+                  mt="10px"
+                >
+                  <Text
+                    fontSize="12px"
+                    fontWeight="700"
+                    color="grayTag"
+                    margin="0"
+                  >
+                    {tags}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Box>
+
+          <Box mt="10px">
+            <DataDisplay answers={answers} question={question} />
+            {liked ? (
+              <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                <HStack alignItems={"flex-end"}>
+                  <Text>Curtido</Text> <BiLike fontSize="20px" />
+                </HStack>
+              </Button>
+            ) : (
+              <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                <HStack alignItems={"flex-end"}>
+                  <Text>Curtir</Text> <BiLike fontSize="20px" />
+                </HStack>
+              </Button>
+            )}
+          </Box>
+        </Flex>
+      )}
 
       <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
         <Flex flexDirection={"column"}>
@@ -297,6 +311,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <AddComment postId={question.id} />
         <AddAnswer postId={question.id} />
       </ModalChakra>
+
       <ModalProfileUsers
         isOpen={isOpenUsers}
         onClose={onCloseUsers}

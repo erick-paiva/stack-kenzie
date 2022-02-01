@@ -57,6 +57,7 @@ export const ButtonStyles = {
       fontFamily: "Roboto, Inter, sans-serif",
     },
     TagButton: {
+      fontSize: "12px",
       size: "sm",
       bg: "transparent",
       color: "gray.300",
