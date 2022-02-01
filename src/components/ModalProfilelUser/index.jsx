@@ -1,5 +1,5 @@
 import {
-    Box,
+  Box,
   Button,
   Flex,
   HStack,
@@ -27,11 +27,11 @@ import { api } from "../../services/api";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import imdDefault from "../../assets/imgDefault.svg"
+import imdDefault from "../../assets/imgDefault.svg";
 
 const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
-  const [module, setModule] = useState("");
+  const [module, setModule] = useState(user.module);
   //   const [newUser, setNewUser] = useState({
   //       name: user.name,
   //       email: user.email,
@@ -58,59 +58,72 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
 
   const history = useHistory();
   const updateProfile = (value) => {
-    api.patch(`/users/${user.id}`,value, {headers: {Authorization: `Bearer ${accessToken}`}}).then(() => api.get(`/users/${user.id}`).then((resp) => setUser(resp.data)))
-  }
-
+    api
+      .patch(`/users/${user.id}`, value, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(() =>
+        api.get(`/users/${user.id}`).then((resp) => setUser(resp.data))
+      );
+  };
 
   const editProfile = (data) => {
-
     if (data.email) {
-        updateProfile({email:data.email})
+      updateProfile({ email: data.email });
     }
     if (data.name) {
-        updateProfile({name:data.name})
+      updateProfile({ name: data.name });
     }
     if (data.slack) {
-        updateProfile({slack:data.slack})
+      updateProfile({ slack: data.slack });
     }
     if (module) {
-        updateProfile({module:module})
+      updateProfile({ module: module });
     }
     if (data.image) {
-        updateProfile({image:data.image})
+      updateProfile({ image: data.image });
     }
-    if(data.linkedin){
-        updateProfile({linkedin:data.linkedin})
+    if (data.linkedin) {
+      updateProfile({ linkedin: data.linkedin });
     }
-  
   };
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered>
+    <Modal onClose={onClose} isOpen={isOpen}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Perfil</ModalHeader>
         <ModalCloseButton />
         <ModalBody paddingX="30px">
-          <Flex flexDirection="column" justifyContent="center" alignItems="center">
-          {/* <Avatar userCreator={user} /> */}
-            <Image src={user.image ? user.image : imdDefault} h="100px"/>
+          <Flex
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {/* <Avatar userCreator={user} /> */}
+            <Image
+              src={user.image ? user.image : imdDefault}
+              h="100px"
+              borderRadius="full"
+            />
             <Text>{user?.linkedin}</Text>
             <Text>{user.name}</Text>
             <Text>{user.email}</Text>
             <HStack spacing="6" margin="20px 20px">
-
-            <Button variant="ButtonBorderedWhite" w="80px">
+              <Button variant="ButtonBorderedWhite" w="80px">
                 {user.coach ? "COACH" : "ALUNO"}
-            </Button>
-            <Button variant="ButtonBorderedWhite" w="80px">
+              </Button>
+              <Button variant="ButtonBorderedWhite" w="80px">
                 {user.module}
-            </Button>
-            {user?.linkedin && <Button variant="ButtonBorderedWhite" w="80px" >LINKEDIN</Button> }
-
+              </Button>
+              {user?.linkedin && (
+                <Button variant="ButtonBorderedWhite" w="80px">
+                  LINKEDIN
+                </Button>
+              )}
             </HStack>
           </Flex>
-          <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)} mb="18px">
+          <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)}>
             <InputChakra
               placeholder="seu nome"
               label="Nome do usuário"

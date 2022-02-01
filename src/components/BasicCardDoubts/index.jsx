@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import DisplayStatus from "../DisplayStatus";
+import DataDisplay from "../DataDisplay";
 import { BiLike } from "react-icons/bi";
 import Avatar from "../Avatar";
 export default function BasicCardDoubts({
@@ -21,6 +21,7 @@ export default function BasicCardDoubts({
   answers,
   deslike,
   like,
+  likes,
   comments,
   user,
 }) {
@@ -53,16 +54,6 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        {/* <Box>
-          <Image
-            src={!!user?.image ? user.image : ImgDefault}
-            h="80px"
-            w="auto"
-          />
-          <Text as="figcaption" fontSize="14px">
-            {user?.name}
-          </Text>
-        </Box> */}
         <Avatar userCreator={user}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
@@ -71,11 +62,7 @@ export default function BasicCardDoubts({
                 Deletar
               </Button>
             )}
-            <DisplayStatus answers={answers} question={question} />
-            <Text fontSize="14px">
-              {question?.question.likes.length} curtidas
-            </Text>
-            <Text fontSize="14px">{comments?.length} comentários</Text>
+            <DataDisplay answers={answers} question={question} likes={likes} comments={comments} />
           </VStack>
         )}
       </Flex>
@@ -112,12 +99,10 @@ export default function BasicCardDoubts({
       </Flex>
 
       <VStack
-        // w="200px"
         spacing="4"
         display="flex"
         flexDirection="column"
         alignItems="flex-start"
-        // onClick={onOpen}
       >
         {is800px && (
           <Box color="primary">
@@ -126,18 +111,14 @@ export default function BasicCardDoubts({
                 Deletar
               </Button>
             )}
-            <DisplayStatus answers={answers} question={question} />
-            <Text fontSize="14px">
-              {question?.question.likes.length} curtidas
-            </Text>
-            <Text fontSize="14px">{comments?.length} comentários</Text>
+            <DataDisplay answers={answers} question={question} likes={likes} comments={comments.length}/>
           </Box>
         )}
 
         {liked ? (
           <Button
-            onClick={() => {
-              deslike();
+            onClick={(e) => {
+              deslike(e);
               setLiked(false);
             }}
             Button
@@ -149,8 +130,8 @@ export default function BasicCardDoubts({
           </Button>
         ) : (
           <Button
-            onClick={() => {
-              like();
+            onClick={(e) => {
+              like(e);
               setLiked(true);
             }}
             Button
