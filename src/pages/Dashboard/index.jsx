@@ -3,23 +3,22 @@ import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
-import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
-
-import Avatar from "../../components/Avatar";
 
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
   const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
+
   const questionFilter =
     questions.filter(
       (ele) =>
         ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
         ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
     ) || [];
+
   useEffect(() => {
     setTimeout(() => {
       setUpdate(!update);
