@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -50,6 +50,7 @@ export default function Dashboard() {
           <DropDownButton padding="10px" itens={["data", "hora"]} />
           <Box margin={"20px"}>
             <Heading size={"sm"}>Tags</Heading>
+            <Button variant={"TagButton"}>JAVASCRIPT</Button>
           </Box>
         </Flex>
 
