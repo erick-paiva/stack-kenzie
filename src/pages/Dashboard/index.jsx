@@ -21,11 +21,11 @@ export default function Dashboard() {
         ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
     ) || [];
   useEffect(() => {
-    setTimeout(() => {
-      setUpdate(!update);
-      getAllQuestions();
-    }, 5000);
-  }, [update]);
+    //setTimeout(() => {
+    setUpdate(!update);
+    getAllQuestions();
+    //}, 5000);
+  }, []);
 
   return (
     <Box as="section">
@@ -63,11 +63,13 @@ export default function Dashboard() {
       >
         {!!nameSearch
           ? questionFilter?.map((ele) => (
-              <CardDoubts
-                question={ele}
-                callback={getAllQuestions}
-                key={ele.id}
-              />
+              <>
+                <CardDoubts
+                  question={ele}
+                  callback={getAllQuestions}
+                  key={ele.id}
+                />
+              </>
             ))
           : questions.map((ele) => (
               <CardDoubts

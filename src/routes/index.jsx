@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/Signup";
 import Error404 from "../pages/Error404";
+import TestCards from "../pages/TestCards";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -31,6 +32,8 @@ const AllRoutes = () => {
 
       {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />
+
+      <Route path="/testcards" component={TestCards} />
 
       {/* ROTAS NÃO ENCONTRADAS */}
       <Route path="/*" component={Error404} />
