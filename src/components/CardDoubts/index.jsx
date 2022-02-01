@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useAuth, useQuestions } from "../../providers/hooks";
+import { useAuth } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
@@ -156,7 +156,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       // maxW="600px"
       borderRadius="6px"
       alignItems="center"
-      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
+      boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
       padding="15px 20px"
       // onClick={() => history}
       mt="20px"
@@ -233,17 +233,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
         )}
 
         {liked ? (
-          <Button
-            onClick={(e) => deslike(e)}
-            Button
-            variant="ButtonFilledSmall"
-          >
+          <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
-          <Button onClick={(e) => like(e)} Button variant="ButtonBorderedSmall">
+          <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
             </HStack>
