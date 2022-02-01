@@ -165,6 +165,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       _hover= {{
         bg: "whiten(primary, 20)",
         transform: "scale(1.02)",
+        transition: "0.1s"
       }}
     >
       <Flex

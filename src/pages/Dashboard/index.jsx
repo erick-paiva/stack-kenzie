@@ -42,7 +42,8 @@ export default function Dashboard() {
       <Box
         h="63vh"
         overflowY="auto"
-        m={"10px"}
+        overflowX="hidden"
+        // m={"10px"}
         sx={{
           "&::-webkit-scrollbar": {
             width: "25px",
@@ -57,6 +58,7 @@ export default function Dashboard() {
             borderRadius: "50px",
           },
         }}
+        paddingX="20px"
       >
         {!!nameSearch
           ? questionFilter?.map((ele) => (

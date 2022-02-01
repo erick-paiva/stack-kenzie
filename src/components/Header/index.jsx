@@ -3,8 +3,7 @@ import {
   Flex,
   Image,
   useBreakpointValue,
-  useDisclosure,
-  useMediaQuery,
+  useDisclosure
 } from "@chakra-ui/react";
 import Logo from "../../assets/logoKenzieStack.svg";
 import imgDefault from "../../assets/imgDefault.svg";
@@ -58,7 +57,7 @@ export function Header({ setNameSearch }) {
             </Box>
             <Box onClick={onOpen} cursor="pointer">
               {/* <Avatar userCreator={user} /> */}
-              <Image src={user?.image ? user.image : imgDefault} h="60px"/>
+              <Image src={user?.image ? user.image : imgDefault} h="60px" borderRadius="full"/>
               <ModalProfileUser
                 onOpen={onOpen}
                 isOpen={isOpen}
