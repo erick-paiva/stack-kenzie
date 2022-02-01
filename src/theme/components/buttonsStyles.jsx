@@ -1,4 +1,4 @@
-import { whiten, blacken } from "@chakra-ui/theme-tools";
+import { blacken } from "@chakra-ui/theme-tools";
 
 export const ButtonStyles = {
   variants: {
@@ -7,7 +7,9 @@ export const ButtonStyles = {
       variant: "solid",
       bg: "primary",
       color: "white",
-      w: "315px",
+
+      width: "100%",
+      margin: "auto",
       _hover: {
         bg: blacken("primary", 40),
         transform: "scale(1.02)",
@@ -16,7 +18,8 @@ export const ButtonStyles = {
     },
     ButtonBorderedWhite: {
       size: "lg",
-      w: "315px",
+
+      width: "100%",
       bg: "transparent",
       color: "primary",
       border: "1px solid",
@@ -33,7 +36,8 @@ export const ButtonStyles = {
       color: "primary",
       border: "1px solid",
       borderColor: "primary",
-      width: "150px",
+      maxWidth: "150px",
+      width: "100%",
       _hover: {
         transform: "scale(1.02)",
         bg: blacken("white", 5),
@@ -45,7 +49,8 @@ export const ButtonStyles = {
       variant: "solid",
       bg: "primary",
       color: "white",
-      width: "150px",
+      maxWidth: "150px",
+      width: "100%",
       _hover: {
         bg: blacken("primary", 40),
         transform: "scale(1.02)",

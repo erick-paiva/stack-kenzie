@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
   useBreakpointValue,
   useDisclosure,
@@ -29,7 +28,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [time, setTime] = useState(1000000);
-  const history = useHistory();
+  // const history = useHistory();
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
@@ -39,9 +38,11 @@ export default function CardDoubts({ question, callback, disable = false }) {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isOpenUsers, onOpen:onOpenUsers, onClose:onCloseUsers } = useDisclosure();
-
-  
+  const {
+    isOpen: isOpenUsers,
+    onOpen: onOpenUsers,
+    onClose: onCloseUsers,
+  } = useDisclosure();
 
   const is800px = useBreakpointValue({ base: false, md: true });
 
@@ -167,10 +168,10 @@ export default function CardDoubts({ question, callback, disable = false }) {
       width="100%"
       flexDirection={["column", "column", "row"]}
       onClick={!disable && onOpen}
-      _hover= {{
+      _hover={{
         bg: "whiten(primary, 20)",
         transform: "scale(1.02)",
-        transition: "0.1s"
+        transition: "0.1s",
       }}
     >
       <Flex
@@ -181,11 +182,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
         alignItems="center"
         justifyContent="space-between"
       >
-         <Avatar userCreator={userCreator} callback={onOpenUsers}  />
-        {!is800px && (
-            <DataDisplay answers={answers} question={question} />
-            
-        )}
+        <Avatar userCreator={userCreator} callback={onOpenUsers} />
+        {!is800px && <DataDisplay answers={answers} question={question} />}
       </Flex>
 
       <Flex
@@ -229,7 +227,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
       >
         {is800px && (
           <Box color="primary">
-            <DataDisplay answers={answers} question={question} likes={question?.question.likes.length} comments={comments?.length} />
+            <DataDisplay
+              answers={answers}
+              question={question}
+              likes={question?.question.likes.length}
+              comments={comments?.length}
+            />
           </Box>
         )}
 
@@ -313,7 +316,11 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <AddComment postId={question.id} />
         <AddAnswer postId={question.id} />
       </ModalChakra>
-      <ModalProfileUsers isOpen={isOpenUsers} onClose={onCloseUsers} user={userCreator} />
+      <ModalProfileUsers
+        isOpen={isOpenUsers}
+        onClose={onCloseUsers}
+        user={userCreator}
+      />
     </Flex>
   );
 }
