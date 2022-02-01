@@ -21,6 +21,7 @@ import ModalChakra from "../ModalChakra";
 import BasicCardDoubts from "../BasicCardDoubts";
 import AddComment from "../AddComment";
 import AddAnswer from "../AddAnswer";
+import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 
@@ -248,7 +249,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       </VStack>
 
       <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
-        <Flex>
+        <Flex flexDirection={"column"}>
           <BasicCardDoubts
             question={question}
             ImgDefault={!!userCreator?.image ? userCreator.image : ImgDefault}
@@ -260,6 +261,54 @@ export default function CardDoubts({ question, callback, disable = false }) {
             comments={comments}
             user={user}
           />
+          <Box width={"95%"}>
+            <Flex>
+              <Box
+                maxHeight={"400px"}
+                width={"100%"}
+                overflowY="auto"
+                p={"10px"}
+                flexDirection={"column"}
+                padding={"10px"}
+                justifyContent={"center"}
+                sx={{
+                  "&::-webkit-scrollbar": {
+                    width: "25px",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    width: "30px",
+                    borderRadius: "50px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    border: "3px solid #0001FF",
+                    background: "white",
+                    borderRadius: "50px",
+                  },
+                }}
+              >
+                <Flex
+                  flexDirection={"column"}
+                  alignItems={"flex-end"}
+                  width={"100%"}
+                >
+                  {!!comments &&
+                    comments.map((ele, key) => (
+                      <CardComment
+                        key={key}
+                        question={question}
+                        ImgDefault={ImgDefault}
+                        deleteQuestion={deleteQuestion}
+                        answers={answers}
+                        deslike={deslike}
+                        like={like}
+                        comments={ele.comment}
+                        user={ele.userId}
+                      />
+                    ))}
+                </Flex>
+              </Box>
+            </Flex>
+          </Box>
         </Flex>
         <AddComment postId={question.id} />
         <AddAnswer postId={question.id} />
