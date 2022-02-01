@@ -170,7 +170,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             {userCreator?.name}
           </Text>
         </Box> */}
-         <Avatar userCreator={user}  />
+         <Avatar userCreator={userCreator}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
             <DisplayStatus answers={answers} question={question} />
@@ -233,13 +233,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
         )}
 
         {liked ? (
-          <Button onClick={deslike} Button variant="ButtonFilledSmall">
+          <Button onClick={deslike} variant="ButtonFilledSmall" mt="20px">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
-          <Button onClick={like} Button variant="ButtonBorderedSmall">
+          <Button onClick={like} variant="ButtonBorderedSmall" mt="20px">
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />
             </HStack>
