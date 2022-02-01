@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { api } from "../../../services/api";
 
-const AuthContext = createContext({});
+const UserContext = createContext({});
 
-const AuthProvider = ({ children }) => {
+const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
 
@@ -37,10 +37,10 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ users, user, getAllUsers, getOneUser }}>
+    <UserContext.Provider value={{ users, user, getAllUsers, getOneUser }}>
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-export { AuthProvider, AuthContext };
+export { UserProvider, UserContext };

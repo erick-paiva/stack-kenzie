@@ -1,5 +1,5 @@
-function App() {
-  return <div>Aplicação</div>;
-}
+import AllRoutes from "./routes";
 
-export default App;
+export default function App() {
+  return <AllRoutes />;
+}

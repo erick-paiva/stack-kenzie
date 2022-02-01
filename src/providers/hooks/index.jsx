@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 import { UserContext } from "../contexts/users";
 import { QuestionContext } from "../contexts/questions";
+import { AnswerContext } from "../contexts/answers";
 import { CommentContext } from "../contexts/comments";
 
 //Hook useAuth
@@ -38,8 +39,18 @@ export const useQuestions = () => {
   return context;
 };
 
-//Hook useComments
+//Hook useAnswers
+export const useAnswers = () => {
+  const context = useContext(AnswerContext);
 
+  if (!context) {
+    throw new Error("useQuestion must be used within an AuthProvider");
+  }
+
+  return context;
+};
+
+//Hook useComments
 export const useComments = () => {
   const context = useContext(CommentContext);
 
