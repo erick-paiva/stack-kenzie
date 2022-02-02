@@ -1,6 +1,15 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
-export default function CardComment({ question, ImgDefault, comments, user }) {
+export default function CardComment({
+  question,
+  ImgDefault,
+  comments,
+  answerBody,
+  user,
+}) {
+  console.log(comments, "comment");
+  console.log(answerBody, "answers");
+
   return (
     <Flex
       minH="150px"
@@ -42,7 +51,8 @@ export default function CardComment({ question, ImgDefault, comments, user }) {
         w="100%"
       >
         <Text fontSize="16px" fontWeight="400" lineHeight="24px">
-          {comments}
+          {!!comments && comments}
+          {!!answerBody && answerBody}
         </Text>
       </Flex>
     </Flex>

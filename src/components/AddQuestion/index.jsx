@@ -33,8 +33,7 @@ export default function AddQuestion() {
     return { day: dia, month: mes, year: ano, hour: hora, minutes: min };
   };
 
-
-  const { tags, updateTags } = useTags();
+  const { tags } = useTags();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -50,8 +49,8 @@ export default function AddQuestion() {
     handleSubmit,
   } = useForm({ resolver: yupResolver(QuestionSchema) });
 
-  const handleClick = ({titleQuestion,bodyQuestion}) => {
-    console.log(titleQuestion, bodyQuestion)
+  const handleClick = ({ titleQuestion, bodyQuestion }) => {
+    console.log(titleQuestion, bodyQuestion);
     const date = getHours();
     createQuestion({
       userId: user.id,
@@ -121,9 +120,9 @@ export default function AddQuestion() {
               flexWrap={"wrap"}
               p="5px"
             >
-              {tags?.map(element => (
-                  element.isActive && <p>{element.name}</p>
-              ))}
+              {tags?.map(
+                (element) => element.isActive && <p>{element.name}</p>
+              )}
             </Flex>
             <AddTag />
           </Flex>

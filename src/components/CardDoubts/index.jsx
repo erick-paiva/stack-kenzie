@@ -1,14 +1,12 @@
 import {
   Box,
   Button,
-  Center,
   Flex,
   Heading,
   HStack,
   Text,
   useDisclosure,
   useMediaQuery,
-  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth, useQuestions } from "../../providers/hooks";
@@ -26,7 +24,7 @@ import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
 
 export default function CardDoubts({ question, disable = false }) {
-  const {getAllQuestions} = useQuestions();
+  const { getAllQuestions } = useQuestions();
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [update, setUptade] = useState(true);
@@ -59,17 +57,19 @@ export default function CardDoubts({ question, disable = false }) {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
-    api.get("/answers").then((resp) => setAnswers(resp.data));
+    api
+      .get(`/answers?postId=${question?.id}`)
+      .then((resp) => setAnswers(resp.data));
     api.get(`/comments?postId=${question?.id}`).then((resp) => {
       setComments(resp.data);
     });
     api
       .get(`/questions/${question.id}`)
       .then(({ data }) => setLikes(data.question?.likes));
-      api
+    api
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
-      getAllQuestions()
+    getAllQuestions();
   };
   // useEffect(() => {
   //   setTimeout(() => {
@@ -164,16 +164,24 @@ export default function CardDoubts({ question, disable = false }) {
     return <></>;
   }
 
+  console.log(answers);
+
   return (
     <ContainerBase
       w="100%"
       onClick={!disable && onOpen}
       onHover={{ cursor: "pointer" }}
+      m="0px 0px 20px 0px"
     >
       {isMobile ? (
         <Box>
           <Flex justifyContent={"space-between"} mb="20px">
-            <Box onClick={(e) => {onOpenUsers();e.stopPropagation()}}>
+            <Box
+              onClick={(e) => {
+                onOpenUsers();
+                e.stopPropagation();
+              }}
+            >
               <Avatar sm userCreator={userCreator} />
             </Box>
             <DisplayStatus
@@ -220,9 +228,14 @@ export default function CardDoubts({ question, disable = false }) {
         </Box>
       ) : (
         <Flex w="100%">
-          <Box onClick={(e) => {onOpenUsers();e.stopPropagation()}}>
-              <Avatar sm userCreator={userCreator} />
-            </Box>
+          <Box
+            onClick={(e) => {
+              onOpenUsers();
+              e.stopPropagation();
+            }}
+          >
+            <Avatar sm userCreator={userCreator} />
+          </Box>
           <Box ml="20px" w="full">
             <Heading>{question?.question.title}</Heading>
 
@@ -298,6 +311,25 @@ export default function CardDoubts({ question, disable = false }) {
             user={user}
           />
           <Box width={"95%"}>
+            <Flex flexDirection={"column"} alignItems={"center"} width={"100%"}>
+              {user?.coach && (
+                <AddAnswer postId={question.id} getData={getData} />
+              )}
+
+              {!!answers &&
+                answers.map((ele, key) => (
+                  <CardComment
+                    key={key}
+                    question={question}
+                    ImgDefault={ImgDefault}
+                    deleteQuestion={deleteQuestion}
+                    answerBody={ele.body}
+                    deslike={deslike}
+                    like={like}
+                    user={ele.userId}
+                  />
+                ))}
+            </Flex>
             <Flex>
               <Box
                 maxHeight={"400px"}
@@ -322,7 +354,6 @@ export default function CardDoubts({ question, disable = false }) {
                   },
                 }}
               >
-                {user?.coach && <AddAnswer postId={question.id} />}
                 <Flex
                   flexDirection={"column"}
                   alignItems={"flex-end"}
@@ -335,7 +366,6 @@ export default function CardDoubts({ question, disable = false }) {
                         question={questionUpdate}
                         ImgDefault={ImgDefault}
                         deleteQuestion={deleteQuestion}
-                        answers={answers}
                         deslike={deslike}
                         like={like}
                         comments={ele.comment}
