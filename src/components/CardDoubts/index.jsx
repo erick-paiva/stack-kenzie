@@ -308,7 +308,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             </Flex>
           </Box>
         </Flex>
-        <AddComment postId={question.id} />
+        <AddComment postId={question.id} getData={getData}/>
         <AddAnswer postId={question.id} />
       </ModalChakra>
 
