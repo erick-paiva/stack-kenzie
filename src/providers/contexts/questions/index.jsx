@@ -25,12 +25,13 @@ const QuestionProvider = ({ children }) => {
   const createQuestion = async (data) => {
     api.post("/questions", data, tokenBearer).then(() => {
       toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
+        title: "Sua pergunta foi enviada!",
+        description: "Agora é só aguardar a resposta dos facilitadores :)",
+        status: "success",
         duration: 9000,
         isClosable: true,
-      })
+        variant: "info",
+      });
       getAllQuestions();
     });
   };
@@ -47,7 +48,13 @@ const QuestionProvider = ({ children }) => {
 
   return (
     <QuestionContext.Provider
-      value={{ questions, setQuestions, createQuestion, getAllQuestions, deleteQuestion }}
+      value={{
+        questions,
+        setQuestions,
+        createQuestion,
+        getAllQuestions,
+        deleteQuestion,
+      }}
     >
       {children}
     </QuestionContext.Provider>
