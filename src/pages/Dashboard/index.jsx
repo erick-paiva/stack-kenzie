@@ -11,9 +11,12 @@ import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
+import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
+
+import DisplayTags from "../../components/DisplayTags";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -35,9 +38,9 @@ export default function Dashboard() {
   const [option, setOption] = useState([]);
   const [nameSearch, setNameSearch] = useState("");
 
-  console.log(questions)
+  console.log(questions);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
-  const [ tagSelected, setTagSelected] = useState([])
+  const [tagSelected, setTagSelected] = useState([]);
   // const questionFilter =
   //   questions.filter(
   //     (ele) =>
@@ -46,7 +49,6 @@ export default function Dashboard() {
   //   ) || [];
 
   const [questionFilter, setQuestionFilter] = useState([]);
-
 
   useEffect(() => {
     const filtered =
@@ -57,7 +59,6 @@ export default function Dashboard() {
       ) || [];
     setQuestionFilter(filtered);
   }, [nameSearch]);
-
 
   // useEffect(() => {
   //   if (nameSearch.length > 0) {
@@ -153,7 +154,7 @@ export default function Dashboard() {
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
                 />
-                <Heading size={"sm"}>Tags</Heading>
+                {/* <Heading size={"sm"}>Tags</Heading>
                 <Button
                   onClick={() => handleTagClick("JAVASCRIPT")}
                   variant={"TagButton"}
@@ -172,6 +173,8 @@ export default function Dashboard() {
                 >
                   REACT
                 </Button>
+            */}
+                <DisplayTags />
               </>
             )}
           </Box>
