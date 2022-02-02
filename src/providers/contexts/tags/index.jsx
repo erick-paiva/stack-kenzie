@@ -28,20 +28,8 @@ const TagProvider = ({ children }) => {
     { name: "KATAS", isActive: false },
   ]);
 
-  //deletar uma questão
-  const updateTags = async (tag) => {
-    /* 
-    const newTags = tags.reduce((acc, act) => {
-      if (act.name === tag) {
-        return (tag.isActive = true);
-      }
-    }); 
-    setTags(newTags) 
-    */
-  };
-
   return (
-    <TagContext.Provider value={{ tags, setTags, updateTags }}>
+    <TagContext.Provider value={{ tags, setTags }}>
       {children}
     </TagContext.Provider>
   );
