@@ -33,33 +33,41 @@ const scroll = {
 export default function Dashboard() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const { questions, getAllQuestions } = useQuestions();
-  // const [update, setUpdate] = useState(true);
+  const [option, setOption] = useState([]);
   const [nameSearch, setNameSearch] = useState("");
+  const [tagSelected, setTagSelected] = useState([]);
 
-  const [questionFilter, setQuestionFilter] = useState(questions);
+  console.log(tagSelected);
+
+  const [questionFilter, setQuestionFilter] = useState([]);
 
   useEffect(() => {
-    if (nameSearch.length > 0) {
-      setQuestionFilter(
-        questions.filter(
-          (ele) =>
-            ele.question.title
-              .toLowerCase()
-              .includes(nameSearch.toLowerCase()) ||
-            ele.question.body
-              .toLowerCase()
-              .includes(nameSearch.toLowerCase()) ||
-            []
-        )
-      );
-    } else {
-      setQuestionFilter(questions);
-    }
+    setQuestionFilter(questions);
+  }, [questions]);
+
+  useEffect(() => {
+    const filtered =
+      questions.filter(
+        (ele) =>
+          ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
+          ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+      ) || [];
+    setQuestionFilter(filtered);
   }, [nameSearch]);
 
-  console.log(nameSearch);
-  console.log(nameSearch.length);
-  console.log(questionFilter);
+  useEffect(() => {}, [tagSelected]);
+
+  // useEffect(() => {
+  //   if (nameSearch.length > 0) {
+  //     setQuestionFilter(filter(questions));
+  //   } else {
+  //     setQuestionFilter(questions);
+  //   }
+  // }, [nameSearch]);
+
+  // console.log(nameSearch);
+  // console.log(nameSearch.length);
+  // console.log(questionFilter);
 
   // filtro vindo da busca
   // guardar num state os valores vindos da busca
@@ -71,19 +79,16 @@ export default function Dashboard() {
   // adiciona um filtro para mostrar apenas as questions que tiverem a
   // a tag selecionada
 
-  // const questionFilter =
-  //   questions.filter(
-  //     (ele) =>
-  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-  //   ) || [];
+  // ordenar
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setUpdate(!update);
-  //     getAllQuestions();
-  //   }, 5000);
-  // }, [update]);
+  const handleTagClick = (value) => {
+    console.log(questions);
+    if (questions.some((e) => e.questions.tags !== value)) {
+      setTagSelected([...tagSelected, value]);
+    } else {
+      setTagSelected(questions.filter((e) => e.questions.tags !== value));
+    }
+  };
 
   return (
     <Box>
@@ -132,16 +137,39 @@ export default function Dashboard() {
           <Box margin={"20px"} w="320px">
             {isMobile ? (
               <Flex>
-                <DropDownButton />
+                <DropDownButton
+                  itens={["Data", "Curtidas"]}
+                  setOption={setOption}
+                />
                 <Button ml="20px" variant={"ButtonBorderedSmall"}>
                   Tags
                 </Button>
               </Flex>
             ) : (
               <>
-                <DropDownButton />
+                <DropDownButton
+                  itens={["Data", "Curtidas"]}
+                  setOption={setOption}
+                />
                 <Heading size={"sm"}>Tags</Heading>
-                <Button variant={"TagButton"}>JAVASCRIPT</Button>
+                <Button
+                  onClick={() => handleTagClick("JAVASCRIPT")}
+                  variant={"TagButton"}
+                >
+                  JAVASCRIPT
+                </Button>
+                <Button
+                  onClick={() => handleTagClick("Q2")}
+                  variant={"TagButton"}
+                >
+                  Q2
+                </Button>
+                <Button
+                  onClick={() => handleTagClick("REACT")}
+                  variant={"TagButton"}
+                >
+                  REACT
+                </Button>
               </>
             )}
           </Box>

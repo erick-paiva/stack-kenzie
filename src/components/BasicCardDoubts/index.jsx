@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import DataDisplay from "../DataDisplay";
+import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
 import Avatar from "../Avatar";
 export default function BasicCardDoubts({
@@ -53,7 +53,7 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar userCreator={user}  />
+        <Avatar userCreator={ImgDefault}  />
         {!is800px && (
           <VStack spacing="2" color="primary">
             {question.userId === user.id && (
@@ -61,7 +61,7 @@ export default function BasicCardDoubts({
                 Deletar
               </Button>
             )}
-            <DataDisplay answers={answers} question={question} likes={likes} comments={comments} />
+            <DisplayStatus answers={answers} question={question} likes={likes} comments={comments} />
           </VStack>
         )}
       </Flex>
@@ -110,7 +110,7 @@ export default function BasicCardDoubts({
                 Deletar
               </Button>
             )}
-            <DataDisplay answers={answers} question={question} likes={likes} comments={comments.length}/>
+            <DisplayStatus answers={answers} question={question} likes={likes} comments={comments.length}/>
           </Box>
         )}
 
