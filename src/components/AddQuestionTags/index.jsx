@@ -10,7 +10,6 @@ export default function AddTag({ tagSelected, setTagSelected }) {
 		} else {
 			setTagSelected(tagSelected.filter((e) => e !== value));
 		}
-		console.log(tagSelected);
 	};
 
 	const { isOpen, onOpen, onClose } = useDisclosure();

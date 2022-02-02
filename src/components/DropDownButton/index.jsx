@@ -10,7 +10,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { useEffect, useState } from "react/cjs/react.development";
 import { useQuestions } from "../../providers/hooks";
 
-export default function DropDownButton({ itens, setOption, option, setArray, array }) {
+export default function DropDownButton({ itens, setArray, array }) {
 
 
   // useEffect(() => {
@@ -54,9 +54,9 @@ export default function DropDownButton({ itens, setOption, option, setArray, arr
     }
   };
 
-  useEffect(() => {
-    setItem(option)
-  },[option,array])
+  // useEffect(() => {
+  //   setItem(option)
+  // },[option,array])
   return (
     <Menu>
       <MenuButton
@@ -69,7 +69,7 @@ export default function DropDownButton({ itens, setOption, option, setArray, arr
       </MenuButton>
       <MenuList>
         {itens.map((ele, index) => (
-          <Box onClick={() => setOption(index)} key={ele}>
+          <Box onClick={() => setItem(index)} key={ele}>
             <MenuItem>{ele}</MenuItem>
           </Box>
         ))}
