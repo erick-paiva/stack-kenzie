@@ -34,64 +34,38 @@ const scroll = {
 };
 
 export default function Dashboard() {
-  const { questions, getAllQuestions } = useQuestions();
-  const [option, setOption] = useState([]);
+  const { questions , getAllQuestions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
-
-  console.log(questions);
+  const [option, setOption] = useState(0)
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
-  // const questionFilter =
-  //   questions.filter(
-  //     (ele) =>
-  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-  //   ) || [];
-
   const [questionFilter, setQuestionFilter] = useState([]);
 
-  useEffect(() => {
-    const filtered =
-      questions.filter(
-        (ele) =>
-          ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-          ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-      ) || [];
-    setQuestionFilter(filtered);
-  }, [nameSearch]);
-
-  // useEffect(() => {
-  //   if (nameSearch.length > 0) {
-  //     setQuestionFilter(filter(questions));
-  //   } else {
-  //     setQuestionFilter(questions);
-  //   }
-  // }, [nameSearch]);
-
-  // console.log(nameSearch);
-  // console.log(nameSearch.length);
-  // console.log(questionFilter);
-
-  // filtro vindo da busca
-  // guardar num state os valores vindos da busca
-  // filtra as questions para trazer apenas as que tiverem em seu nome
-  //ou no body
-
-  // filtro vindo da escolha da tag
-  // guardar num state os valores vindos das tags selecionadas
-  // adiciona um filtro para mostrar apenas as questions que tiverem a
-  // a tag selecionada
-
-  // ordenar
-
   const handleTagClick = (value) => {
-    console.log(questions);
-    if (questions.some((e) => e.questions.tags !== value)) {
+    if (!tagSelected.some((e) => e === value)) {
       setTagSelected([...tagSelected, value]);
     } else {
-      setTagSelected(questions.filter((e) => e.questions.tags !== value));
+      setTagSelected(tagSelected.filter((e) => e !== value));
     }
   };
+  useEffect(() => {
+    if(nameSearch && tagSelected.length > 0){
+      const filter = questions.filter(ele => tagSelected.every(e => ele.tags.includes(e))).filter(ele => ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) || 
+      ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())) || []
+      setQuestionFilter(filter);
+    }else if(nameSearch){
+      const filter = questions.filter(ele => ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) || 
+      ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())) || []
+      setQuestionFilter(filter);
+    }else if(tagSelected.length > 0){
+      const filter = questions.filter(ele => tagSelected.every(e => ele.tags.includes(e))) || []
+      console.log(filter, "filll")
+      setQuestionFilter(filter);
+    }else{
+      setQuestionFilter(questions)
+    }
+
+  }, [tagSelected, nameSearch,questions]);
 
   return (
     <Box>
@@ -111,11 +85,13 @@ export default function Dashboard() {
           overflowX="hidden"
           sx={scroll}
         >
-          {questionFilter.map((ele, i) => (
-            <CardDoubts question={ele} callback={getAllQuestions} key={i} />
-          ))}
+          {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0 ? questionFilter : questions).map(
+            (ele, i) => (
+              <CardDoubts question={ele} callback={getAllQuestions} key={i} />
+            )
+          )}
 
-          {questionFilter.length === 0 && (
+          {questionFilter.length === 0 && nameSearch && (
             <Text
               textAlign={"center"}
               color="primary"
@@ -143,6 +119,9 @@ export default function Dashboard() {
                 <DropDownButton
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
+                  option={option}
+                  setArray={setQuestionFilter}
+                  array={questions}
                 />
                 <Button ml="20px" variant={"ButtonBorderedSmall"}>
                   Tags
@@ -153,28 +132,11 @@ export default function Dashboard() {
                 <DropDownButton
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
+                  option={option}
+                  setArray={setQuestionFilter}
+                  array={questions}
                 />
-                {/* <Heading size={"sm"}>Tags</Heading>
-                <Button
-                  onClick={() => handleTagClick("JAVASCRIPT")}
-                  variant={"TagButton"}
-                >
-                  JAVASCRIPT
-                </Button>
-                <Button
-                  onClick={() => handleTagClick("Q2")}
-                  variant={"TagButton"}
-                >
-                  Q2
-                </Button>
-                <Button
-                  onClick={() => handleTagClick("REACT")}
-                  variant={"TagButton"}
-                >
-                  REACT
-                </Button>
-            */}
-                <DisplayTags />
+                <DisplayTags handleTagClick={handleTagClick} tagsSelected={tagSelected} />
               </>
             )}
           </Box>

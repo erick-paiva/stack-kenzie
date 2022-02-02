@@ -1,10 +1,15 @@
-import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Text, Stack, Button } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
+<<<<<<< HEAD
 const DisplayTags = () => {
   const { tags, updateTags } = useTags();
   
+=======
+const DisplayTags = ({handleTagClick, tagsSelected}) => {
+  const { tags } = useTags();
+
+>>>>>>> c880cab0b99a0f26b16c65e8cd98c63c662f0a7a
   return (
     <Box>
       <Text color="#0001FF" fontWeight="bold">
@@ -24,14 +29,14 @@ const DisplayTags = () => {
       >
         {tags.map((tag) => (
           <Button
-            key={tag.name}
-            variant="TagButton"
+            key={tag}
+            variant={tagsSelected.some(ele => ele === tag) ? "TagButtonOn" : "TagButton"}
             borderRadius="5px"
             margin="2px 5px"
-            onClick={() => updateTags(tag.name)}
             cursor="pointer"
+            onClick={() => handleTagClick(tag)}
           >
-            {tag.name}
+            {tag}
           </Button>
         ))}
       </Stack>

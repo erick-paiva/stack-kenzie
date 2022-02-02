@@ -34,7 +34,7 @@ export default function FormSignUp() {
       .string()
       .required("E-mail Obrigatório!")
       .email("Precisa ser um E-mail"),
-    slack: yup.string().required("Campo Obrigatório!"),
+    linkedin: yup.string().required("Campo Obrigatório!"),
     module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     password: yup
       .string()
@@ -76,7 +76,7 @@ export default function FormSignUp() {
       >
         <InputChakra
           name="name"
-          placeholder="Nome"
+          placeholder="Nome Completo"
           label="Nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
@@ -86,7 +86,12 @@ export default function FormSignUp() {
         />
 
         <InputChakra
+          w="100%"
+          h="40px"
+          borderRadius="6px"
+          placeholder="email@email.com"
           label="Email"
+          placeholder="email@email.com"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
@@ -95,12 +100,13 @@ export default function FormSignUp() {
         />
 
         <InputChakra
-          label="Slack"
+          label="LinkedIn"
+          placeholder="www.linkedin.com/nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
-          error={errors.email}
-          {...register("slack")}
+          error={errors.linkedin}
+          {...register("linkedin")}
         />
 
         <RadioGroup
@@ -113,7 +119,9 @@ export default function FormSignUp() {
         >
           <Text>Módulo</Text>
           <Stack spacing={"auto"} direction="row" mt="8px" ml="10px">
-            <Radio value={"Q1"}>Q1</Radio>
+            <Radio isRequired value={"Q1"}>
+              Q1
+            </Radio>
             <Radio value={"Q2"}>Q2</Radio>
             <Radio value={"Q3"}>Q3</Radio>
             <Radio value={"Q4"}>Q4</Radio>

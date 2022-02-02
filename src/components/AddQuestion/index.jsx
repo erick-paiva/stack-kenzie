@@ -15,6 +15,10 @@ import ModalChakra from "../ModalChakra";
 import AddTag from "../AddQuestionTags";
 // import { AddTag } from "../AddQuestionTags";
 
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 export default function AddQuestion() {
   const [titleQuestion, setTitleQuestion] = useState("");
   const [bodyQuestion, setBodyQuestion] = useState("");
@@ -36,6 +40,18 @@ export default function AddQuestion() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  //Fix - Yup verica não pode em branco
+  const QuestionSchema = yup.object().shape({
+    titleQuestion: yup.string().required("Campo Obrigatório!"),
+    bodyQuestion: yup.string().required("Campo Obrigatório!"),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ resolver: yupResolver(QuestionSchema) });
+
   const handleClick = () => {
     const date = getHours();
     createQuestion({
@@ -46,7 +62,18 @@ export default function AddQuestion() {
         body: bodyQuestion,
         likes: [],
       },
-      tags: ["JS", "REACT", "LINUX", "NODE JS"],
+      tags: [
+        "HTML",
+        "JS",
+        "REACT",
+        "LINUX",
+        "NODE JS",
+        "PYTHON",
+        "FLASK",
+        "DJANGO",
+        "SQL",
+        "NOSQL",
+      ],
     });
   };
 
@@ -58,19 +85,28 @@ export default function AddQuestion() {
       onOpen={onOpen}
       onClose={onClose}
     >
-      <VStack spacing="8" padding="0 0 30px">
+      <VStack
+        as="form"
+        onSubmit={handleSubmit(handleClick)}
+        spacing="8"
+        padding="0 0 30px"
+      >
         <InputChakra
           placeholder="Digite o título da sua pergunta"
           label="Título da pergunta"
           onChange={(e) => setTitleQuestion(e.currentTarget.value)}
           h="40px"
+          error={errors.titleQuestion}
+          {...register("titleQuestion")}
         />
 
         <TextAreaChakra
           placeholder="Descreva com detalhes a sua dúvida"
           label="Descreva sua dúvida"
           onChange={(e) => setBodyQuestion(e.currentTarget.value)}
-          h="200px"
+          h="190px"
+          error={errors.bodyQuestion}
+          {...register("bodyQuestion")}
         />
         <Box w="100%">
           <Text>Tags</Text>
@@ -93,7 +129,7 @@ export default function AddQuestion() {
             <AddTag />
           </Flex>
         </Box>
-        <Button onClick={handleClick} variant="ButtonFilledBlue">
+        <Button onClick={handleClick} type="submit" Button variant="ButtonFilledBlue">
           ENVIAR PERGUNTA
         </Button>
       </VStack>
