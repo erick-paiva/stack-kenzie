@@ -306,7 +306,7 @@ export default function CardDoubts({ question, disable = false }) {
             deslike={deslike}
             like={like}
             likes={likes.length}
-            comments={comments}
+            comments={comments.length}
             user={user}
           />
           <Box width={"95%"}>
