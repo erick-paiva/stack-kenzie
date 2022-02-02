@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../providers/hooks";
+import { useAuth, useQuestions } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import DisplayStatus from "../DisplayStatus";
@@ -25,17 +25,29 @@ import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
 
-export default function CardDoubts({ question, callback, disable = false }) {
+export default function CardDoubts({ question, disable = false }) {
+  const {getAllQuestions} = useQuestions();
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [time, setTime] = useState(1000000);
   const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
-
+  const [likes, setLikes] = useState(question.question?.likes);
+  const [visible, setVisible] = useState(true);
   const [liked, setLiked] = useState(
-    question.question.likes.some((ele) => ele.userId === user.id)
+    likes.some((ele) => ele.userId === user.id)
   );
+  const questionUpdate = {
+    userId: question.userId,
+    date: question.date,
+    id: question.id,
+    question: {
+      body: question.question.body,
+      title: question.question.title,
+      likes: likes,
+    },
+    tags: question.tags,
+  };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -48,31 +60,32 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
   const getData = () => {
     api.get("/answers").then((resp) => setAnswers(resp.data));
+    api.get(`/comments?postId=${question?.id}`).then((resp) => {
+      setComments(resp.data);
+    });
     api
-      .get(`/comments?postId=${question?.id}`)
-      .then((resp) => setComments(resp.data));
-  };
-  useEffect(() => {
-    setTimeout(() => {
-      setUptade(!update);
-      getData();
-      setTime(10000);
-    }, time);
-  }, [update]);
-
-  useEffect(() => {
-    api
+      .get(`/questions/${question.id}`)
+      .then(({ data }) => setLikes(data.question?.likes));
+      api
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
+      getAllQuestions()
+  };
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUptade(!update);
+  //     getData();
+  //   }, 10000);
+  // }, [update]);
+
+  useEffect(() => {
     getData();
   }, []);
 
   const like = (e) => {
     e.stopPropagation();
-    callback();
-    const filter = question.question?.likes.filter(
-      (ele) => ele.userId !== user.id
-    );
+    getData();
+    const filter = likes.filter((ele) => ele.userId !== user.id);
     if (!liked) {
       setLiked(true);
       api
@@ -93,7 +106,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             },
           }
         )
-        .then(() => callback())
+        .then(() => getData())
         .catch((err) => {
           console.log(err);
           setLiked(false);
@@ -103,11 +116,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
   const deslike = (e) => {
     e.stopPropagation();
-
-    callback();
-    const filter = question.question.likes.filter(
-      (ele) => ele.userId !== user.id
-    );
+    getData();
+    const filter = likes.filter((ele) => ele.userId !== user.id);
     if (liked) {
       setLiked(false);
       api
@@ -128,7 +138,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             },
           }
         )
-        .then(() => callback())
+        .then(() => getData())
         .catch((err) => {
           console.log(err);
           setLiked(true);
@@ -148,8 +158,11 @@ export default function CardDoubts({ question, callback, disable = false }) {
           },
         }
       )
-      .then(() => callback());
+      .then(() => setVisible(false));
   };
+  if (!visible) {
+    return <></>;
+  }
 
   return (
     <ContainerBase
@@ -160,11 +173,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
       {isMobile ? (
         <Box>
           <Flex justifyContent={"space-between"} mb="20px">
-            <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
+            <Box onClick={(e) => {onOpenUsers();e.stopPropagation()}}>
+              <Avatar sm userCreator={userCreator} />
+            </Box>
             <DisplayStatus
               answers={answers}
-              question={question}
-              likes={question.question?.likes.length}
+              question={questionUpdate}
+              likes={likes.length}
               comments={comments.length}
             />
           </Flex>
@@ -205,7 +220,9 @@ export default function CardDoubts({ question, callback, disable = false }) {
         </Box>
       ) : (
         <Flex w="100%">
-          <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
+          <Box onClick={(e) => {onOpenUsers();e.stopPropagation()}}>
+              <Avatar sm userCreator={userCreator} />
+            </Box>
           <Box ml="20px" w="full">
             <Heading>{question?.question.title}</Heading>
 
@@ -246,8 +263,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
           <Box mt="10px">
             <DisplayStatus
               answers={answers}
-              question={question}
-              likes={question.question.likes.length}
+              question={questionUpdate}
+              likes={likes.length}
               comments={comments.length}
             />
             {liked ? (
@@ -270,13 +287,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
       <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
         <Flex flexDirection={"column"}>
           <BasicCardDoubts
-            question={question}
+            question={questionUpdate}
             ImgDefault={userCreator}
             deleteQuestion={deleteQuestion}
             answers={answers}
             deslike={deslike}
             like={like}
-            likes={question?.question.likes.length}
+            likes={likes.length}
             comments={comments}
             user={user}
           />
@@ -315,7 +332,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
                     comments.map((ele, key) => (
                       <CardComment
                         key={key}
-                        question={question}
+                        question={questionUpdate}
                         ImgDefault={ImgDefault}
                         deleteQuestion={deleteQuestion}
                         answers={answers}
@@ -331,7 +348,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
         </Flex>
         <AddComment postId={question.id} getData={getData} />
-        <AddAnswer postId={question.id} />
       </ModalChakra>
 
       <ModalProfileUsers

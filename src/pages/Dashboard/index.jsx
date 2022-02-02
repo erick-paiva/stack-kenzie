@@ -34,13 +34,12 @@ const scroll = {
 };
 
 export default function Dashboard() {
-  const { questions , getAllQuestions } = useQuestions();
+  const { questions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
   const [option, setOption] = useState(0)
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
   const [questionFilter, setQuestionFilter] = useState([]);
-
   const handleTagClick = (value) => {
     if (!tagSelected.some((e) => e === value)) {
       setTagSelected([...tagSelected, value]);
@@ -59,7 +58,6 @@ export default function Dashboard() {
       setQuestionFilter(filter);
     }else if(tagSelected.length > 0){
       const filter = questions.filter(ele => tagSelected.every(e => ele.tags.includes(e))) || []
-      console.log(filter, "filll")
       setQuestionFilter(filter);
     }else{
       setQuestionFilter(questions)
@@ -67,6 +65,7 @@ export default function Dashboard() {
 
   }, [tagSelected, nameSearch,questions]);
 
+  console.log(questionFilter,"fill")
   return (
     <Box>
       <Header setNameSearch={setNameSearch} />
@@ -86,12 +85,12 @@ export default function Dashboard() {
           sx={scroll}
         >
           {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0 ? questionFilter : questions).map(
-            (ele, i) => (
-              <CardDoubts question={ele} callback={getAllQuestions} key={i} />
+            (ele) => (
+              <CardDoubts question={ele} key={ele.id} />
             )
           )}
 
-          {questionFilter.length === 0 && nameSearch && (
+          {questionFilter.length === 0 && (
             <Text
               textAlign={"center"}
               color="primary"
@@ -119,9 +118,8 @@ export default function Dashboard() {
                 <DropDownButton
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
-                  option={option}
                   setArray={setQuestionFilter}
-                  array={questions}
+                  array={questionFilter}
                 />
                 <Button ml="20px" variant={"ButtonBorderedSmall"}>
                   Tags
@@ -132,9 +130,8 @@ export default function Dashboard() {
                 <DropDownButton
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
-                  option={option}
                   setArray={setQuestionFilter}
-                  array={questions}
+                  array={questionFilter}
                 />
                 <DisplayTags handleTagClick={handleTagClick} tagsSelected={tagSelected} />
               </>
