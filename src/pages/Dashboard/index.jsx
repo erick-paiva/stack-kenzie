@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Flex,
-  Heading,
   Text,
   useMediaQuery,
   VStack,
@@ -11,7 +10,6 @@ import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
-import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
@@ -34,9 +32,9 @@ const scroll = {
 };
 
 export default function Dashboard() {
-  const { questions , getAllQuestions } = useQuestions();
+  const { questions, getAllQuestions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
-  const [option, setOption] = useState(0)
+  const [option, setOption] = useState(0);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
   const [questionFilter, setQuestionFilter] = useState([]);
@@ -49,23 +47,39 @@ export default function Dashboard() {
     }
   };
   useEffect(() => {
-    if(nameSearch && tagSelected.length > 0){
-      const filter = questions.filter(ele => tagSelected.every(e => ele.tags.includes(e))).filter(ele => ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) || 
-      ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())) || []
+    if (nameSearch && tagSelected.length > 0) {
+      const filter =
+        questions
+          .filter((ele) => tagSelected.every((e) => ele.tags.includes(e)))
+          .filter(
+            (ele) =>
+              ele.question.title
+                .toLowerCase()
+                .includes(nameSearch.toLowerCase()) ||
+              ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+          ) || [];
       setQuestionFilter(filter);
-    }else if(nameSearch){
-      const filter = questions.filter(ele => ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) || 
-      ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())) || []
+    } else if (nameSearch) {
+      const filter =
+        questions.filter(
+          (ele) =>
+            ele.question.title
+              .toLowerCase()
+              .includes(nameSearch.toLowerCase()) ||
+            ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+        ) || [];
       setQuestionFilter(filter);
-    }else if(tagSelected.length > 0){
-      const filter = questions.filter(ele => tagSelected.every(e => ele.tags.includes(e))) || []
-      console.log(filter, "filll")
+    } else if (tagSelected.length > 0) {
+      const filter =
+        questions.filter((ele) =>
+          tagSelected.every((e) => ele.tags.includes(e))
+        ) || [];
+      console.log(filter, "filll");
       setQuestionFilter(filter);
-    }else{
-      setQuestionFilter(questions)
+    } else {
+      setQuestionFilter(questions);
     }
-
-  }, [tagSelected, nameSearch,questions]);
+  }, [tagSelected, nameSearch, questions]);
 
   return (
     <Box>
@@ -85,11 +99,12 @@ export default function Dashboard() {
           overflowX="hidden"
           sx={scroll}
         >
-          {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0 ? questionFilter : questions).map(
-            (ele, i) => (
-              <CardDoubts question={ele} callback={getAllQuestions} key={i} />
-            )
-          )}
+          {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
+            ? questionFilter
+            : questions
+          ).map((ele, i) => (
+            <CardDoubts question={ele} callback={getAllQuestions} key={i} />
+          ))}
 
           {questionFilter.length === 0 && nameSearch && (
             <Text
@@ -136,7 +151,10 @@ export default function Dashboard() {
                   setArray={setQuestionFilter}
                   array={questions}
                 />
-                <DisplayTags handleTagClick={handleTagClick} tagsSelected={tagSelected} />
+                <DisplayTags
+                  handleTagClick={handleTagClick}
+                  tagsSelected={tagSelected}
+                />
               </>
             )}
           </Box>

@@ -156,6 +156,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
       w="100%"
       onClick={!disable && onOpen}
       onHover={{ cursor: "pointer" }}
+      m="0px 0px 20px 0px"
     >
       {isMobile ? (
         <Box>

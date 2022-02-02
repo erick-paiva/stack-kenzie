@@ -2,9 +2,7 @@ import { Center, Image, Text } from "@chakra-ui/react";
 
 import ImgDefault from "../../assets/user_sign.png";
 
-
-
-export default function Avatar({ userCreator, callback, sm }) {
+export default function Avatar({ userCreator, callback, sm, noName }) {
   return (
     <Center
       flexDir={"column"}
@@ -24,9 +22,12 @@ export default function Avatar({ userCreator, callback, sm }) {
         maxW={sm ? "60px" : "100px"}
         maxH={sm ? "60px" : "100px"}
       />
-      <Text textAlign={"center"} isTruncated width={"100px"}>
-        {userCreator.name}
-      </Text>
+
+      {!noName && (
+        <Text textAlign={"center"} isTruncated width={"100px"}>
+          {userCreator.name}
+        </Text>
+      )}
     </Center>
   );
 }
