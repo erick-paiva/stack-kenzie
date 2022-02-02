@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
 import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
-import DataDisplay from "../DataDisplay";
+import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
 import ModalChakra from "../ModalChakra";
 import BasicCardDoubts from "../BasicCardDoubts";
@@ -161,7 +161,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <Box>
           <Flex justifyContent={"space-between"} mb="20px">
             <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
-            <DataDisplay answers={answers} question={question} />
+            <DisplayStatus answers={answers} question={question} likes={question.question?.likes.length} comments={comments.length} />
           </Flex>
           <Box>
             <Heading>{question?.question.title}</Heading>
@@ -228,7 +228,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
 
           <Box mt="10px">
-            <DataDisplay answers={answers} question={question} />
+          <DisplayStatus answers={answers} question={question} likes={question.question.likes.length} comments={comments.length} />
             {liked ? (
               <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
                 <HStack alignItems={"flex-end"}>
@@ -250,7 +250,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <Flex flexDirection={"column"}>
           <BasicCardDoubts
             question={question}
-            ImgDefault={!!userCreator?.image ? userCreator.image : ImgDefault}
+            ImgDefault={userCreator}
             deleteQuestion={deleteQuestion}
             answers={answers}
             deslike={deslike}

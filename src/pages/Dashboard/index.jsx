@@ -14,7 +14,6 @@ import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
-import ModalChakra from "../../components/ModalChakra";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -35,9 +34,10 @@ export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
   const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
+  const [options, setOption] = useState([])
+
 
   const [isMobile] = useMediaQuery("(max-width: 900px)");
-
   const questionFilter =
     questions.filter(
       (ele) =>
@@ -45,12 +45,17 @@ export default function Dashboard() {
         ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
     ) || [];
 
-  useEffect(() => {
-    setTimeout(() => {
-      setUpdate(!update);
-      getAllQuestions();
-    }, 5000);
-  }, [update]);
+    // useEffect(() => {console.log("aulterou", options[0])},[options])
+
+
+
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUpdate(!update);
+  //     getAllQuestions();
+  //   }, 5000);
+  // }, [update]);
 
   return (
     <Box>
@@ -78,7 +83,7 @@ export default function Dashboard() {
                   key={ele.id}
                 />
               ))
-            : questions.map((ele) => (
+            : (options.length > 0 ? options : questions).map((ele) => (
                 <CardDoubts
                   question={ele}
                   callback={getAllQuestions}
@@ -111,14 +116,14 @@ export default function Dashboard() {
           <Box margin={"20px"} w="320px">
             {isMobile ? (
               <Flex>
-                <DropDownButton />
+                <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
                 <Button ml="20px" variant={"ButtonBorderedSmall"}>
                   Tags
                 </Button>
               </Flex>
             ) : (
               <>
-                <DropDownButton />
+                <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
                 <Heading size={"sm"}>Tags</Heading>
                 <Button variant={"TagButton"}>JAVASCRIPT</Button>
               </>
