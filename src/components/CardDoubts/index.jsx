@@ -161,7 +161,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <Box>
           <Flex justifyContent={"space-between"} mb="20px">
             <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
-            <DisplayStatus answers={answers} question={question} likes={question.question?.likes.length} comments={comments.length} />
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={question.question?.likes.length}
+              comments={comments.length}
+            />
           </Flex>
           <Box>
             <Heading>{question?.question.title}</Heading>
@@ -228,7 +233,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
 
           <Box mt="10px">
-          <DisplayStatus answers={answers} question={question} likes={question.question.likes.length} comments={comments.length} />
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={question.question.likes.length}
+              comments={comments.length}
+            />
             {liked ? (
               <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
                 <HStack alignItems={"flex-end"}>
@@ -309,7 +319,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
             </Flex>
           </Box>
         </Flex>
-        <AddComment postId={question.id} />
+        <AddComment postId={question.id} getData={getData} />
+        <AddAnswer postId={question.id} />
       </ModalChakra>
 
       <ModalProfileUsers
