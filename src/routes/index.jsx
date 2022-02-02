@@ -21,13 +21,31 @@ const RouteProtected = ({ component: Component, ...rest }) => {
   );
 };
 
+const RouteVerifield = ({ component: Component, ...rest }) => {
+  const isAuth = localStorage.getItem("@StackKenzie:user");
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuth ? (
+          <Redirect
+            to={{ pathname: "/dashboard", state: { from: props.location } }}
+          />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  );
+};
+
 const AllRoutes = () => {
   return (
     <Switch>
-      {/* PRINCIPAIS ROTAS */}
+      {/* ROTAS VERIFICADAS */}
       {/* <Route exact path="/" component={LeadPage} /> */}
-      <Route exact path="/" component={SignIn} />
-      <Route exact path="/signup" component={SignUp} />
+      <RouteVerifield exact path="/" component={SignIn} />
+      <RouteVerifield path="/signup" component={SignUp} />
 
       {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />
