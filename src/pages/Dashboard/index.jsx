@@ -31,19 +31,22 @@ const scroll = {
 };
 
 export default function Dashboard() {
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
   const { questions, getAllQuestions } = useQuestions();
   const [option, setOption] = useState([]);
   const [nameSearch, setNameSearch] = useState("");
-  const [tagSelected, setTagSelected] = useState([]);
 
-  console.log(tagSelected);
+  console.log(questions)
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const [ tagSelected, setTagSelected] = useState([])
+  // const questionFilter =
+  //   questions.filter(
+  //     (ele) =>
+  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
+  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+  //   ) || [];
 
   const [questionFilter, setQuestionFilter] = useState([]);
 
-  useEffect(() => {
-    setQuestionFilter(questions);
-  }, [questions]);
 
   useEffect(() => {
     const filtered =
@@ -55,7 +58,6 @@ export default function Dashboard() {
     setQuestionFilter(filtered);
   }, [nameSearch]);
 
-  useEffect(() => {}, [tagSelected]);
 
   // useEffect(() => {
   //   if (nameSearch.length > 0) {
