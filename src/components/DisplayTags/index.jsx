@@ -23,7 +23,7 @@ const DesplayTags = () => {
         borderRadius="6px"
       >
         {tags.map((tag) => (
-          <Button
+          <Badge
             key={tag.name}
             border={tag.isActive ? "2px solid #0001FF" : "2px solid #CBD5E0"}
             color={tag.isActive ? "#0001FF" : "#CBD5E0"}
@@ -34,7 +34,7 @@ const DesplayTags = () => {
             cursor="pointer"
           >
             {tag.name}
-          </Button>
+          </Badge>
         ))}
       </Stack>
     </Box>
