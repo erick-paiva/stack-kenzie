@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTags } from "../../providers/hooks";
 
 const DesplayTags = () => {
-  const { tags, updateTags } = useTags();
+  const { tags } = useTags();
 
   return (
     <Box>
@@ -28,10 +28,9 @@ const DesplayTags = () => {
             variant="TagButton"
             borderRadius="5px"
             margin="2px 5px"
-            onClick={() => updateTags(tag.name)}
             cursor="pointer"
           >
-            {tag.name}
+            {tag}
           </Button>
         ))}
       </Stack>
