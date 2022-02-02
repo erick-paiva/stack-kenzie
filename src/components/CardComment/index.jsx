@@ -1,11 +1,6 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Text
-} from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
+
 export default function CardComment({ question, ImgDefault, comments, user }) {
-  console.log(comments);
   return (
     <Flex
       minH="150px"

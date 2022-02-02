@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  useMediaQuery,
+  VStack,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
@@ -7,11 +15,29 @@ import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
 
+const scroll = {
+  "&::-webkit-scrollbar": {
+    width: "25px",
+  },
+  "&::-webkit-scrollbar-track": {
+    width: "30px",
+    borderRadius: "50px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    border: "3px solid #0001FF",
+    background: "white",
+    borderRadius: "50px",
+  },
+};
+
 export default function Dashboard() {
   const { questions, getAllQuestions } = useQuestions();
   const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
   const [options, setOption] = useState([])
+
+
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
   const questionFilter =
     questions.filter(
       (ele) =>
@@ -32,47 +58,22 @@ export default function Dashboard() {
   // }, [update]);
 
   return (
-    <Box as="section">
+    <Box>
       <Header setNameSearch={setNameSearch} />
+
       <Flex
-        flexDirection={"row-reverse"}
-        margin={"5px"}
-        height={"250px"}
         justifyContent={"center"}
+        m={"50px"}
+        flexDir={isMobile && "column-reverse"}
+        alignItems={isMobile && "center"}
       >
-        <Flex
-          flexDirection={"column"}
-          justifyContent="space-between"
-          padding="40px"
-        >
-          <AddQuestion />
-
-          <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
-          <Box margin={"20px"}>
-            <Heading size={"sm"}>Tags</Heading>
-            <Button variant={"TagButton"}>JAVASCRIPT</Button>
-          </Box>
-        </Flex>
-
         <Box
-          h="63vh"
+          maxWidth={isMobile && "340px"}
+          h="75vh"
+          w="100%"
           overflowY="auto"
           overflowX="hidden"
-          m={"10px"}
-          sx={{
-            "&::-webkit-scrollbar": {
-              width: "25px",
-            },
-            "&::-webkit-scrollbar-track": {
-              width: "30px",
-              borderRadius: "50px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              border: "3px solid #0001FF",
-              background: "white",
-              borderRadius: "50px",
-            },
-          }}
+          sx={scroll}
         >
           {!!nameSearch
             ? questionFilter?.map((ele) => (
@@ -89,12 +90,46 @@ export default function Dashboard() {
                   key={ele.id}
                 />
               ))}
+
           {questionFilter.length === 0 && (
-            <Text color="primary" fontWeight="bold" fontSize="24px">
+            <Text
+              textAlign={"center"}
+              color="primary"
+              fontWeight="bold"
+              fontSize="24px"
+            >
               Resultado não encontrado
             </Text>
           )}
         </Box>
+
+        <VStack
+          alignItems={"flex-start"}
+          spacing={"20px"}
+          ml={isMobile ? "0px" : "20px"}
+          mb="20px"
+          mW="320px"
+          h="fit-content"
+        >
+          <AddQuestion />
+
+          <Box margin={"20px"} w="320px">
+            {isMobile ? (
+              <Flex>
+                <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
+                <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                  Tags
+                </Button>
+              </Flex>
+            ) : (
+              <>
+                <DropDownButton padding="10px" itens={["Mais recentes","Mais antigos", "Mais curtidas", "Menos curtidas"]} setOption={setOption} />
+                <Heading size={"sm"}>Tags</Heading>
+                <Button variant={"TagButton"}>JAVASCRIPT</Button>
+              </>
+            )}
+          </Box>
+        </VStack>
       </Flex>
     </Box>
   );

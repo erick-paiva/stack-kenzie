@@ -71,9 +71,8 @@ export default function DropDownButton({ itens,  setOption }) {
       <MenuButton
         as={Button}
         rightIcon={<BsChevronDown />}
-        variant="ButtonBorderedWhite"
-        w={["50%", "50%", "auto"]}
-        fontSize={["12px", "18px", "20px"]}
+        variant="ButtonBorderedSmall"
+        mb="20px"
       >
         Ordenar por
       </MenuButton>
