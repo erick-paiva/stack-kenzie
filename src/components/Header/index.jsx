@@ -6,7 +6,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Logo from "../../assets/logoKenzieStack.svg";
-import imgDefault from "../../assets/imgDefault.svg";
+import imgDefault from "../../assets/user_sign.png";
 import { InputChakra } from "../InputChakra";
 import ModalProfileUser from "../ModalProfilelUser";
 import Avatar from "../Avatar";
