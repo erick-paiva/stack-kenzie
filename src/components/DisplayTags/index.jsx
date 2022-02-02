@@ -23,18 +23,16 @@ const DesplayTags = () => {
         borderRadius="6px"
       >
         {tags.map((tag) => (
-          <Badge
+          <Button
             key={tag.name}
-            border={tag.isActive ? "2px solid #0001FF" : "2px solid #CBD5E0"}
-            color={tag.isActive ? "#0001FF" : "#CBD5E0"}
-            bg="white"
+            variant="TagButton"
             borderRadius="5px"
             margin="2px 5px"
             onClick={() => updateTags(tag.name)}
             cursor="pointer"
           >
             {tag.name}
-          </Badge>
+          </Button>
         ))}
       </Stack>
     </Box>

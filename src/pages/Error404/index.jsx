@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 
 export default function Error404() {
   const history = useHistory();
-
   return (
     <Box as="section" p="10px">
       <VStack
@@ -40,7 +39,10 @@ export default function Error404() {
             Página não encontrada! Procure um coach.
           </Text>
         </Stack>
-        <Button onClick={() => history.push("/")} variant="ButtonBorderedWhite">
+        <Button
+          variant="ButtonBorderedWhite"
+          onClick={history.push("/dashboard")}
+        >
           Voltar
         </Button>
       </VStack>

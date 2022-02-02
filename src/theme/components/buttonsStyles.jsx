@@ -1,4 +1,4 @@
-import { whiten, blacken } from "@chakra-ui/theme-tools";
+import { blacken } from "@chakra-ui/theme-tools";
 
 export const ButtonStyles = {
   variants: {
@@ -7,7 +7,8 @@ export const ButtonStyles = {
       variant: "solid",
       bg: "primary",
       color: "white",
-      w: "315px",
+      width: "100%",
+      margin: "auto",
       _hover: {
         bg: blacken("primary", 40),
         transform: "scale(1.02)",
@@ -16,7 +17,7 @@ export const ButtonStyles = {
     },
     ButtonBorderedWhite: {
       size: "lg",
-      w: "315px",
+      width: "100%",
       bg: "transparent",
       color: "primary",
       border: "1px solid",
@@ -33,7 +34,8 @@ export const ButtonStyles = {
       color: "primary",
       border: "1px solid",
       borderColor: "primary",
-      width: "150px",
+      width: "100%",
+      height: "30px",
       _hover: {
         transform: "scale(1.02)",
         bg: blacken("white", 5),
@@ -45,10 +47,30 @@ export const ButtonStyles = {
       variant: "solid",
       bg: "primary",
       color: "white",
-      width: "150px",
+      maxWidth: "150px",
+      width: "100%",
+      height: "30px",
       _hover: {
         bg: blacken("primary", 40),
         transform: "scale(1.02)",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
+    TagButton: {
+      fontSize: "12px",
+      size: "sm",
+      bg: "transparent",
+      color: "gray.300",
+      border: "1px solid",
+      borderColor: "gray.300",
+      width: "fit-content",
+      height: "fit-content",
+      padding: "4px",
+      _hover: {
+        transform: "scale(1.02)",
+        bg: blacken("white", 5),
+        color: "primary",
+        borderColor: "primary",
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },

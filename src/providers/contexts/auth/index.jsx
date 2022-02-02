@@ -7,6 +7,7 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("@StackKenzie:accessToken");
@@ -17,8 +18,8 @@ const AuthProvider = ({ children }) => {
       setUser(JSON.parse(user));
     }
   }, []);
-
-  const history = useHistory();
+  
+  
 
   //Função Login
   const signIn = async (email, password) => {
@@ -54,7 +55,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, user, signIn, signUp }}>
+    <AuthContext.Provider value={{ accessToken, user, setUser, signIn, signUp }}>
       {children}
     </AuthContext.Provider>
   );
