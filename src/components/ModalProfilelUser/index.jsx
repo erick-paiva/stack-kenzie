@@ -12,7 +12,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/hooks";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
 import { api } from "../../services/api";
@@ -20,11 +19,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CardPerfil from "../CardPerfil";
+import { useHistory } from "react-router-dom";
 
 const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
   const [module, setModule] = useState(user.module);
-
+  const history = useHistory()
   const formSchema = yup.object().shape({
     name: yup.string(),
     email: yup.string().email("Precisa ser um E-mail"),
@@ -39,7 +39,6 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
     handleSubmit,
   } = useForm({ resolver: yupResolver(formSchema) });
 
-  const history = useHistory();
   const updateProfile = (value) => {
     api
       .patch(`/users/${user.id}`, value, {
@@ -70,6 +69,11 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
       updateProfile({ linkedin: data.linkedin });
     }
   };
+  const logOut = () => {
+    localStorage.removeItem("@StackKenzie:accessToken");
+    localStorage.removeItem("@StackKenzie:user");
+    history.push("/")
+  }
 
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
@@ -133,6 +137,9 @@ const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
               type="submit"
             >
               ATUALIZAR
+            </Button>
+            <Button variant="ButtonBorderedWhite" w="100%" onClick={logOut}>
+              SAIR DA CONTA
             </Button>
           </VStack>
         </ModalBody>

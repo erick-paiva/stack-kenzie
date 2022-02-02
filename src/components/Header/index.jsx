@@ -3,7 +3,7 @@ import {
   Flex,
   Image,
   useBreakpointValue,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import Logo from "../../assets/logoKenzieStack.svg";
 import imgDefault from "../../assets/imgDefault.svg";
@@ -36,7 +36,6 @@ export function Header({ setNameSearch }) {
 
         {!is800px ? (
           <Box onClick={onOpen} cursor="pointer">
-              {/* <Image src={user?.image ? user.image : imgDefault} h="60px"/> */}
             <Avatar userCreator={user} />
             <ModalProfileUser
               onOpen={onOpen}
@@ -57,7 +56,11 @@ export function Header({ setNameSearch }) {
             </Box>
             <Box onClick={onOpen} cursor="pointer">
               {/* <Avatar userCreator={user} /> */}
-              <Image src={user?.image ? user.image : imgDefault} h="60px" borderRadius="full"/>
+              <Image
+                src={user?.image ? user.image : imgDefault}
+                h="60px"
+                borderRadius="full"
+              />
               <ModalProfileUser
                 onOpen={onOpen}
                 isOpen={isOpen}

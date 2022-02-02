@@ -7,7 +7,7 @@ const QuestionContext = createContext({});
 
 const QuestionProvider = ({ children }) => {
   const toast = useToast();
-  const [questions, SetQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   const { accessToken } = useAuth();
 
@@ -38,7 +38,7 @@ const QuestionProvider = ({ children }) => {
   //Pegar todos as questões
   const getAllQuestions = async () => {
     api.get("/questions").then((response) => {
-      SetQuestions(response.data);
+      setQuestions(response.data);
     });
   };
 
@@ -47,7 +47,7 @@ const QuestionProvider = ({ children }) => {
 
   return (
     <QuestionContext.Provider
-      value={{ questions, createQuestion, getAllQuestions, deleteQuestion }}
+      value={{ questions, setQuestions, createQuestion, getAllQuestions, deleteQuestion }}
     >
       {children}
     </QuestionContext.Provider>
