@@ -75,7 +75,7 @@ export default function AddQuestion() {
   return (
     <ModalChakra
       title="Fazer uma pergunta"
-      ButtonText="Fazer uma pergunta"
+      buttonText="Fazer uma pergunta"
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
@@ -108,17 +108,22 @@ export default function AddQuestion() {
           <Flex alignItems="center">
             <Flex
               border="1px solid"
-              borderColor="grayTag"
-              h="55px"
+              borderRadius="6px"
+              borderColor="gray.200"
+              h="fitContent"
+              w="100%"
               mt="7px"
               alignItems="center"
-              paddingX="15px"
-              borderRadius="6px"
-              w="100%"
+              flexWrap={"wrap"}
+              p="5px"
             >
-              tags map
+              <Button variant={"tagButton"}>JAVASCRIPT</Button>
+              <Button variant={"tagButton"}>REACT</Button>
+              <Button variant={"tagButton"}>CSS</Button>
             </Flex>
-            <Button>Tags</Button>
+            <Button ml={"20px"} variant={"ButtonBorderedSmall"}>
+              Tags
+            </Button>
           </Flex>
         </Box>
         <Button onClick={handleClick} type="submit" Button variant="ButtonFilledBlue">

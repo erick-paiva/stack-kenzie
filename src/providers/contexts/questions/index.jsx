@@ -7,7 +7,7 @@ const QuestionContext = createContext({});
 
 const QuestionProvider = ({ children }) => {
   const toast = useToast();
-  const [questions, SetQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   const { accessToken } = useAuth();
 
@@ -25,11 +25,12 @@ const QuestionProvider = ({ children }) => {
   const createQuestion = async (data) => {
     api.post("/questions", data, tokenBearer).then(() => {
       toast({
-        title: "Resposta adicionada!",
-        status: "success",
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
         duration: 9000,
         isClosable: true,
-      });
+      })
       getAllQuestions();
     });
   };
@@ -37,7 +38,7 @@ const QuestionProvider = ({ children }) => {
   //Pegar todos as questões
   const getAllQuestions = async () => {
     api.get("/questions").then((response) => {
-      SetQuestions(response.data);
+      setQuestions(response.data);
     });
   };
 
@@ -46,7 +47,7 @@ const QuestionProvider = ({ children }) => {
 
   return (
     <QuestionContext.Provider
-      value={{ questions, createQuestion, getAllQuestions, deleteQuestion }}
+      value={{ questions, setQuestions, createQuestion, getAllQuestions, deleteQuestion }}
     >
       {children}
     </QuestionContext.Provider>

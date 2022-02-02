@@ -1,9 +1,10 @@
 import { Button, HStack, Input, Text } from "@chakra-ui/react";
+
 import React, { useState } from "react";
 import { BiCommentDots } from "react-icons/bi";
 import { useAuth, useComments } from "../../providers/hooks";
 
-function AddComment({ postId }) {
+function AddComment({ postId, getData }) {
   const [value, setValue] = useState("");
   const handleChange = (event) => setValue(event.target.value);
   const { user } = useAuth();
@@ -24,7 +25,10 @@ function AddComment({ postId }) {
 
   const handleSubmit = () => {
     createComment(data);
+    getData()
+
   };
+
   return (
     <div>
       <Input

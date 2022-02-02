@@ -8,19 +8,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-function ModalChakra({ children, title, ButtonText, isOpen, onClose, onOpen }) {
+function ModalChakra({ children, title, buttonText, isOpen, onClose, onOpen }) {
   return (
     <>
-      {ButtonText && (
-        <Button
-          onClick={onOpen}
-          w={["50%", "50%", "auto"]}
-          Button
-          variant="ButtonFilledBlue"
-          fontSize={["12px", "18px", "20px"]}
-          ml={["10px", "15px", "0"]}
-        >
-          {ButtonText}
+      {buttonText && (
+        <Button variant="ButtonFilledBlue" onClick={onOpen}>
+          {buttonText}
         </Button>
       )}
 

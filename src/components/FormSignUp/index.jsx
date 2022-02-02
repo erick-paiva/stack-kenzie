@@ -19,6 +19,8 @@ import Logo from "../../assets/logo1.svg";
 import { useAuth } from "../../providers/hooks";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
+import ContainerBase from "../ContainerBase/Index";
+import LogoBlue from "../LogoBlue";
 
 export default function FormSignUp() {
   const { signUp } = useAuth();
@@ -32,7 +34,7 @@ export default function FormSignUp() {
       .string()
       .required("E-mail Obrigatório!")
       .email("Precisa ser um E-mail"),
-    slack: yup.string().required("Campo Obrigatório!"),
+    linkedin: yup.string().required("Campo Obrigatório!"),
     module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     password: yup
       .string()
@@ -62,49 +64,17 @@ export default function FormSignUp() {
   };
 
   return (
-    <Box
-      width="434px"
-      height="840px"
-      padding="15px 15px"
-      border="1px solid "
-      borderColor="gray.100"
-      bg="white"
-      borderRadius="6px"
-      boxShadow="md"
-      p="6"
-      rounded="md"
-    >
-      <Heading
-        background="#0001FF"
-        borderRadius="6px"
-        w="100%"
-        mt="10px"
-        boxShadow="md"
-        rounded="md"
-      >
-        <Image
-          src={Logo}
-          alt="stakenzie"
-          title="stakenzie"
-          width="161px"
-          height="95px"
-          mt="20px"
-          mb="20px"
-          ml="110px"
-        />
-      </Heading>
+    <ContainerBase w={"434px"}>
+      <LogoBlue />
 
       <VStack
         alignItems="flex-start"
         mt="10"
         as="form"
-        spacing={4}
+        spacing={"20px"}
         onSubmit={handleSubmit(handleSignUp)}
       >
         <InputChakra
-          w="100%"
-          h="40px"
-          borderRadius="6px"
           name="name"
           placeholder="Nome Completo"
           label="Nome"
@@ -121,6 +91,7 @@ export default function FormSignUp() {
           borderRadius="6px"
           placeholder="email@email.com"
           label="Email"
+          placeholder="email@email.com"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
@@ -129,34 +100,25 @@ export default function FormSignUp() {
         />
 
         <InputChakra
-          w="100%"
-          h="40px"
-          placeholder="@nome"
-          borderRadius="6px"
-          label="Slack"
+          label="LinkedIn"
+          placeholder="www.linkedin.com/nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
-          error={errors.email}
-          {...register("slack")}
+          error={errors.linkedin}
+          {...register("linkedin")}
         />
 
         <RadioGroup
-          w="100%"
-          h="40%"
+          w="250px"
           onChange={setValue}
           value={value}
           borderRadius="6px"
           border="1px  #E2E8F0"
           defaultValue="1"
         >
-          <Stack
-            spacing={14}
-            direction="row"
-            m="8px"
-            ml="10px"
-            color="theme.colors"
-          >
+          <Text>Módulo</Text>
+          <Stack spacing={"auto"} direction="row" mt="8px" ml="10px">
             <Radio value={"Q1"}>Q1</Radio>
             <Radio value={"Q2"}>Q2</Radio>
             <Radio value={"Q3"}>Q3</Radio>
@@ -212,26 +174,18 @@ export default function FormSignUp() {
         >
           Cadastrar
         </Button>
-
-        <Text ml="1" mt="2" mb="2" color="gray.600">
-          Não possui uma conta?
-        </Text>
-        <Button
-          fontSize="16px"
-          bg="#FFFFFF"
-          color="#0001FF"
-          border="1px solid #0001FF"
-          w="100%"
-          h="40px"
-          borderRadius="6px"
-          _hover={{
-            background: "gray.50",
-          }}
-          onClick={() => history.push("/")}
-        >
-          Ir para o login
-        </Button>
+        <Box w="100%">
+          <Text color="gray.500" mb="5px">
+            Já possui uma conta?
+          </Text>
+          <Button
+            variant={"ButtonBorderedWhite"}
+            onClick={() => history.push("/")}
+          >
+            Ir para o login
+          </Button>
+        </Box>
       </VStack>
-    </Box>
+    </ContainerBase>
   );
 }

@@ -1,21 +1,32 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Center, Image, Text } from "@chakra-ui/react";
 
-import ImgDefault from "../../assets/imgDefault.svg";
+import ImgDefault from "../../assets/user_sign.png";
 
-export default function Avatar({ userCreator }) {
+
+
+export default function Avatar({ userCreator, callback, sm }) {
   return (
-    <>
-      <Box as="figure" textAlign="center">
-        <Image
-          src={!!userCreator?.image ? userCreator.image : ImgDefault}
-          borderRadius="full"
-          w={["55px", "55px", "100px", "100px"]}
-          h={["55px", "55px", "100px", "100px"]}
-        />
-        <Text as="figcaption" fontSize="13.1283px">
-          {userCreator?.name}
-        </Text>
-      </Box>
-    </>
+    <Center
+      flexDir={"column"}
+      as="figure"
+      onClick={(e) => {
+        callback();
+        e.stopPropagation();
+      }}
+    >
+      <Image
+        src={!!userCreator?.image ? userCreator.image : ImgDefault}
+        //src={!!userCreator?.image ? userCreator.image : <Avatar src='https://bit.ly/broken-link' />}
+
+        borderRadius="full"
+        minW={sm ? "60px" : "100px"}
+        minH={sm ? "60px" : "100px"}
+        maxW={sm ? "60px" : "100px"}
+        maxH={sm ? "60px" : "100px"}
+      />
+      <Text textAlign={"center"} isTruncated width={"100px"}>
+        {userCreator.name}
+      </Text>
+    </Center>
   );
 }
