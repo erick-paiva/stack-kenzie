@@ -17,7 +17,7 @@ export default function DropDownButton({ itens, setOption, option, setArray, arr
   //   setItem(option)
   //   console.log("alterou")
   // },[questions,option])
-  console.log(option, "opt")
+  // console.log(option, "opt")
 
   const setItem = (option) => {
     if (option === 0) {
