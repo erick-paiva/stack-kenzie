@@ -29,7 +29,7 @@ const DesplayTags = () => {
             margin="2px 5px"
             cursor="pointer"
           >
-            {tag.name}
+            {tag}
           </Button>
         ))}
       </Stack>

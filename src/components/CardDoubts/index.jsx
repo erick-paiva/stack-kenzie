@@ -170,7 +170,13 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Flex>
           <Box>
             <Heading>{question?.question.title}</Heading>
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
             <Flex my="20px" flexWrap="wrap">
@@ -199,11 +205,16 @@ export default function CardDoubts({ question, callback, disable = false }) {
         </Box>
       ) : (
         <Flex w="100%">
-          <Avatar userCreator={userCreator} callback={onOpenUsers} />
+          <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
           <Box ml="20px" w="full">
             <Heading>{question?.question.title}</Heading>
 
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
 
