@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
-import { UserContext } from "../contexts/users";
 import { QuestionContext } from "../contexts/questions";
 import { AnswerContext } from "../contexts/answers";
 import { CommentContext } from "../contexts/comments";
@@ -12,18 +11,6 @@ export const useAuth = () => {
 
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
-  }
-
-  return context;
-};
-
-//Hook useUsers
-
-export const useUsers = () => {
-  const context = useContext(UserContext);
-
-  if (!context) {
-    throw new Error("useQuestion must be used within an AuthProvider");
   }
 
   return context;

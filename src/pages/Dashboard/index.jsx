@@ -1,29 +1,58 @@
-import { Grid, GridItem } from "@chakra-ui/react";
-import CardAnswer from "../../components/CardAnswer";
+import { Box, Flex, useDisclosure, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useState } from "react/cjs/react.development";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
-import DesplayTags from "../../components/DisplayTags";
-import { useQuestions, useComments, useAnswers } from "../../providers/hooks";
+import ModalChakra from "../../components/ModalChakra";
+import { useQuestions } from "../../providers/hooks";
+import AddQuestion from "../../components/AddQuestion";
 
-const Dashboard = () => {
-  const { answers } = useAnswers();
+export default function Dashboard() {
+  const { questions, getAllQuestions } = useQuestions();
+  const [update, setUpdate] = useState(true);
+  const [nameSearch, setNameSearch] = useState("");
+  const questionFilter =
+    questions.filter(
+      (ele) =>
+        ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
+        ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+    ) || [];
+  useEffect(() => {
+    setTimeout(() => {
+      setUpdate(!update);
+      getAllQuestions();
+    }, 5000);
+  }, [update]);
+
   return (
-    <Grid
-      templateRows="repeat(1, 1fr)"
-      templateColumns="repeat(12, 1fr)"
-      gap={2}
-    >
-      <GridItem colSpan={12}>
-        <Header />
-      </GridItem>
-      <GridItem rowSpan={2} colSpan={8}>
-        {answers && answers.map((answer) => <CardAnswer answer={answer} />)}
-      </GridItem>
-      <GridItem rowSpan={2} colSpan={4} h="100px">
-        <DesplayTags />
-      </GridItem>
-    </Grid>
-  );
-};
+    <Box as="section">
+      <Header setNameSearch={setNameSearch} />
+      <Flex>
+        <ModalChakra
+          title="Modal pergunta"
+          ButtonText="Modal adicionar pergunta"
+        >
+          <AddQuestion />
+        </ModalChakra>
+      </Flex>
 
-export default Dashboard;
+      <VStack mt="30px">
+        {!!nameSearch
+          ? questionFilter?.map((ele) => (
+              <CardDoubts
+                question={ele}
+                callback={getAllQuestions}
+                key={ele.id}
+              />
+            ))
+          : questions.map((ele) => (
+              <CardDoubts
+                question={ele}
+                callback={getAllQuestions}
+                key={ele.id}
+              />
+            ))}
+      </VStack>
+    </Box>
+  );
+}

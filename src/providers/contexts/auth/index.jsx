@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useUsers } from "../../hooks";
 import { api } from "../../../services/api";
 
 const AuthContext = createContext({});
@@ -8,7 +7,6 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
-  const { users, setUsers } = useUsers({});
 
   useEffect(() => {
     const accessToken = localStorage.getItem("@StackKenzie:accessToken");
@@ -49,7 +47,6 @@ const AuthProvider = ({ children }) => {
       .post("/signup", data)
       .then(() => {
         signIn(data.email, data.password);
-        setUsers([...users, ...data]);
       })
       .catch((err) => {
         alert(err.message);
