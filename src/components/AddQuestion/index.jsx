@@ -20,8 +20,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function AddQuestion() {
-  const [titleQuestion, setTitleQuestion] = useState("");
-  const [bodyQuestion, setBodyQuestion] = useState("");
   const { createQuestion } = useQuestions();
   const { user } = useAuth();
   const getHours = () => {
@@ -51,7 +49,8 @@ export default function AddQuestion() {
     handleSubmit,
   } = useForm({ resolver: yupResolver(QuestionSchema) });
 
-  const handleClick = () => {
+  const handleClick = ({ titleQuestion, bodyQuestion }) => {
+    console.log(titleQuestion, bodyQuestion);
     const date = getHours();
     createQuestion({
       userId: user.id,
@@ -93,7 +92,7 @@ export default function AddQuestion() {
         <InputChakra
           placeholder="Digite o título da sua pergunta"
           label="Título da pergunta"
-          onChange={(e) => setTitleQuestion(e.currentTarget.value)}
+          // onChange={(e) => setTitleQuestion(e.currentTarget.value)}
           h="40px"
           error={errors.titleQuestion}
           {...register("titleQuestion")}
@@ -102,7 +101,7 @@ export default function AddQuestion() {
         <TextAreaChakra
           placeholder="Descreva com detalhes a sua dúvida"
           label="Descreva sua dúvida"
-          onChange={(e) => setBodyQuestion(e.currentTarget.value)}
+          // onChange={(e) => setBodyQuestion(e.currentTarget.value)}
           h="190px"
           error={errors.bodyQuestion}
           {...register("bodyQuestion")}
@@ -128,7 +127,7 @@ export default function AddQuestion() {
             <AddTag />
           </Flex>
         </Box>
-        <Button onClick={handleClick} type="submit" variant="ButtonFilledBlue">
+        <Button type="submit" variant="ButtonFilledBlue">
           ENVIAR PERGUNTA
         </Button>
       </VStack>

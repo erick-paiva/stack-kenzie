@@ -4,9 +4,12 @@ export default function CardComment({
   question,
   ImgDefault,
   comments,
-  answers,
+  answerBody,
   user,
 }) {
+  console.log(comments, "comment");
+  console.log(answerBody, "answers");
+
   return (
     <Flex
       minH="150px"
@@ -49,7 +52,7 @@ export default function CardComment({
       >
         <Text fontSize="16px" fontWeight="400" lineHeight="24px">
           {!!comments && comments}
-          {!!answers && answers}
+          {!!answerBody && answerBody}
         </Text>
       </Flex>
     </Flex>
