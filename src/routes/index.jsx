@@ -1,8 +1,9 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import ExampleContext from "../pages/ExampleContext";
-
-import { Stack, Text } from "@chakra-ui/react";
+import Dashboard from "../pages/Dashboard";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/Signup";
+import Error404 from "../pages/Error404";
 
 const RouteProtected = ({ component: Component, ...rest }) => {
   const isAuth = localStorage.getItem("@StackKenzie:user");
@@ -13,107 +14,44 @@ const RouteProtected = ({ component: Component, ...rest }) => {
         isAuth ? (
           <Component {...props} />
         ) : (
-          <Redirect
-            to={{ pathname: "/signin", state: { from: props.location } }}
-          />
+          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
         )
       }
     />
   );
 };
 
-const LeadPage = () => {
+const RouteVerifield = ({ component: Component, ...rest }) => {
+  const isAuth = localStorage.getItem("@StackKenzie:user");
   return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="orange"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela da LeadPage
-      </Text>
-    </Stack>
-  );
-};
-const SignIn = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="purple"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela de Login
-      </Text>
-    </Stack>
-  );
-};
-const SignUp = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="gray"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela de Cadastro
-      </Text>
-    </Stack>
-  );
-};
-const Dashboard = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="green"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela do Dashboard
-      </Text>
-    </Stack>
-  );
-};
-const PageError = () => {
-  return (
-    <Stack
-      w="100vw"
-      h="100vh"
-      align="center"
-      justifyContent="center"
-      color="red"
-    >
-      <Text margin="auto" fontSize="10rem" align="center">
-        Tela de Erro 404
-      </Text>
-    </Stack>
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuth ? (
+          <Redirect
+            to={{ pathname: "/dashboard", state: { from: props.location } }}
+          />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
   );
 };
 
 const AllRoutes = () => {
   return (
     <Switch>
-      {/* PRINCIPAIS ROTAS */}
-      <Route exact path="/" component={LeadPage} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
+      {/* ROTAS VERIFICADAS */}
+      {/* <Route exact path="/" component={LeadPage} /> */}
+      <RouteVerifield exact path="/" component={SignIn} />
+      <RouteVerifield path="/signup" component={SignUp} />
 
       {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />
 
-      {/* ROTAS NÃO CADASTRADAS */}
-      <Route path="/examplecontext" component={ExampleContext} />
-
       {/* ROTAS NÃO ENCONTRADAS */}
-      <Route path="/*" component={PageError} />
+      <Route path="/*" component={Error404} />
     </Switch>
   );
 };

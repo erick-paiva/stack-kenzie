@@ -1,11 +1,16 @@
-import { createContext, useCallback, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { api } from "../../../services/api";
+import { useUsers } from "../../hooks";
 
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
+
+  const { users, setUsers } = useUsers();
+  const history = useHistory();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("@StackKenzie:accessToken");
@@ -33,23 +38,18 @@ const AuthProvider = ({ children }) => {
 
         setAccessToken(response.data.accessToken);
         setUser(response.data.user);
+        history.push("/dashboard");
       })
       .catch((err) => alert(err.message));
   };
 
   //Função Cadastrar
-  const signUp = async (name, email, password, bio, module, coach = false) => {
+  const signUp = async (data) => {
     await api
-      .post("/register", {
-        name,
-        email,
-        password,
-        bio,
-        module,
-        coach,
-      })
+      .post("/signup", data)
       .then((response) => {
-        alert(`Cadastrado com sucesso o: ${response.data.user.name}`);
+        setUsers([...users, response.data.user]);
+        signIn(data.email, data.password);
       })
       .catch((err) => {
         alert(err.message);
@@ -57,7 +57,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, user, signIn, signUp }}>
+    <AuthContext.Provider
+      value={{ accessToken, user, setUser, signIn, signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );
