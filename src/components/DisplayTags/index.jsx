@@ -1,15 +1,9 @@
 import { Box, Text, Stack, Button } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
-<<<<<<< HEAD
-const DisplayTags = () => {
-  const { tags, updateTags } = useTags();
-  
-=======
 const DisplayTags = ({handleTagClick, tagsSelected}) => {
   const { tags } = useTags();
 
->>>>>>> c880cab0b99a0f26b16c65e8cd98c63c662f0a7a
   return (
     <Box>
       <Text color="#0001FF" fontWeight="bold">
