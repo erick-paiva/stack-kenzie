@@ -1,12 +1,15 @@
 import { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../../../services/api";
+import { useUsers } from "../../hooks";
 
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
+
+  const { users, setUsers } = useUsers();
   const history = useHistory();
 
   useEffect(() => {
@@ -18,8 +21,6 @@ const AuthProvider = ({ children }) => {
       setUser(JSON.parse(user));
     }
   }, []);
-  
-  
 
   //Função Login
   const signIn = async (email, password) => {
@@ -46,7 +47,8 @@ const AuthProvider = ({ children }) => {
   const signUp = async (data) => {
     await api
       .post("/signup", data)
-      .then(() => {
+      .then((response) => {
+        setUsers([...users, response.data.user]);
         signIn(data.email, data.password);
       })
       .catch((err) => {
@@ -55,7 +57,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, user, setUser, signIn, signUp }}>
+    <AuthContext.Provider
+      value={{ accessToken, user, setUser, signIn, signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );

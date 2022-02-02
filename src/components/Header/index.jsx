@@ -53,8 +53,9 @@ export function Header({ setNameSearch }) {
               defaultBorder="blue"
               h="50px"
               maxW="500px"
-              onChange={(e) => setNameSearch(e.currentTarget.value)}
+              onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
             />
+
             <Box onClick={onOpen} cursor="pointer">
               <Avatar userCreator={user} sm />
               <ModalProfileUser
@@ -74,7 +75,7 @@ export function Header({ setNameSearch }) {
             border="2px solid red"
             defaultBorder="blue"
             h="50px"
-            onChange={(e) => setNameSearch(e.currentTarget.value)}
+            onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
           />
         </Flex>
       )}
