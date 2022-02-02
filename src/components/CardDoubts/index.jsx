@@ -1,14 +1,12 @@
 import {
   Box,
   Button,
-  Center,
   Flex,
   Heading,
   HStack,
   Text,
   useDisclosure,
   useMediaQuery,
-  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
@@ -47,7 +45,9 @@ export default function CardDoubts({ question, callback, disable = false }) {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
-    api.get("/answers").then((resp) => setAnswers(resp.data));
+    api
+      .get(`/answers?postId=${question?.id}`)
+      .then((resp) => setAnswers(resp.data));
     api
       .get(`/comments?postId=${question?.id}`)
       .then((resp) => setComments(resp.data));
@@ -150,6 +150,9 @@ export default function CardDoubts({ question, callback, disable = false }) {
       )
       .then(() => callback());
   };
+
+  console.log(answers);
+  console.log(comments, "commnets");
 
   return (
     <ContainerBase
@@ -282,6 +285,25 @@ export default function CardDoubts({ question, callback, disable = false }) {
             user={user}
           />
           <Box width={"95%"}>
+            <Flex flexDirection={"column"} alignItems={"center"} width={"100%"}>
+              {user?.coach && (
+                <AddAnswer postId={question.id} getData={getData} />
+              )}
+
+              {!!answers &&
+                answers.map((ele, key) => (
+                  <CardComment
+                    key={key}
+                    question={question}
+                    ImgDefault={ImgDefault}
+                    deleteQuestion={deleteQuestion}
+                    answers={ele.answers}
+                    deslike={deslike}
+                    like={like}
+                    user={ele.userId}
+                  />
+                ))}
+            </Flex>
             <Flex>
               <Box
                 maxHeight={"400px"}
@@ -306,7 +328,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
                   },
                 }}
               >
-                {user?.coach && <AddAnswer postId={question.id} />}
                 <Flex
                   flexDirection={"column"}
                   alignItems={"flex-end"}
@@ -319,7 +340,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
                         question={question}
                         ImgDefault={ImgDefault}
                         deleteQuestion={deleteQuestion}
-                        answers={answers}
                         deslike={deslike}
                         like={like}
                         comments={ele.comment}
@@ -332,7 +352,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
         </Flex>
         <AddComment postId={question.id} getData={getData} />
-        <AddAnswer postId={question.id} />
       </ModalChakra>
 
       <ModalProfileUsers

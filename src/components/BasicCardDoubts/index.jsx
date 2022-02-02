@@ -31,8 +31,6 @@ export default function BasicCardDoubts({
   return (
     <Flex
       minH="200px"
-      // minW="320px"
-      // maxW="600px"
       borderRadius="6px"
       alignItems="center"
       boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
@@ -51,7 +49,7 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar userCreator={ImgDefault} />
+        <Avatar sm userCreator={ImgDefault} />
         {!isMobile && (
           <VStack spacing="2" color="primary">
             {question.userId === user.id && (
