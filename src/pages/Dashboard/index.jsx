@@ -38,59 +38,22 @@ export default function Dashboard() {
   console.log(questions)
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [ tagSelected, setTagSelected] = useState([])
-  // const questionFilter =
-  //   questions.filter(
-  //     (ele) =>
-  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-  //   ) || [];
+  const [questionFilter, setQuestionFilter] = useState([])
 
-  const [questionFilter, setQuestionFilter] = useState([]);
-
-
-  useEffect(() => {
-    const filtered =
-      questions.filter(
-        (ele) =>
-          ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-          ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-      ) || [];
-    setQuestionFilter(filtered);
-  }, [nameSearch]);
-
-
-  // useEffect(() => {
-  //   if (nameSearch.length > 0) {
-  //     setQuestionFilter(filter(questions));
-  //   } else {
-  //     setQuestionFilter(questions);
-  //   }
-  // }, [nameSearch]);
-
-  // console.log(nameSearch);
-  // console.log(nameSearch.length);
-  // console.log(questionFilter);
-
-  // filtro vindo da busca
-  // guardar num state os valores vindos da busca
-  // filtra as questions para trazer apenas as que tiverem em seu nome
-  //ou no body
-
-  // filtro vindo da escolha da tag
-  // guardar num state os valores vindos das tags selecionadas
-  // adiciona um filtro para mostrar apenas as questions que tiverem a
-  // a tag selecionada
-
-  // ordenar
+  const test = () => {
+    const filter = questions.filter(ele => ele.tags.some(ele => ele) )
+  }
 
   const handleTagClick = (value) => {
-    console.log(questions);
-    if (questions.some((e) => e.questions.tags !== value)) {
+    if (!tagSelected.some((e) => e === value)) {
       setTagSelected([...tagSelected, value]);
     } else {
-      setTagSelected(questions.filter((e) => e.questions.tags !== value));
+      setTagSelected(tagSelected.filter((e) => e !== value));
     }
   };
+  useEffect(() => {
+    console.log(tagSelected, "aa")
+  },[questionFilter, nameSearch,tagSelected])
 
   return (
     <Box>
@@ -110,7 +73,7 @@ export default function Dashboard() {
           overflowX="hidden"
           sx={scroll}
         >
-          {questionFilter.map((ele, i) => (
+          {(questionFilter.length > 0 ? questionFilter: questions).map((ele, i) => (
             <CardDoubts question={ele} callback={getAllQuestions} key={i} />
           ))}
 
