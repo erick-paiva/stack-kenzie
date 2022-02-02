@@ -6,15 +6,10 @@ import {
   ModalBody,
   ModalCloseButton,
   Flex,
-  Box,
-  Text,
-  Heading,
 } from "@chakra-ui/react";
 import AddAnswer from "../AddAnswer";
 import AddComment from "../AddComment";
 import BasicCardDoubts from "../BasicCardDoubts";
-import CardComment from "../CardComment";
-import CardDoubts from "../CardDoubts";
 
 function ModalChakra({
   isOpen,
@@ -29,7 +24,6 @@ function ModalChakra({
   comments,
   user,
 }) {
-  console.log(question);
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size={"full"}>

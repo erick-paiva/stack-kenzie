@@ -5,6 +5,7 @@ import { useTags } from "../../providers/hooks";
 const DesplayTags = () => {
   const { tags } = useTags();
 
+
   return (
     <Box>
       <Text color="#0001FF" fontWeight="bold">
