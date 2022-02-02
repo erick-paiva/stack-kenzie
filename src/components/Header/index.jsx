@@ -51,7 +51,7 @@ export function Header({ setNameSearch }) {
                 border="2px solid red"
                 defaultBorder="blue"
                 h="50px"
-                onChange={(e) => setNameSearch(e.currentTarget.value)}
+                onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
               />
             </Box>
             <Box onClick={onOpen} cursor="pointer">
@@ -79,7 +79,7 @@ export function Header({ setNameSearch }) {
             border="2px solid red"
             defaultBorder="blue"
             h="50px"
-            onChange={(e) => setNameSearch(e.currentTarget.value)}
+            onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
           />
         </Flex>
       )}
