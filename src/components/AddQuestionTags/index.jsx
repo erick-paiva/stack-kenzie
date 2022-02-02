@@ -1,46 +1,38 @@
-import {
-    Flex,
-    useDisclosure,
-  } from "@chakra-ui/react";
-  
-  import ModalChakra from "../ModalChakra";
-  import DisplayTags from "../../components/DisplayTags";
+import { Flex, useDisclosure, Button } from '@chakra-ui/react';
 
+import ModalChakra from '../ModalChakra';
+import DisplayTags from '../../components/DisplayTags';
 
+export default function AddTag({ tagSelected, setTagSelected }) {
+	const handleTagClick = (value) => {
+		if (!tagSelected.some((e) => e === value)) {
+			setTagSelected([ ...tagSelected, value ]);
+		} else {
+			setTagSelected(tagSelected.filter((e) => e !== value));
+		}
+		console.log(tagSelected);
+	};
 
-  
-  export default function AddTag() {
-    
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-  
-    
-    return (
-      <ModalChakra
-        title="Adicionar tags"
-        buttonText="Adicionar tags"
-        
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onClose={onClose}
-      >
-
-            <Flex
-              h="fitContent"
-              w="100%"
-              mt="20px"
-              justifyContent="center"
-              alignItems="center"
-              flexWrap={"wrap"}
-              p="0 0 20px"
-            >
-              <DisplayTags />              
-            </Flex>
-          
-  
-          
-          
-      </ModalChakra>
-    );
-  }
-  
+	return (
+		<div>
+			<Button onClick={onOpen} variant="ButtonBorderedSmall">
+				Adicionar Tags
+			</Button>
+			<ModalChakra title="Adicionar tags" isOpen={isOpen} onClose={onClose}>
+				<Flex
+					h="fitContent"
+					w="100%"
+					mt="20px"
+					justifyContent="center"
+					alignItems="center"
+					flexWrap={'wrap'}
+					p="0 0 20px"
+				>
+					<DisplayTags handleTagClick={handleTagClick} tagsSelected={tagSelected} />
+				</Flex>
+			</ModalChakra>
+		</div>
+	);
+}
