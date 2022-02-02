@@ -36,7 +36,7 @@ export default function Dashboard() {
   const [nameSearch, setNameSearch] = useState("");
   const [options, setOption] = useState([])
 
-
+  console.log(questions)
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const questionFilter =
     questions.filter(
@@ -83,7 +83,7 @@ export default function Dashboard() {
                   key={ele.id}
                 />
               ))
-            : (options.length > 0 ? options : questions).map((ele) => (
+            : (options.length > 0  ? options : questions).map((ele) => (
                 <CardDoubts
                   question={ele}
                   callback={getAllQuestions}

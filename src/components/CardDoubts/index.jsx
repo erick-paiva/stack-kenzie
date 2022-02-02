@@ -284,6 +284,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
                   },
                 }}
               >
+                {user?.coach && <AddAnswer postId={question.id} />}
                 <Flex
                   flexDirection={"column"}
                   alignItems={"flex-end"}
@@ -309,7 +310,6 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
         </Flex>
         <AddComment postId={question.id} />
-        <AddAnswer postId={question.id} />
       </ModalChakra>
 
       <ModalProfileUsers
