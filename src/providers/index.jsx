@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
+import { UserProvider } from "./contexts/users";
 import { QuestionProvider } from "./contexts/questions";
 import { AnswerProvider } from "./contexts/answers";
 import { CommentProvider } from "./contexts/comments";
@@ -18,6 +19,7 @@ const composeProviders =
 export const AllProviders = composeProviders(
   ThemeProvider,
   BrowserRouter,
+  UserProvider,
   AuthProvider,
   QuestionProvider,
   AnswerProvider,
