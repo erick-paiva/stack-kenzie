@@ -1,9 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
-import { UserProvider } from "./contexts/auth";
+import { UserProvider } from "./contexts/users";
 import { QuestionProvider } from "./contexts/questions";
 import { AnswerProvider } from "./contexts/answers";
 import { CommentProvider } from "./contexts/comments";
+import { TagProvider } from "./contexts/tags";
 import { ThemeProvider } from "./contexts/theme";
 
 const composeProviders =
@@ -22,7 +23,8 @@ export const AllProviders = composeProviders(
   UserProvider,
   QuestionProvider,
   AnswerProvider,
-  CommentProvider
+  CommentProvider,
+  TagProvider
 );
 //ATENÇÃO => A FUNÇÃO LER O PROVIDER DA DIREITA PARA ESQUERDA.
 

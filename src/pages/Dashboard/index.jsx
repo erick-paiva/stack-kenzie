@@ -7,7 +7,6 @@ import { useQuestions, useComments, useAnswers } from "../../providers/hooks";
 
 const Dashboard = () => {
   const { answers } = useAnswers();
-  console.log("answers: ", answers);
   return (
     <Grid
       templateRows="repeat(1, 1fr)"
@@ -17,10 +16,10 @@ const Dashboard = () => {
       <GridItem colSpan={12}>
         <Header />
       </GridItem>
-      <GridItem rowSpan={2} colSpan={8} bg="papayawhip">
+      <GridItem rowSpan={2} colSpan={8}>
         {answers && answers.map((answer) => <CardAnswer answer={answer} />)}
       </GridItem>
-      <GridItem rowSpan={2} colSpan={4} h="100px" bg="tomato">
+      <GridItem rowSpan={2} colSpan={4} h="100px">
         <DesplayTags />
       </GridItem>
     </Grid>

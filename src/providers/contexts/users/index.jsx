@@ -5,7 +5,7 @@ const UserContext = createContext({});
 
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
+  const [oneUser, setOneUser] = useState({});
 
   useEffect(() => {
     api
@@ -31,13 +31,15 @@ const UserProvider = ({ children }) => {
     await api
       .post(`/users/${userId}`)
       .then((response) => {
-        setUser(response.data);
+        setOneUser(response.data);
       })
       .catch((err) => alert(err.message));
   };
 
   return (
-    <UserContext.Provider value={{ users, user, getAllUsers, getOneUser }}>
+    <UserContext.Provider
+      value={{ users, oneUser, setUsers, setOneUser, getAllUsers, getOneUser }}
+    >
       {children}
     </UserContext.Provider>
   );
