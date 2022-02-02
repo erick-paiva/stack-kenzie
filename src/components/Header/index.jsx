@@ -39,7 +39,6 @@ export function Header({ setNameSearch }) {
           <Box onClick={onOpen} cursor="pointer">
             <Avatar userCreator={user} />
             <ModalProfileUser
-              onOpen={onOpen}
               isOpen={isOpen}
               onClose={onClose}
             />
@@ -59,7 +58,6 @@ export function Header({ setNameSearch }) {
             <Box onClick={onOpen} cursor="pointer">
               <Avatar userCreator={user} sm />
               <ModalProfileUser
-                onOpen={onOpen}
                 isOpen={isOpen}
                 onClose={onClose}
               />

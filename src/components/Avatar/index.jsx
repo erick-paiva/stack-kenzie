@@ -4,20 +4,14 @@ import ImgDefault from "../../assets/user_sign.png";
 
 
 
-export default function Avatar({ userCreator, callback, sm }) {
+export default function Avatar({ userCreator, sm }) {
   return (
     <Center
       flexDir={"column"}
       as="figure"
-      onClick={(e) => {
-        callback();
-        e.stopPropagation();
-      }}
     >
       <Image
         src={!!userCreator?.image ? userCreator.image : ImgDefault}
-        //src={!!userCreator?.image ? userCreator.image : <Avatar src='https://bit.ly/broken-link' />}
-
         borderRadius="full"
         minW={sm ? "60px" : "100px"}
         minH={sm ? "60px" : "100px"}
