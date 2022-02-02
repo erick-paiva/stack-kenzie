@@ -1,7 +1,7 @@
 import { Box, Text, Stack, Button } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
-const DesplayTags = () => {
+const DisplayTags = ({handleTagClick, tagsSelected}) => {
   const { tags } = useTags();
 
   return (
@@ -23,11 +23,12 @@ const DesplayTags = () => {
       >
         {tags.map((tag) => (
           <Button
-            key={tag.name}
-            variant="TagButton"
+            key={tag}
+            variant={tagsSelected.some(ele => ele === tag) ? "TagButtonOn" : "TagButton"}
             borderRadius="5px"
             margin="2px 5px"
             cursor="pointer"
+            onClick={() => handleTagClick(tag)}
           >
             {tag}
           </Button>
@@ -37,4 +38,4 @@ const DesplayTags = () => {
   );
 };
 
-export default DesplayTags;
+export default DisplayTags;
