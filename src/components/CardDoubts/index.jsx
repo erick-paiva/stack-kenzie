@@ -205,7 +205,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
         </Box>
       ) : (
         <Flex w="100%">
-          <Avatar userCreator={userCreator} callback={onOpenUsers} />
+          <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
           <Box ml="20px" w="full">
             <Heading>{question?.question.title}</Heading>
 
