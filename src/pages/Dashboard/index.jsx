@@ -38,7 +38,7 @@ export default function Dashboard() {
   const [option, setOption] = useState([]);
   const [nameSearch, setNameSearch] = useState("");
 
-  console.log(questions);
+  // console.log(questions);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
   // const questionFilter =

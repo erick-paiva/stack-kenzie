@@ -161,11 +161,22 @@ export default function CardDoubts({ question, callback, disable = false }) {
         <Box>
           <Flex justifyContent={"space-between"} mb="20px">
             <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
-            <DisplayStatus answers={answers} question={question} likes={question.question?.likes.length} comments={comments.length} />
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={question.question?.likes.length}
+              comments={comments.length}
+            />
           </Flex>
           <Box>
             <Heading>{question?.question.title}</Heading>
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
             <Flex my="20px" flexWrap="wrap">
@@ -198,7 +209,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
           <Box ml="20px" w="full">
             <Heading>{question?.question.title}</Heading>
 
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
 
@@ -228,7 +244,12 @@ export default function CardDoubts({ question, callback, disable = false }) {
           </Box>
 
           <Box mt="10px">
-          <DisplayStatus answers={answers} question={question} likes={question.question.likes.length} comments={comments.length} />
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={question.question.likes.length}
+              comments={comments.length}
+            />
             {liked ? (
               <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
                 <HStack alignItems={"flex-end"}>
