@@ -74,5 +74,23 @@ export const ButtonStyles = {
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },
+    TagButtonOn: {
+      fontSize: "12px",
+      size: "sm",
+      bg: blacken("white", 5),
+      color: "primary",
+      border: "1px solid",
+      borderColor: "primary",
+      width: "fit-content",
+      height: "fit-content",
+      padding: "4px",
+      _hover: {
+        transform: "scale(1.02)",
+        bg: "transparent",
+        color: "gray.300",
+        borderColor: "gray.300",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
   },
 };

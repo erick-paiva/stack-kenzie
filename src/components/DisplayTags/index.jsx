@@ -1,10 +1,8 @@
-import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Text, Stack, Button } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
 const DesplayTags = () => {
   const { tags } = useTags();
-
 
   return (
     <Box>
