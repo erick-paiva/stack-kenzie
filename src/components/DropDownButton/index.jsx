@@ -7,15 +7,22 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
+import { useEffect, useState } from "react/cjs/react.development";
 import { useQuestions } from "../../providers/hooks";
 
-export default function DropDownButton({ itens, setOption }) {
-  const { questions } = useQuestions();
+export default function DropDownButton({ itens, setOption, option, setArray, array }) {
+
+
+  // useEffect(() => {
+  //   setItem(option)
+  //   console.log("alterou")
+  // },[questions,option])
+  console.log(option, "opt")
 
   const setItem = (option) => {
     if (option === 0) {
-      setOption(
-        questions
+      setArray(
+        array
           .slice()
           .sort((a, b) => {
             if (a.date.month > b.date.month) {
@@ -39,13 +46,17 @@ export default function DropDownButton({ itens, setOption }) {
     }
 
     if (option === 1) {
-      setOption(
-        questions
+      setArray(
+        array
           .slice()
           .sort((a, b) => b.question?.likes.length - a.question?.likes.length)
       );
     }
   };
+
+  useEffect(() => {
+    setItem(option)
+  },[option,array])
   return (
     <Menu>
       <MenuButton
@@ -58,7 +69,7 @@ export default function DropDownButton({ itens, setOption }) {
       </MenuButton>
       <MenuList>
         {itens.map((ele, index) => (
-          <Box onClick={() => setItem(index)} key={ele}>
+          <Box onClick={() => setOption(index)} key={ele}>
             <MenuItem>{ele}</MenuItem>
           </Box>
         ))}
