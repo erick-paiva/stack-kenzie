@@ -38,6 +38,7 @@ const CommentProvider = ({ children }) => {
   const getAllComments = async () => {
     api.get("/comments").then((response) => {
       SetComments(response.data);
+      console.log("todo os comements: ", response.data);
     });
   };
 

@@ -2,7 +2,7 @@ import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTags } from "../../providers/hooks";
 
-const DesplayTags = () => {
+const DisplayTags = () => {
   const { tags } = useTags();
 
   return (
@@ -38,4 +38,4 @@ const DesplayTags = () => {
   );
 };
 
-export default DesplayTags;
+export default DisplayTags;

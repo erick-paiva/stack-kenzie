@@ -154,26 +154,6 @@ export default function Dashboard() {
                   itens={["Data", "Curtidas"]}
                   setOption={setOption}
                 />
-                {/* <Heading size={"sm"}>Tags</Heading>
-                <Button
-                  onClick={() => handleTagClick("JAVASCRIPT")}
-                  variant={"TagButton"}
-                >
-                  JAVASCRIPT
-                </Button>
-                <Button
-                  onClick={() => handleTagClick("Q2")}
-                  variant={"TagButton"}
-                >
-                  Q2
-                </Button>
-                <Button
-                  onClick={() => handleTagClick("REACT")}
-                  variant={"TagButton"}
-                >
-                  REACT
-                </Button>
-            */}
                 <DisplayTags />
               </>
             )}
