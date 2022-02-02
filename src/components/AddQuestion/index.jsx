@@ -10,7 +10,7 @@ import { InputChakra } from "../InputChakra";
 import { TextAreaChakra } from "../TextAreaChakra";
 
 import { useState } from "react/cjs/react.development";
-import { useAuth, useQuestions } from "../../providers/hooks";
+import { useAuth, useQuestions, useTags } from "../../providers/hooks";
 import ModalChakra from "../ModalChakra";
 import AddTag from "../AddQuestionTags";
 // import { AddTag } from "../AddQuestionTags";
@@ -30,6 +30,9 @@ export default function AddQuestion() {
 
     return { day: dia, month: mes, year: ano, hour: hora, minutes: min };
   };
+
+
+  const { tags, updateTags } = useTags();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -83,9 +86,9 @@ export default function AddQuestion() {
               flexWrap={"wrap"}
               p="5px"
             >
-              <Button variant={"tagButton"}>JAVASCRIPT</Button>
-              <Button variant={"tagButton"}>REACT</Button>
-              <Button variant={"tagButton"}>CSS</Button>
+              {tags?.map(element => (
+                  element.isActive && <p>{element.name}</p>
+              ))}
             </Flex>
             <AddTag />
           </Flex>
