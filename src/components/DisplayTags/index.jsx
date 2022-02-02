@@ -1,5 +1,4 @@
-import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Text, Stack, Button } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
 const DesplayTags = () => {
@@ -25,7 +24,7 @@ const DesplayTags = () => {
         {tags.map((tag) => (
           <Button
             key={tag.name}
-            variant="TagButtonOn"
+            variant="TagButton"
             borderRadius="5px"
             margin="2px 5px"
             cursor="pointer"
