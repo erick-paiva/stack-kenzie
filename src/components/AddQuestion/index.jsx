@@ -35,8 +35,7 @@ export default function AddQuestion() {
     return { day: dia, month: mes, year: ano, hour: hora, minutes: min };
   };
 
-
-  const { tags, updateTags } = useTags();
+  const { tags } = useTags();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -122,14 +121,14 @@ export default function AddQuestion() {
               flexWrap={"wrap"}
               p="5px"
             >
-              {tags?.map(element => (
-                  element.isActive && <p>{element.name}</p>
-              ))}
+              {tags?.map(
+                (element) => element.isActive && <p>{element.name}</p>
+              )}
             </Flex>
             <AddTag />
           </Flex>
         </Box>
-        <Button onClick={handleClick} type="submit" Button variant="ButtonFilledBlue">
+        <Button onClick={handleClick} type="submit" variant="ButtonFilledBlue">
           ENVIAR PERGUNTA
         </Button>
       </VStack>
