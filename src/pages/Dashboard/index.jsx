@@ -65,7 +65,6 @@ export default function Dashboard() {
 
   }, [tagSelected, nameSearch,questions]);
 
-  console.log(questionFilter,"fill")
   return (
     <Box>
       <Header setNameSearch={setNameSearch} />
