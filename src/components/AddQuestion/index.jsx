@@ -12,6 +12,8 @@ import { TextAreaChakra } from "../TextAreaChakra";
 import { useState } from "react/cjs/react.development";
 import { useAuth, useQuestions } from "../../providers/hooks";
 import ModalChakra from "../ModalChakra";
+import AddTag from "../AddQuestionTags";
+// import { AddTag } from "../AddQuestionTags";
 
 export default function AddQuestion() {
   const [titleQuestion, setTitleQuestion] = useState("");
@@ -85,9 +87,7 @@ export default function AddQuestion() {
               <Button variant={"tagButton"}>REACT</Button>
               <Button variant={"tagButton"}>CSS</Button>
             </Flex>
-            <Button ml={"20px"} variant={"ButtonBorderedSmall"}>
-              Tags
-            </Button>
+            <AddTag />
           </Flex>
         </Box>
         <Button onClick={handleClick} variant="ButtonFilledBlue">

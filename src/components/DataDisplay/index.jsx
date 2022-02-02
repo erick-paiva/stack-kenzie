@@ -1,9 +1,9 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 
 function DisplayStatus({ answers, question, likes, comments }) {
   return (
-    <VStack spacing="2" color="primary">
+    <VStack spacing="5px" color="primary">
       <Text
         fontSize="12px"
         fontWeight="700"
@@ -21,9 +21,11 @@ function DisplayStatus({ answers, question, likes, comments }) {
           ? "RESPONDIDO"
           : "SEM RESPOSTA"}
       </Text>
-      <Text fontSize="14px">{likes} curtidas</Text>
-      <Text fontSize="14px">{comments} comentários</Text>
-      </VStack>
+      <Box alignItems={"start"}>
+        <Text fontSize="14px">{likes} curtidas</Text>
+        <Text fontSize="14px">{comments} comentários</Text>
+      </Box>
+    </VStack>
   );
 }
 
