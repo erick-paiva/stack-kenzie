@@ -119,7 +119,9 @@ export default function FormSignUp() {
         >
           <Text>Módulo</Text>
           <Stack spacing={"auto"} direction="row" mt="8px" ml="10px">
-            <Radio value={"Q1"}>Q1</Radio>
+            <Radio isRequired value={"Q1"}>
+              Q1
+            </Radio>
             <Radio value={"Q2"}>Q2</Radio>
             <Radio value={"Q3"}>Q3</Radio>
             <Radio value={"Q4"}>Q4</Radio>
