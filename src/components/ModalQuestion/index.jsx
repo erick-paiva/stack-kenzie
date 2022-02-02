@@ -33,9 +33,8 @@ function ModalChakra({
           <ModalCloseButton />
           <ModalBody>
             <Flex
-              // width={"100%"}
-              // justifyContent={"center"}
-              // alignItems={"center"}
+              width={"100%"}
+              alignItems={"center"}
               justifyContent={"flex-end"}
             >
               <BasicCardDoubts
@@ -48,11 +47,9 @@ function ModalChakra({
                 comments={comments}
                 user={user}
               />
-              {/* <CardDoubts question={question} disable callback={callback} /> */}
             </Flex>
 
             <AddComment postId={question.id} />
-            <AddAnswer postId={question.id} />
           </ModalBody>
         </ModalContent>
       </Modal>
