@@ -2,8 +2,9 @@ import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTags } from "../../providers/hooks";
 
-const DesplayTags = ({handleTagClick}) => {
-  const { tags, updateTags } = useTags();
+const DesplayTags = () => {
+  const { tags } = useTags();
+
 
   return (
     <Box>
@@ -28,10 +29,9 @@ const DesplayTags = ({handleTagClick}) => {
             variant="TagButton"
             borderRadius="5px"
             margin="2px 5px"
-            onClick={() =>{updateTags(tag.name);handleTagClick(tag.name)}}
             cursor="pointer"
           >
-            {tag.name}
+            {tag}
           </Button>
         ))}
       </Stack>
