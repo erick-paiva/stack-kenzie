@@ -81,7 +81,6 @@ export default function Dashboard() {
       setQuestionFilter(questions);
     }
   }, [tagSelected, nameSearch, questions]);
-
   return (
     <>
       {isMobile ? (

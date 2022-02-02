@@ -7,8 +7,6 @@ export default function CardComment({
   answerBody,
   user,
 }) {
-  console.log(comments, "comment");
-  console.log(answerBody, "answers");
 
   return (
     <Flex
