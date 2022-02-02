@@ -34,7 +34,7 @@ export default function FormSignUp() {
       .string()
       .required("E-mail Obrigatório!")
       .email("Precisa ser um E-mail"),
-    slack: yup.string().required("Campo Obrigatório!"),
+    linkedin: yup.string().required("Campo Obrigatório!"),
     module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     password: yup
       .string()
@@ -76,7 +76,7 @@ export default function FormSignUp() {
       >
         <InputChakra
           name="name"
-          placeholder="Nome"
+          placeholder="nome"
           label="Nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
@@ -87,6 +87,7 @@ export default function FormSignUp() {
 
         <InputChakra
           label="Email"
+          placeholder="email@email.com"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
@@ -95,12 +96,13 @@ export default function FormSignUp() {
         />
 
         <InputChakra
-          label="Slack"
+          label="LinkedIn"
+          placeholder="www.linkedin.com/nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
-          error={errors.email}
-          {...register("slack")}
+          error={errors.linkedin}
+          {...register("linkedin")}
         />
 
         <RadioGroup
