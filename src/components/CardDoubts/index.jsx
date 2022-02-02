@@ -170,7 +170,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             </Text>
             <Flex my="20px" flexWrap="wrap">
               {question?.tags?.map((tag) => (
-                <Button variant={"TagButton"} mx="5px" mb="5px">
+                <Button key={tag} variant={"TagButton"} mx="5px" mb="5px">
                   {tag}
                 </Button>
               ))}

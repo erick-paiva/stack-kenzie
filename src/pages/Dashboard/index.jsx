@@ -14,7 +14,6 @@ import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
-import ModalChakra from "../../components/ModalChakra";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -32,25 +31,59 @@ const scroll = {
 };
 
 export default function Dashboard() {
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
   const { questions, getAllQuestions } = useQuestions();
-  const [update, setUpdate] = useState(true);
+  // const [update, setUpdate] = useState(true);
   const [nameSearch, setNameSearch] = useState("");
 
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
-
-  const questionFilter =
-    questions.filter(
-      (ele) =>
-        ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-        ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-    ) || [];
+  const [questionFilter, setQuestionFilter] = useState(questions);
 
   useEffect(() => {
-    setTimeout(() => {
-      setUpdate(!update);
-      getAllQuestions();
-    }, 5000);
-  }, [update]);
+    if (nameSearch.length > 0) {
+      setQuestionFilter(
+        questions.filter(
+          (ele) =>
+            ele.question.title
+              .toLowerCase()
+              .includes(nameSearch.toLowerCase()) ||
+            ele.question.body
+              .toLowerCase()
+              .includes(nameSearch.toLowerCase()) ||
+            []
+        )
+      );
+    } else {
+      setQuestionFilter(questions);
+    }
+  }, [nameSearch]);
+
+  console.log(nameSearch);
+  console.log(nameSearch.length);
+  console.log(questionFilter);
+
+  // filtro vindo da busca
+  // guardar num state os valores vindos da busca
+  // filtra as questions para trazer apenas as que tiverem em seu nome
+  //ou no body
+
+  // filtro vindo da escolha da tag
+  // guardar num state os valores vindos das tags selecionadas
+  // adiciona um filtro para mostrar apenas as questions que tiverem a
+  // a tag selecionada
+
+  // const questionFilter =
+  //   questions.filter(
+  //     (ele) =>
+  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
+  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+  //   ) || [];
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUpdate(!update);
+  //     getAllQuestions();
+  //   }, 5000);
+  // }, [update]);
 
   return (
     <Box>
@@ -70,21 +103,9 @@ export default function Dashboard() {
           overflowX="hidden"
           sx={scroll}
         >
-          {!!nameSearch
-            ? questionFilter?.map((ele) => (
-                <CardDoubts
-                  question={ele}
-                  callback={getAllQuestions}
-                  key={ele.id}
-                />
-              ))
-            : questions.map((ele) => (
-                <CardDoubts
-                  question={ele}
-                  callback={getAllQuestions}
-                  key={ele.id}
-                />
-              ))}
+          {questionFilter.map((ele, i) => (
+            <CardDoubts question={ele} callback={getAllQuestions} key={i} />
+          ))}
 
           {questionFilter.length === 0 && (
             <Text
@@ -103,7 +124,7 @@ export default function Dashboard() {
           spacing={"20px"}
           ml={isMobile ? "0px" : "20px"}
           mb="20px"
-          mW="320px"
+          maxW="320px"
           h="fit-content"
         >
           <AddQuestion />
