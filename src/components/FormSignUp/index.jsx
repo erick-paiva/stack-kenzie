@@ -76,7 +76,7 @@ export default function FormSignUp() {
       >
         <InputChakra
           name="name"
-          placeholder="nome"
+          placeholder="Nome Completo"
           label="Nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
@@ -86,6 +86,10 @@ export default function FormSignUp() {
         />
 
         <InputChakra
+          w="100%"
+          h="40px"
+          borderRadius="6px"
+          placeholder="email@email.com"
           label="Email"
           placeholder="email@email.com"
           fontSize="16px"
