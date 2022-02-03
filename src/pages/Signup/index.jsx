@@ -7,7 +7,7 @@ export default function SignUp() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   return (
-    <Flex height={"100vh"} justifyContent={"center"}>
+    <Flex justifyContent={"center"} mt="50px">
       {isMobile ? (
         <Flex alignItems={"center"}>
           <FormSignUp />

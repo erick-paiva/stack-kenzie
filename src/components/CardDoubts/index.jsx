@@ -24,6 +24,7 @@ import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
+import CardAnswer from "../CardAnswer";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -71,6 +72,7 @@ export default function CardDoubts({ question, disable = false }) {
   } = useDisclosure();
 
   const [isMobile] = useMediaQuery("(max-width: 1100px)");
+  const [isMobileModal] = useMediaQuery("(max-width: 700px)");
 
   const getData = () => {
     api.get(`/answers?postId=${question?.id}`).then((resp) => {
@@ -330,7 +332,7 @@ export default function CardDoubts({ question, disable = false }) {
       )}
 
       <ModalChakra
-        size={isMobile ? "sm" : "4xl"}
+        size={isMobileModal ? "md" : "4xl"}
         title={questionUpdate.question.title}
         isOpen={isOpen}
         onClose={onClose}
@@ -349,7 +351,7 @@ export default function CardDoubts({ question, disable = false }) {
               user={user}
             />
           </GridItem>
-          <GridItem colSpan={8} mb="10px">
+          <GridItem colStart={3} colSpan={8} mb="10px">
             {user?.coach && (
               <AddAnswer postId={question.id} getData={getData} />
             )}
@@ -357,14 +359,14 @@ export default function CardDoubts({ question, disable = false }) {
           <GridItem colSpan={10} colStart={2} mb="10px">
             {!!answers &&
               answers.map((ele, key) => (
-                <CardComment
-                  key={key}
-                  answerBody={ele.body}
-                  user={ele.userId}
-                />
+                <CardAnswer key={key} answer={ele} user={ele.userId} callback={getData} />
               ))}
           </GridItem>
-          <GridItem colSpan={8} colStart={3} mb="20px">
+          <GridItem
+            colSpan={isMobile ? 10 : 8}
+            colStart={isMobile ? 2 : 3}
+            mb="20px"
+          >
             <Box
               maxHeight={"400px"}
               width={"100%"}

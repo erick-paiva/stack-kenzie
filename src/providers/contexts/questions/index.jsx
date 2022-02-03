@@ -23,16 +23,21 @@ const QuestionProvider = ({ children }) => {
 
   //Criar uma questão
   const createQuestion = async (data) => {
-    api.post("/questions", data, tokenBearer).then(() => {
+    api.post("/questions", data, tokenBearer).then((resp) => {
       toast({
+        containerStyle: {
+          background: "#48BB78",
+          color: "whiter",
+          borderRadius: "8px",
+        },
         title: "Sua pergunta foi enviada!",
         description: "Agora é só aguardar a resposta dos facilitadores :)",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
-        variant: "info",
       });
-      getAllQuestions();
+      // getAllQuestions();
+      setQuestions([...questions, resp.data])
     });
   };
 

@@ -15,7 +15,7 @@ export default function Avatar({ userCreator, sm, noName }) {
       />
 
       {!noName && (
-        <Text textAlign={"center"} isTruncated width={"100px"}>
+        <Text textAlign={"center"} width={"100px"}>
           {userCreator.name}
         </Text>
       )}
