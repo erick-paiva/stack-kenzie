@@ -344,8 +344,8 @@ export default function CardDoubts({ question, disable = false }) {
               answers={answers}
               deslike={deslike}
               like={like}
-              likes={likes.length}
-              comments={comments.length}
+              likes={likes}
+              comments={comments}
               user={user}
             />
           </GridItem>

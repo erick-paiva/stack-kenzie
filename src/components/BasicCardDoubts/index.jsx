@@ -35,7 +35,7 @@ export default function BasicCardDoubts({
         <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(3, 1fr)">
           <GridItem rowSpan={1} colSpan={3}>
             <Flex justifyContent={"space-between"} mb="20px">
-              <Avatar sm userCreator={user} />
+              <Avatar sm userCreator={ImgDefault} />
             </Flex>
           </GridItem>
 
@@ -100,7 +100,7 @@ export default function BasicCardDoubts({
       ) : (
         <Grid templateColumns="repeat(12, 1fr)" gap={2} alignItems={"center"}>
           <GridItem colSpan={2}>
-            <Avatar sm userCreator={user} />
+            <Avatar sm userCreator={ImgDefault} />
           </GridItem>
 
           <GridItem colSpan={8}>
@@ -146,16 +146,17 @@ export default function BasicCardDoubts({
                 likes={likes.length}
                 comments={comments.length}
                 m={"0 0 10px 0"}
+                
               />
 
               {liked ? (
-                <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                <Button onClick={(e) => {deslike(e);setLiked(!liked)}} variant="ButtonLikeOn">
                   <HStack alignItems={"center"}>
                     <Text>Curtiu</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               ) : (
-                <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                <Button onClick={(e) => {like(e);setLiked(!liked)}} variant="ButtonLikeOff">
                   <HStack alignItems={"center"}>
                     <Text>Curtir</Text> <BiLike fontSize="20px" />
                   </HStack>
