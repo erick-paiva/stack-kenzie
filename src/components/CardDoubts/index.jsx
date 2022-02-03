@@ -7,6 +7,9 @@ import {
   Text,
   useDisclosure,
   useMediaQuery,
+  Grid,
+  GridItem,
+  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth, useQuestions } from "../../providers/hooks";
@@ -54,7 +57,7 @@ export default function CardDoubts({ question, disable = false }) {
     onClose: onCloseUsers,
   } = useDisclosure();
 
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const [isMobile] = useMediaQuery("(max-width: 1100px)");
 
   const getData = () => {
     api
@@ -163,6 +166,8 @@ export default function CardDoubts({ question, disable = false }) {
     return <></>;
   }
 
+  //template desktop
+  //12 col ()
 
   return (
     <ContainerBase
@@ -172,29 +177,41 @@ export default function CardDoubts({ question, disable = false }) {
       m="0px 0px 20px 0px"
     >
       {isMobile ? (
-        <Box>
-          <Flex justifyContent={"space-between"} mb="20px">
-            <Box
-              onClick={(e) => {
-                onOpenUsers();
-                e.stopPropagation();
-              }}
-            >
-              <Avatar sm userCreator={userCreator} />
-            </Box>
+        <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(6, 1fr)">
+          <GridItem rowSpan={2} colSpan={3}>
+            <Flex justifyContent={"space-between"} mb="20px">
+              <Box
+                onClick={(e) => {
+                  onOpenUsers();
+                  e.stopPropagation();
+                }}
+              >
+                <Avatar sm userCreator={userCreator} />
+              </Box>
+            </Flex>
+          </GridItem>
+
+          <GridItem
+            rowSpan={2}
+            colSpan={3}
+            colStart={10}
+            justifyContent={"flex-end"}
+            display={"flex"}
+          >
             <DisplayStatus
               answers={answers}
               question={questionUpdate}
               likes={likes.length}
               comments={comments.length}
             />
+
+          </GridItem>
+
+          <GridItem rowSpan={4} colSpan={12}>
             <Text>
               {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
             </Text>
-          </Flex>
-          <Box>
             <Heading>{question?.question.title}</Heading>
-
             <Text
               noOfLines={4}
               fontSize="16px"
@@ -203,6 +220,7 @@ export default function CardDoubts({ question, disable = false }) {
             >
               {question?.question.body}
             </Text>
+
             <Flex my="20px" flexWrap="wrap">
               {question?.tags?.map((tag) => (
                 <Button key={tag} variant={"TagButton"} mx="5px" mb="5px">
@@ -212,33 +230,38 @@ export default function CardDoubts({ question, disable = false }) {
             </Flex>
             <Flex m="auto" w="fit-content">
               {liked ? (
-                <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
                   <HStack alignItems={"flex-end"}>
-                    <Text>Curtido</Text> <BiLike fontSize="20px" />
+                    <Text>Curtiu</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               ) : (
-                <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
                   <HStack alignItems={"flex-end"}>
                     <Text>Curtir</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               )}
             </Flex>
-          </Box>
-        </Box>
+          </GridItem>
+        </Grid>
       ) : (
-        <Flex w="100%">
-          <Box
-            onClick={(e) => {
-              onOpenUsers();
-              e.stopPropagation();
-            }}
-          >
-            <Avatar sm userCreator={userCreator} />
-          </Box>
-          <Box ml="20px" w="full">
-            <Heading>{question?.question.title}</Heading>
+        <Grid templateColumns="repeat(12, 1fr)" gap={2} alignItems={"center"}>
+          <GridItem colSpan={2}>
+            <Box
+              onClick={(e) => {
+                onOpenUsers();
+                e.stopPropagation();
+              }}
+            >
+              <Avatar sm userCreator={userCreator} />
+            </Box>
+          </GridItem>
+
+          <GridItem colSpan={8}>
+            <Heading mb="10px" size="lg">
+              {question?.question.title}
+            </Heading>
 
             <Text
               noOfLines={4}
@@ -272,33 +295,37 @@ export default function CardDoubts({ question, disable = false }) {
                 </Flex>
               ))}
             </Flex>
-          </Box>
+          </GridItem>
 
-          <Box mt="10px">
-            <DisplayStatus
-              answers={answers}
-              question={questionUpdate}
-              likes={likes.length}
-              comments={comments.length}
-            />
-            <Text>
+
+          <GridItem colSpan={2}>
+            <Center margin={"auto"} flexDirection={"column"}>
+              <DisplayStatus
+                answers={answers}
+                question={questionUpdate}
+                likes={likes.length}
+                comments={comments.length}
+                m={"0 0 10px 0"}
+              />
+                  <Text>
               {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
             </Text>
-            {liked ? (
-              <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
-                <HStack alignItems={"flex-end"}>
-                  <Text>Curtido</Text> <BiLike fontSize="20px" />
-                </HStack>
-              </Button>
-            ) : (
-              <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
-                <HStack alignItems={"flex-end"}>
-                  <Text>Curtir</Text> <BiLike fontSize="20px" />
-                </HStack>
-              </Button>
-            )}
-          </Box>
-        </Flex>
+              {liked ? (
+                <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                  <HStack alignItems={"center"}>
+                    <Text>Curtiu</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              ) : (
+                <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                  <HStack alignItems={"center"}>
+                    <Text>Curtir</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              )}
+            </Center>
+          </GridItem>
+        </Grid>
       )}
 
       <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>

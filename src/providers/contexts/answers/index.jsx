@@ -26,6 +26,7 @@ const AnswerProvider = ({ children }) => {
       toast({
         title: "Resposta adicionada!",
         status: "success",
+
         duration: 9000,
         isClosable: true,
       });
