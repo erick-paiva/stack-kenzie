@@ -12,8 +12,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useAuth, useQuestions } from "../../providers/hooks";
-import ImgDefault from "../../assets/imgDefault.svg";
+import { useAuth } from "../../providers/hooks";
 import { api } from "../../services/api";
 import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
@@ -29,7 +28,6 @@ import ContainerBase from "../ContainerBase/Index";
 export default function CardDoubts({ question, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
   const [likes, setLikes] = useState(question.question?.likes);
@@ -73,15 +71,10 @@ export default function CardDoubts({ question, disable = false }) {
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
   };
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setUptade(!update);
-  //     getData();
-  //   }, 10000);
-  // }, [update]);
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const like = (e) => {

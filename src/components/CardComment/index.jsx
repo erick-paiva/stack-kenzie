@@ -10,6 +10,7 @@ export default function CardComment({ comment, answerBody, user, callback }) {
 
   useEffect(() => {
     api.get(`/users/${user}`).then((resp) => setUserComment(resp.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteComment = () => {
