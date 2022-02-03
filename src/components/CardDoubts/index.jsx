@@ -70,7 +70,7 @@ export default function CardDoubts({ question, disable = false }) {
     onClose: onCloseUsers,
   } = useDisclosure();
 
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const [isMobile] = useMediaQuery("(max-width: 1100px)");
 
   const getData = () => {
     api.get(`/answers?postId=${question?.id}`).then((resp) => {
