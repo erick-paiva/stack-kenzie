@@ -49,7 +49,7 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar sm userCreator={ImgDefault} />
+        <Avatar sm userCreator={user} />
         {!isMobile && (
           <VStack spacing="2" color="primary">
             {question.userId === user.id && (

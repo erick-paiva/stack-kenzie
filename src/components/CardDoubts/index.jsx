@@ -57,9 +57,9 @@ export default function CardDoubts({ question, disable = false }) {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
-    api
-      .get(`/answers?postId=${question?.id}`)
-      .then((resp) => setAnswers(resp.data));
+    api.get(`/answers?postId=${question?.id}`).then((resp) => {
+      setAnswers(resp.data);
+    });
     api.get(`/comments?postId=${question?.id}`).then((resp) => {
       setComments(resp.data);
     });
@@ -163,8 +163,6 @@ export default function CardDoubts({ question, disable = false }) {
   if (!visible) {
     return <></>;
   }
-
-  console.log(answers);
 
   return (
     <ContainerBase
