@@ -42,16 +42,35 @@ const AuthProvider = ({ children }) => {
         setAccessToken(response.data.accessToken);
         setUser(response.data.user);
         history.push("/dashboard");
+        toast({
+          containerStyle: {
+            background:"#48BB78",
+            color: "whiter",
+            borderRadius: "8px"
+
+          }, 
+          title: 'Logado com sucesso',
+          description: `Bem-vindo ${response.data.user.name}`,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        })
+        
       })
       .catch((err) => {
         toast({
-          title: "Falha no login.",
-          description: "Senha ou e-mail errados",
-          duration: 3000,
+          containerStyle: {
+            background:"#E53E3E",
+            color: "whiter",
+            borderRadius: "8px"
+
+          }, 
+          title: 'Senha ou email invalidos!',
+          description: "Tente ou senha ou email",
+          status: 'success',
+          duration: 2000,
           isClosable: true,
-          variant: "error",
-          // containerStyle: { background: "red" },
-        });
+        })
       });
   };
 
