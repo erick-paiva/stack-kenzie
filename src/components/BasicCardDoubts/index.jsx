@@ -27,7 +27,7 @@ export default function BasicCardDoubts({
   const [liked, setLiked] = useState(
     question.question.likes.some((ele) => ele.userId === user.id)
   );
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const [isMobile] = useMediaQuery("(max-width: 700px)");
 
   console.log(user, question)
   return (
@@ -147,17 +147,28 @@ export default function BasicCardDoubts({
                 likes={likes.length}
                 comments={comments.length}
                 m={"0 0 10px 0"}
-                
               />
 
               {liked ? (
-                <Button onClick={(e) => {deslike(e);setLiked(!liked)}} variant="ButtonLikeOn">
+                <Button
+                  onClick={(e) => {
+                    deslike(e);
+                    setLiked(!liked);
+                  }}
+                  variant="ButtonLikeOn"
+                >
                   <HStack alignItems={"center"}>
                     <Text>Curtiu</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               ) : (
-                <Button onClick={(e) => {like(e);setLiked(!liked)}} variant="ButtonLikeOff">
+                <Button
+                  onClick={(e) => {
+                    like(e);
+                    setLiked(!liked);
+                  }}
+                  variant="ButtonLikeOff"
+                >
                   <HStack alignItems={"center"}>
                     <Text>Curtir</Text> <BiLike fontSize="20px" />
                   </HStack>
