@@ -12,8 +12,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useAuth, useQuestions } from "../../providers/hooks";
-import ImgDefault from "../../assets/imgDefault.svg";
+import { useAuth } from "../../providers/hooks";
 import { api } from "../../services/api";
 import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
@@ -29,7 +28,6 @@ import ContainerBase from "../ContainerBase/Index";
 export default function CardDoubts({ question, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
   const [likes, setLikes] = useState(question.question?.likes);
@@ -48,7 +46,7 @@ export default function CardDoubts({ question, disable = false }) {
     },
     tags: question.tags,
   };
-  const { day, month, year } = questionUpdate.date
+  const { day, month, year } = questionUpdate.date;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -60,9 +58,9 @@ export default function CardDoubts({ question, disable = false }) {
   const [isMobile] = useMediaQuery("(max-width: 1100px)");
 
   const getData = () => {
-    api
-      .get(`/answers?postId=${question?.id}`)
-      .then((resp) => setAnswers(resp.data));
+    api.get(`/answers?postId=${question?.id}`).then((resp) => {
+      setAnswers(resp.data);
+    });
     api.get(`/comments?postId=${question?.id}`).then((resp) => {
       setComments(resp.data);
     });
@@ -73,15 +71,10 @@ export default function CardDoubts({ question, disable = false }) {
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
   };
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setUptade(!update);
-  //     getData();
-  //   }, 10000);
-  // }, [update]);
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const like = (e) => {
@@ -166,9 +159,6 @@ export default function CardDoubts({ question, disable = false }) {
     return <></>;
   }
 
-  //template desktop
-  //12 col ()
-
   return (
     <ContainerBase
       w="100%"
@@ -204,12 +194,13 @@ export default function CardDoubts({ question, disable = false }) {
               likes={likes.length}
               comments={comments.length}
             />
-
           </GridItem>
 
           <GridItem rowSpan={4} colSpan={12}>
             <Text>
-              {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
+              {`${day.toString().padStart(2, "0")}/${month
+                .toString()
+                .padStart(2, "0")}/${year}`}
             </Text>
             <Heading>{question?.question.title}</Heading>
             <Text
@@ -297,7 +288,6 @@ export default function CardDoubts({ question, disable = false }) {
             </Flex>
           </GridItem>
 
-
           <GridItem colSpan={2}>
             <Center margin={"auto"} flexDirection={"column"}>
               <DisplayStatus
@@ -307,9 +297,11 @@ export default function CardDoubts({ question, disable = false }) {
                 comments={comments.length}
                 m={"0 0 10px 0"}
               />
-                  <Text>
-              {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
-            </Text>
+              <Text>
+                {`${day.toString().padStart(2, "0")}/${month
+                  .toString()
+                  .padStart(2, "0")}/${year}`}
+              </Text>
               {liked ? (
                 <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
                   <HStack alignItems={"center"}>

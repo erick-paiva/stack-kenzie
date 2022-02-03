@@ -29,6 +29,11 @@ export default function SignIn() {
             </Flex>
           )}
         </>
+<<<<<<< HEAD
+      )}
+    </>
+=======
 
+>>>>>>> f32ced5ed71a1eeece5e9bd53df08a873a7e0e58
   );
 }

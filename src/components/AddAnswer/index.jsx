@@ -23,7 +23,8 @@ function AddAnswer({ postId, getData }) {
   };
 
   const handleSubmit = () => {
-    createAnswer(data, getData);
+    createAnswer(data);
+    getData();
   };
   return (
     <div>

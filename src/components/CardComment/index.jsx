@@ -4,25 +4,22 @@ import { useAuth } from "../../providers/hooks";
 import { api } from "../../services/api";
 import Avatar from "../Avatar";
 
-export default function CardComment({
-  comment,
-  answerBody,
-  user,
-  callback
-}) {
-
-  const [userComment, setUserComment] = useState({})
-  const {accessToken, user:userProvider} = useAuth()
+export default function CardComment({ comment, answerBody, user, callback }) {
+  const [userComment, setUserComment] = useState({});
+  const { accessToken, user: userProvider } = useAuth();
 
   useEffect(() => {
-    api.get(`/users/${user}`).then(resp => setUserComment(resp.data))
-  },[])
+    api.get(`/users/${user}`).then((resp) => setUserComment(resp.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteComment = () => {
-    api.delete(`/comments/${comment.id}`, {
-      headers: {Authorization: `Bearer ${accessToken}` }
-    }).then(() => callback())
-  }
+    api
+      .delete(`/comments/${comment.id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(() => callback());
+  };
 
   return (
     <Flex
@@ -51,7 +48,7 @@ export default function CardComment({
             h="50px"
             w="auto"
           /> */}
-          <Avatar userCreator={userComment} sm  />
+          <Avatar userCreator={userComment} sm />
           {/* <Text as="figcaption" fontSize="14px">
             {userComment?.name}
           </Text> */}
@@ -69,9 +66,9 @@ export default function CardComment({
           {!!comment?.comment && comment.comment}
           {!!answerBody && answerBody}
         </Text>
-        {!!comment && userProvider.id === comment.userId && <Button onClick={deleteComment}>
-          DELETAR
-        </Button>}
+        {!!comment && userProvider.id === comment.userId && (
+          <Button onClick={deleteComment}>DELETAR</Button>
+        )}
       </Flex>
     </Flex>
   );
