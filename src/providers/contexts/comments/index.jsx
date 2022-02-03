@@ -25,11 +25,16 @@ const CommentProvider = ({ children }) => {
   //Criar uma questão
   const createComment = async (data, callback) => {
     api.post("/comments", data, tokenBearer).then(() => {
-      callback()
+      callback();
       toast({
-        title: "Comentário adicionado!",
+        containerStyle: {
+          background: "#48BB78",
+          color: "whiter",
+          borderRadius: "8px",
+        },
+        title: "Comentário adicionado",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     });

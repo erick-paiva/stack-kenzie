@@ -24,9 +24,14 @@ const AnswerProvider = ({ children }) => {
     api.post("/answers", data, tokenBearer).then(() => {
       callback();
       toast({
-        title: "Resposta adicionada!",
+        containerStyle: {
+          background: "#48BB78",
+          color: "whiter",
+          borderRadius: "8px",
+        },
+        title: "Resposta enviada",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     });

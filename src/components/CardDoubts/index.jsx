@@ -24,6 +24,7 @@ import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
+import CardAnswer from "../CardAnswer";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -349,7 +350,7 @@ export default function CardDoubts({ question, disable = false }) {
               user={user}
             />
           </GridItem>
-          <GridItem colSpan={8} mb="10px">
+          <GridItem colStart={3} colSpan={8} mb="10px">
             {user?.coach && (
               <AddAnswer postId={question.id} getData={getData} />
             )}
@@ -357,11 +358,7 @@ export default function CardDoubts({ question, disable = false }) {
           <GridItem colSpan={10} colStart={2} mb="10px">
             {!!answers &&
               answers.map((ele, key) => (
-                <CardComment
-                  key={key}
-                  answerBody={ele.body}
-                  user={ele.userId}
-                />
+                <CardAnswer key={key} answerBody={ele.body} user={ele.userId} />
               ))}
           </GridItem>
           <GridItem colSpan={8} colStart={3} mb="20px">
