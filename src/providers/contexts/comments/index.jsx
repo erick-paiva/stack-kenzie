@@ -23,12 +23,18 @@ const CommentProvider = ({ children }) => {
   }, []);
 
   //Criar uma questão
-  const createComment = async (data) => {
+  const createComment = async (data, callback) => {
     api.post("/comments", data, tokenBearer).then(() => {
+      callback();
       toast({
-        title: "Comentário adicionado!",
+        containerStyle: {
+          background: "#48BB78",
+          color: "whiter",
+          borderRadius: "8px",
+        },
+        title: "Comentário adicionado",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     });
@@ -43,7 +49,25 @@ const CommentProvider = ({ children }) => {
   };
 
   //deletar uma questão
-  const deleteComment = async () => {};
+  const deleteComment = async (commentId) => {
+    api
+      .delete(`/comments/${commentId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(() => {
+        toast({
+          containerStyle: {
+            background: "#E53E3E",
+            color: "whiter",
+            borderRadius: "8px",
+          },
+          title: "Comentário deletado!",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <CommentContext.Provider

@@ -1,4 +1,4 @@
-import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import Avatar from "../Avatar";
 

@@ -6,16 +6,15 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/media-query";
 import { BsChevronDown } from "react-icons/bs";
-import { useQuestions } from "../../providers/hooks";
 
-export default function DropDownButton({ itens, setOption }) {
-  const { questions } = useQuestions();
-
+export default function DropDownButton({ itens, setArray, array }) {
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
   const setItem = (option) => {
     if (option === 0) {
-      setOption(
-        questions
+      setArray(
+        array
           .slice()
           .sort((a, b) => {
             if (a.date.month > b.date.month) {
@@ -39,22 +38,22 @@ export default function DropDownButton({ itens, setOption }) {
     }
 
     if (option === 1) {
-      setOption(
-        questions
+      setArray(
+        array
           .slice()
           .sort((a, b) => b.question?.likes.length - a.question?.likes.length)
       );
     }
   };
+
   return (
     <Menu>
       <MenuButton
         as={Button}
-        rightIcon={<BsChevronDown />}
+        rightIcon={!isMobile && <BsChevronDown />}
         variant="ButtonBorderedSmall"
-        mb="20px"
       >
-        Ordenar por
+        Ordenar
       </MenuButton>
       <MenuList>
         {itens.map((ele, index) => (

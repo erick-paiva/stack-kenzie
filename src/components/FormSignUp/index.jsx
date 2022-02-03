@@ -1,9 +1,7 @@
 import {
   Button,
-  Heading,
   Text,
   VStack,
-  Image,
   Box,
   FormErrorMessage,
   Radio,
@@ -15,7 +13,6 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Logo from "../../assets/logo1.svg";
 import { useAuth } from "../../providers/hooks";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
@@ -34,7 +31,7 @@ export default function FormSignUp() {
       .string()
       .required("E-mail Obrigatório!")
       .email("Precisa ser um E-mail"),
-    slack: yup.string().required("Campo Obrigatório!"),
+    linkedin: yup.string().required("Campo Obrigatório!"),
     module: yup.boolean().oneOf([true], "Marque ao menos uma opção!"),
     password: yup
       .string()
@@ -43,8 +40,6 @@ export default function FormSignUp() {
     passwordConfirm: yup
       .string()
       .oneOf([yup.ref("password"), null], "As Senhas devem ser iguais!"),
-
-    //Atenção Inserir o input do slack
   });
 
   const {
@@ -76,7 +71,7 @@ export default function FormSignUp() {
       >
         <InputChakra
           name="name"
-          placeholder="Nome"
+          placeholder="Nome Completo"
           label="Nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
@@ -86,6 +81,10 @@ export default function FormSignUp() {
         />
 
         <InputChakra
+          w="100%"
+          h="40px"
+          borderRadius="6px"
+          placeholder="email@email.com"
           label="Email"
           fontSize="16px"
           border="1px solid #E2E8F0"
@@ -95,12 +94,13 @@ export default function FormSignUp() {
         />
 
         <InputChakra
-          label="Slack"
+          label="LinkedIn"
+          placeholder="www.linkedin.com/nome"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"
-          error={errors.email}
-          {...register("slack")}
+          error={errors.linkedin}
+          {...register("linkedin")}
         />
 
         <RadioGroup
@@ -113,10 +113,12 @@ export default function FormSignUp() {
         >
           <Text>Módulo</Text>
           <Stack spacing={"auto"} direction="row" mt="8px" ml="10px">
-            <Radio value={"Q1"}>Q1</Radio>
-            <Radio value={"Q2"}>Q2</Radio>
-            <Radio value={"Q3"}>Q3</Radio>
-            <Radio value={"Q4"}>Q4</Radio>
+            <Radio isRequired value={"M1"}>
+              M1
+            </Radio>
+            <Radio value={"M2"}>M2</Radio>
+            <Radio value={"M3"}>M3</Radio>
+            <Radio value={"M4"}>M4</Radio>
           </Stack>
         </RadioGroup>
 

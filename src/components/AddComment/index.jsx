@@ -24,18 +24,18 @@ function AddComment({ postId, getData }) {
   };
 
   const handleSubmit = () => {
-    createComment(data);
-    getData()
-
+    createComment(data, getData);
+    setValue("")
   };
 
   return (
-    <div>
+    <>
       <Input
         value={value}
         onChange={handleChange}
         placeholder="Escreva seu comentário"
         size="sm"
+        mb="10px"
       />
       <Button onClick={handleSubmit} variant={"ButtonBorderedSmall"}>
         <HStack alignItems={"flex-end"}>
@@ -43,7 +43,7 @@ function AddComment({ postId, getData }) {
           <BiCommentDots fontSize="20px" />
         </HStack>
       </Button>
-    </div>
+    </>
   );
 }
 

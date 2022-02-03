@@ -24,15 +24,9 @@ const RouteProtected = ({ component: Component, ...rest }) => {
 const AllRoutes = () => {
   return (
     <Switch>
-      {/* PRINCIPAIS ROTAS */}
-      {/* <Route exact path="/" component={LeadPage} /> */}
       <Route exact path="/" component={SignIn} />
       <Route exact path="/signup" component={SignUp} />
-
-      {/* ROTAS PROTEGIDAS */}
       <RouteProtected path="/dashboard" component={Dashboard} />
-
-      {/* ROTAS NÃO ENCONTRADAS */}
       <Route path="/*" component={Error404} />
     </Switch>
   );

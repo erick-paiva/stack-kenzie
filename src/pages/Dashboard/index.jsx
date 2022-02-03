@@ -1,22 +1,26 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
-  Heading,
+  Grid,
+  GridItem,
   Text,
+  useDisclosure,
   useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
-import ModalChakra from "../../components/ModalChakra";
 import { useQuestions } from "../../providers/hooks";
 import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
 
 import DisplayTags from "../../components/DisplayTags";
+import ModalChakra from "../../components/ModalChakra";
+import CardDoubtsSkelenton from "../../components/CardDoubtsSkelenton";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -25,141 +29,248 @@ const scroll = {
   "&::-webkit-scrollbar-track": {
     width: "30px",
     borderRadius: "50px",
+    border: "1px solid rgba(0,0,0,0.08)",
   },
   "&::-webkit-scrollbar-thumb": {
-    border: "3px solid #0001FF",
+    border: "1px solid #0001FF",
     background: "white",
     borderRadius: "50px",
   },
 };
 
 export default function Dashboard() {
-  const { questions, getAllQuestions } = useQuestions();
-  const [option, setOption] = useState([]);
+  const { questions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
-
-  console.log(questions);
+  const [notFound, setNotFound] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
-  // const questionFilter =
-  //   questions.filter(
-  //     (ele) =>
-  //       ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-  //       ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-  //   ) || [];
-
   const [questionFilter, setQuestionFilter] = useState([]);
-
-  useEffect(() => {
-    const filtered =
-      questions.filter(
-        (ele) =>
-          ele.question.title.toLowerCase().includes(nameSearch.toLowerCase()) ||
-          ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
-      ) || [];
-    setQuestionFilter(filtered);
-  }, [nameSearch]);
-
-  // useEffect(() => {
-  //   if (nameSearch.length > 0) {
-  //     setQuestionFilter(filter(questions));
-  //   } else {
-  //     setQuestionFilter(questions);
-  //   }
-  // }, [nameSearch]);
-
-  // console.log(nameSearch);
-  // console.log(nameSearch.length);
-  // console.log(questionFilter);
-
-  // filtro vindo da busca
-  // guardar num state os valores vindos da busca
-  // filtra as questions para trazer apenas as que tiverem em seu nome
-  //ou no body
-
-  // filtro vindo da escolha da tag
-  // guardar num state os valores vindos das tags selecionadas
-  // adiciona um filtro para mostrar apenas as questions que tiverem a
-  // a tag selecionada
-
-  // ordenar
-
   const handleTagClick = (value) => {
-    console.log(questions);
-    if (questions.some((e) => e.questions.tags !== value)) {
+    if (!tagSelected.some((e) => e === value)) {
       setTagSelected([...tagSelected, value]);
     } else {
-      setTagSelected(questions.filter((e) => e.questions.tags !== value));
+      setTagSelected(tagSelected.filter((e) => e !== value));
     }
   };
+  useEffect(() => {
+    if (nameSearch && tagSelected.length > 0) {
+      const filter =
+        questions
+          .filter((ele) => tagSelected.every((e) => ele.tags.includes(e)))
+          .filter(
+            (ele) =>
+              ele.question.title
+                .toLowerCase()
+                .includes(nameSearch.toLowerCase()) ||
+              ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+          ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
+      setQuestionFilter(filter);
+    } else if (nameSearch) {
+      const filter =
+        questions.filter(
+          (ele) =>
+            ele.question.title
+              .toLowerCase()
+              .includes(nameSearch.toLowerCase()) ||
+            ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
+        ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
+      setQuestionFilter(filter);
+    } else if (tagSelected.length > 0) {
+      const filter =
+        questions.filter((ele) =>
+          tagSelected.every((e) => ele.tags.includes(e))
+        ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
+      setQuestionFilter(filter);
+    } else {
+      setQuestionFilter(questions);
+    }
+  }, [tagSelected, nameSearch]);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box>
-      <Header setNameSearch={setNameSearch} />
+    <>
+      {isMobile ? (
+        <Grid h="100vh" templateRows="repeat(8, 1fr)" gap={5}>
+          <GridItem rowSpan={1}>
+            <Header setNameSearch={setNameSearch} />
+          </GridItem>
 
-      <Flex
-        justifyContent={"center"}
-        m={"50px"}
-        flexDir={isMobile && "column-reverse"}
-        alignItems={isMobile && "center"}
-      >
-        <Box
-          maxWidth={isMobile && "340px"}
-          h="75vh"
-          w="100%"
-          overflowY="auto"
-          overflowX="hidden"
-          sx={scroll}
-        >
-          {questionFilter.map((ele, i) => (
-            <CardDoubts question={ele} callback={getAllQuestions} key={i} />
-          ))}
-
-          {questionFilter.length === 0 && (
-            <Text
-              textAlign={"center"}
-              color="primary"
-              fontWeight="bold"
-              fontSize="24px"
+          <GridItem rowSpan={1} paddingX={"70px"} m="auto" h="100%" w="100%">
+            <VStack
+              alignItems={"center"}
+              spacing={"20px"}
+              w="100%"
+              margin="auto"
             >
-              Resultado não encontrado
-            </Text>
-          )}
-        </Box>
+              <AddQuestion />
 
-        <VStack
-          alignItems={"flex-start"}
-          spacing={"20px"}
-          ml={isMobile ? "0px" : "20px"}
-          mb="20px"
-          maxW="320px"
-          h="fit-content"
-        >
-          <AddQuestion />
+              <Flex width={"100%"} justifyContent={"space-between"}>
+                {isMobile ? (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
+                    />
+                    <Button
+                      ml="20px"
+                      variant={"ButtonBorderedSmall"}
+                      onClick={onOpen}
+                    >
+                      Tags
+                    </Button>
+                    <ModalChakra isOpen={isOpen} onClose={onClose}>
+                      <Center mb="20px">
+                        <DisplayTags
+                          handleTagClick={handleTagClick}
+                          tagsSelected={tagSelected}
+                        />
+                      </Center>
+                    </ModalChakra>
+                  </>
+                ) : (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
+                    />
 
-          <Box margin={"20px"} w="320px">
-            {isMobile ? (
-              <Flex>
-                <DropDownButton
-                  itens={["Data", "Curtidas"]}
-                  setOption={setOption}
-                />
-                <Button ml="20px" variant={"ButtonBorderedSmall"}>
-                  Tags
-                </Button>
+                    <DisplayTags
+                      handleTagClick={handleTagClick}
+                      tagsSelected={tagSelected}
+                    />
+                  </>
+                )}
               </Flex>
-            ) : (
-              <>
-                <DropDownButton
-                  itens={["Data", "Curtidas"]}
-                  setOption={setOption}
-                />
-                <DisplayTags />
-              </>
+            </VStack>
+          </GridItem>
+          <GridItem
+            rowSpan={6}
+            sx={scroll}
+            overflowY="auto"
+            h="100%"
+            w="100%"
+            paddingRight={"10px"}
+          >
+            {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
+              ? questionFilter
+              : questions
+            ).map((ele) => (
+              <CardDoubts question={ele} key={ele.id} />
+            ))}
+
+            {notFound && (
+              <Text
+                textAlign={"center"}
+                color="primary"
+                fontWeight="bold"
+                fontSize="24px"
+              >
+                Resultado não encontrado
+              </Text>
             )}
-          </Box>
-        </VStack>
-      </Flex>
-    </Box>
+            {questions.length === 0 && (
+              <CardDoubtsSkelenton amount={[0, 1, 2, 3, 4, 5]} />
+            )}
+          </GridItem>
+        </Grid>
+      ) : (
+        <Grid
+          h="100vh"
+          templateRows="repeat(8, 1fr)"
+          templateColumns="repeat(4, 1fr)"
+          gap={5}
+        >
+          <GridItem rowSpan={1} colSpan={5}>
+            <Header setNameSearch={setNameSearch} />
+          </GridItem>
+
+          <GridItem rowSpan={7} colSpan={3} marginLeft={12}>
+            <Box
+              maxWidth={isMobile && "340px"}
+              h="100%"
+              w="100%"
+              overflowY="scroll"
+              sx={scroll}
+              paddingRight={3}
+            >
+              {(questionFilter.length > 0 ||
+              nameSearch ||
+              tagSelected.length > 0
+                ? questionFilter
+                : questions
+              ).map((ele) => (
+                <CardDoubts question={ele} key={ele.id} />
+              ))}
+
+              {notFound && (
+                <Text
+                  textAlign={"center"}
+                  color="primary"
+                  fontWeight="bold"
+                  fontSize="24px"
+                >
+                  Resultado não encontrado
+                </Text>
+              )}
+              {questions.length === 0 && (
+                <CardDoubtsSkelenton amount={[0, 1, 2, 3, 4, 5]} />
+              )}
+            </Box>
+          </GridItem>
+          <GridItem rowSpan={7} colSpan={1} marginRight={12}>
+            <VStack
+              alignItems={"flex-start"}
+              spacing={"20px"}
+              ml={isMobile ? "0px" : "20px"}
+              mb="20px"
+              maxW="320px"
+              h="fit-content"
+            >
+              <AddQuestion />
+
+              <Box margin={"20px"} w="320px">
+                {isMobile ? (
+                  <Flex>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
+                    />
+                    <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                      Tags
+                    </Button>
+                  </Flex>
+                ) : (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
+                    />
+                    <DisplayTags
+                      handleTagClick={handleTagClick}
+                      tagsSelected={tagSelected}
+                    />
+                  </>
+                )}
+              </Box>
+            </VStack>
+          </GridItem>
+        </Grid>
+      )}
+    </>
   );
 }

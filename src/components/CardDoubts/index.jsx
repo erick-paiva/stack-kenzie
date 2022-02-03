@@ -1,18 +1,18 @@
 import {
   Box,
   Button,
-  Center,
   Flex,
   Heading,
   HStack,
   Text,
   useDisclosure,
   useMediaQuery,
-  VStack,
+  Grid,
+  GridItem,
+  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
-import ImgDefault from "../../assets/imgDefault.svg";
 import { api } from "../../services/api";
 import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
@@ -24,18 +24,45 @@ import CardComment from "../CardComment";
 import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
+import CardAnswer from "../CardAnswer";
 
-export default function CardDoubts({ question, callback, disable = false }) {
+const scroll = {
+  "&::-webkit-scrollbar": {
+    width: "25px",
+  },
+  "&::-webkit-scrollbar-track": {
+    width: "30px",
+    borderRadius: "50px",
+    border: "1px solid rgba(0,0,0,0.08)",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    border: "1px solid #0001FF",
+    background: "white",
+    borderRadius: "50px",
+  },
+};
+
+export default function CardDoubts({ question, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [time, setTime] = useState(1000000);
-  const [update, setUptade] = useState(true);
   const { user, accessToken } = useAuth();
   const [userCreator, setUserCreator] = useState({});
-
+  const [likes, setLikes] = useState(question.question?.likes);
+  const [visible, setVisible] = useState(true);
   const [liked, setLiked] = useState(
-    question.question.likes.some((ele) => ele.userId === user.id)
+    likes.some((ele) => ele.userId === user.id)
   );
+  const questionUpdate = {
+    userId: question.userId,
+    date: question.date,
+    id: question.id,
+    question: {
+      body: question.question.body,
+      title: question.question.title,
+      likes: likes,
+    },
+    tags: question.tags,
+  };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -44,35 +71,33 @@ export default function CardDoubts({ question, callback, disable = false }) {
     onClose: onCloseUsers,
   } = useDisclosure();
 
-  const [isMobile] = useMediaQuery("(max-width: 900px)");
+  const [isMobile] = useMediaQuery("(max-width: 1100px)");
+  const [isMobileModal] = useMediaQuery("(max-width: 700px)");
 
   const getData = () => {
-    api.get("/answers").then((resp) => setAnswers(resp.data));
+    api.get(`/answers?postId=${question?.id}`).then((resp) => {
+      setAnswers(resp.data);
+    });
+    api.get(`/comments?postId=${question?.id}`).then((resp) => {
+      setComments(resp.data);
+    });
     api
-      .get(`/comments?postId=${question?.id}`)
-      .then((resp) => setComments(resp.data));
-  };
-  useEffect(() => {
-    setTimeout(() => {
-      setUptade(!update);
-      getData();
-      setTime(10000);
-    }, time);
-  }, [update]);
-
-  useEffect(() => {
+      .get(`/questions/${question.id}`)
+      .then(({ data }) => setLikes(data.question?.likes));
     api
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
+  };
+
+  useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const like = (e) => {
     e.stopPropagation();
-    callback();
-    const filter = question.question?.likes.filter(
-      (ele) => ele.userId !== user.id
-    );
+    getData();
+    const filter = likes.filter((ele) => ele.userId !== user.id);
     if (!liked) {
       setLiked(true);
       api
@@ -93,7 +118,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             },
           }
         )
-        .then(() => callback())
+        .then(() => getData())
         .catch((err) => {
           console.log(err);
           setLiked(false);
@@ -103,11 +128,8 @@ export default function CardDoubts({ question, callback, disable = false }) {
 
   const deslike = (e) => {
     e.stopPropagation();
-
-    callback();
-    const filter = question.question.likes.filter(
-      (ele) => ele.userId !== user.id
-    );
+    getData();
+    const filter = likes.filter((ele) => ele.userId !== user.id);
     if (liked) {
       setLiked(false);
       api
@@ -128,7 +150,7 @@ export default function CardDoubts({ question, callback, disable = false }) {
             },
           }
         )
-        .then(() => callback())
+        .then(() => getData())
         .catch((err) => {
           console.log(err);
           setLiked(true);
@@ -148,31 +170,63 @@ export default function CardDoubts({ question, callback, disable = false }) {
           },
         }
       )
-      .then(() => callback());
+      .then(() => setVisible(false));
   };
+  if (!visible) {
+    return <></>;
+  }
 
   return (
     <ContainerBase
       w="100%"
       onClick={!disable && onOpen}
       onHover={{ cursor: "pointer" }}
+      m="0px 0px 20px 0px"
     >
       {isMobile ? (
-        <Box>
-          <Flex justifyContent={"space-between"} mb="20px">
-            <Avatar sm userCreator={userCreator} callback={onOpenUsers} />
+        <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(3, 1fr)">
+          <GridItem rowSpan={1} colSpan={3}>
+            <Flex justifyContent={"space-between"} mb="20px">
+              <Box
+                onClick={(e) => {
+                  onOpenUsers();
+                  e.stopPropagation();
+                }}
+              >
+                <Avatar sm userCreator={userCreator} />
+              </Box>
+            </Flex>
+          </GridItem>
+
+          <GridItem
+            rowSpan={1}
+            colSpan={5}
+            colStart={8}
+            display={"flex"}
+            alignItems={"flex-end"}
+            flexDir={"column"}
+          >
             <DisplayStatus
               answers={answers}
-              question={question}
-              likes={question.question?.likes.length}
+              question={questionUpdate}
+              likes={likes.length}
               comments={comments.length}
             />
-          </Flex>
-          <Box>
-            <Heading>{question?.question.title}</Heading>
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+          </GridItem>
+
+          <GridItem rowSpan={2} colSpan={12}>
+            <Heading mb="10px" size="lg">
+              {question?.question.title}
+            </Heading>
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
+
             <Flex my="20px" flexWrap="wrap">
               {question?.tags?.map((tag) => (
                 <Button key={tag} variant={"TagButton"} mx="5px" mb="5px">
@@ -182,28 +236,45 @@ export default function CardDoubts({ question, callback, disable = false }) {
             </Flex>
             <Flex m="auto" w="fit-content">
               {liked ? (
-                <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
+                <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
                   <HStack alignItems={"flex-end"}>
-                    <Text>Curtido</Text> <BiLike fontSize="20px" />
+                    <Text>Curtiu</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               ) : (
-                <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
+                <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
                   <HStack alignItems={"flex-end"}>
                     <Text>Curtir</Text> <BiLike fontSize="20px" />
                   </HStack>
                 </Button>
               )}
             </Flex>
-          </Box>
-        </Box>
+          </GridItem>
+        </Grid>
       ) : (
-        <Flex w="100%">
-          <Avatar userCreator={userCreator} callback={onOpenUsers} />
-          <Box ml="20px" w="full">
-            <Heading>{question?.question.title}</Heading>
+        <Grid templateColumns="repeat(12, 1fr)" gap={2} alignItems={"center"}>
+          <GridItem colSpan={2}>
+            <Box
+              onClick={(e) => {
+                onOpenUsers();
+                e.stopPropagation();
+              }}
+            >
+              <Avatar sm userCreator={userCreator} />
+            </Box>
+          </GridItem>
 
-            <Text fontSize="16px" fontWeight="400" lineHeight="24px">
+          <GridItem colSpan={8}>
+            <Heading mb="10px" size="lg">
+              {question?.question.title}
+            </Heading>
+
+            <Text
+              noOfLines={4}
+              fontSize="16px"
+              fontWeight="400"
+              lineHeight="24px"
+            >
               {question?.question.body}
             </Text>
 
@@ -230,97 +301,97 @@ export default function CardDoubts({ question, callback, disable = false }) {
                 </Flex>
               ))}
             </Flex>
-          </Box>
+          </GridItem>
 
-          <Box mt="10px">
-            <DisplayStatus
-              answers={answers}
-              question={question}
-              likes={question.question.likes.length}
-              comments={comments.length}
-            />
-            {liked ? (
-              <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
-                <HStack alignItems={"flex-end"}>
-                  <Text>Curtido</Text> <BiLike fontSize="20px" />
-                </HStack>
-              </Button>
-            ) : (
-              <Button onClick={(e) => like(e)} variant="ButtonBorderedSmall">
-                <HStack alignItems={"flex-end"}>
-                  <Text>Curtir</Text> <BiLike fontSize="20px" />
-                </HStack>
-              </Button>
-            )}
-          </Box>
-        </Flex>
+          <GridItem colSpan={2}>
+            <Center margin={"auto"} flexDirection={"column"}>
+              <DisplayStatus
+                answers={answers}
+                question={questionUpdate}
+                likes={likes.length}
+                comments={comments.length}
+                m={"0 0 10px 0"}
+              />
+
+              {liked ? (
+                <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                  <HStack alignItems={"center"}>
+                    <Text>Curtiu</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              ) : (
+                <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                  <HStack alignItems={"center"}>
+                    <Text>Curtir</Text> <BiLike fontSize="20px" />
+                  </HStack>
+                </Button>
+              )}
+            </Center>
+          </GridItem>
+        </Grid>
       )}
 
-      <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
-        <Flex flexDirection={"column"}>
-          <BasicCardDoubts
-            question={question}
-            ImgDefault={userCreator}
-            deleteQuestion={deleteQuestion}
-            answers={answers}
-            deslike={deslike}
-            like={like}
-            likes={question?.question.likes.length}
-            comments={comments}
-            user={user}
-          />
-          <Box width={"95%"}>
-            <Flex>
-              <Box
-                maxHeight={"400px"}
-                width={"100%"}
-                overflowY="auto"
-                p={"10px"}
-                flexDirection={"column"}
-                padding={"10px"}
-                justifyContent={"center"}
-                sx={{
-                  "&::-webkit-scrollbar": {
-                    width: "25px",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    width: "30px",
-                    borderRadius: "50px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    border: "3px solid #0001FF",
-                    background: "white",
-                    borderRadius: "50px",
-                  },
-                }}
-              >
-                {user?.coach && <AddAnswer postId={question.id} />}
-                <Flex
-                  flexDirection={"column"}
-                  alignItems={"flex-end"}
-                  width={"100%"}
-                >
-                  {!!comments &&
-                    comments.map((ele, key) => (
-                      <CardComment
-                        key={key}
-                        question={question}
-                        ImgDefault={ImgDefault}
-                        deleteQuestion={deleteQuestion}
-                        answers={answers}
-                        deslike={deslike}
-                        like={like}
-                        comments={ele.comment}
-                        user={ele.userId}
-                      />
-                    ))}
-                </Flex>
-              </Box>
-            </Flex>
-          </Box>
-        </Flex>
-        <AddComment postId={question.id} getData={getData} />
-        <AddAnswer postId={question.id} />
+      <ModalChakra
+        size={isMobileModal ? "md" : "4xl"}
+        title={questionUpdate.question.title}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <Grid autoRows templateColumns={"repeat(12,1fr)"}>
+          <GridItem colSpan={12} mb="10px">
+            <BasicCardDoubts
+              question={questionUpdate}
+              ImgDefault={userCreator}
+              deleteQuestion={deleteQuestion}
+              answers={answers}
+              deslike={deslike}
+              like={like}
+              likes={likes}
+              comments={comments}
+              user={user}
+            />
+          </GridItem>
+          <GridItem colStart={3} colSpan={8} mb="10px">
+            {user?.coach && (
+              <AddAnswer postId={question.id} getData={getData} />
+            )}
+          </GridItem>
+          <GridItem colSpan={10} colStart={2} mb="10px">
+            {!!answers &&
+              answers.map((ele, key) => (
+                <CardAnswer key={key} answer={ele} user={ele.userId} callback={getData} />
+              ))}
+          </GridItem>
+          <GridItem
+            colSpan={isMobile ? 10 : 8}
+            colStart={isMobile ? 2 : 3}
+            mb="20px"
+          >
+            <Box
+              maxHeight={"400px"}
+              width={"100%"}
+              overflowY="auto"
+              p={"10px"}
+              flexDirection={"column"}
+              padding={"10px"}
+              justifyContent={"center"}
+              sx={scroll}
+            >
+              {!!comments &&
+                comments.map((ele, key) => (
+                  <CardComment
+                    key={key}
+                    comment={ele}
+                    user={ele.userId}
+                    callback={getData}
+                  />
+                ))}
+            </Box>
+          </GridItem>
+          <GridItem colSpan={8} colStart={3} mb="10px">
+            <AddComment postId={question.id} getData={getData} />
+          </GridItem>
+        </Grid>
       </ModalChakra>
 
       <ModalProfileUsers

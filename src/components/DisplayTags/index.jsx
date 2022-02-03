@@ -1,12 +1,12 @@
-import { Box, Text, Stack, Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Text, Stack, Button, useMediaQuery } from "@chakra-ui/react";
 import { useTags } from "../../providers/hooks";
 
-const DisplayTags = () => {
+const DisplayTags = ({ handleTagClick, tagsSelected }) => {
   const { tags } = useTags();
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   return (
-    <Box>
+    <Box mt={!isMobile && "20px"}>
       <Text color="#0001FF" fontWeight="bold">
         #TAGS
       </Text>
@@ -22,13 +22,18 @@ const DisplayTags = () => {
         bg="white"
         borderRadius="6px"
       >
-        {tags.map((tag) => (
+        {tags.map((tag, i) => (
           <Button
-            key={tag.name}
-            variant="TagButton"
+            key={tag + i}
+            variant={
+              tagsSelected?.some((ele) => ele === tag)
+                ? "TagButtonOn"
+                : "TagButton"
+            }
             borderRadius="5px"
             margin="2px 5px"
             cursor="pointer"
+            onClick={() => handleTagClick(tag)}
           >
             {tag}
           </Button>

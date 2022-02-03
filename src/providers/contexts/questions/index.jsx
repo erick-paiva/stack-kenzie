@@ -23,15 +23,21 @@ const QuestionProvider = ({ children }) => {
 
   //Criar uma questão
   const createQuestion = async (data) => {
-    api.post("/questions", data, tokenBearer).then(() => {
+    api.post("/questions", data, tokenBearer).then((resp) => {
       toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 9000,
+        containerStyle: {
+          background: "#48BB78",
+          color: "whiter",
+          borderRadius: "8px",
+        },
+        title: "Sua pergunta foi enviada!",
+        description: "Agora é só aguardar a resposta dos facilitadores :)",
+        status: "success",
+        duration: 2000,
         isClosable: true,
-      })
-      getAllQuestions();
+      });
+      // getAllQuestions();
+      setQuestions([...questions, resp.data]);
     });
   };
 
@@ -42,12 +48,40 @@ const QuestionProvider = ({ children }) => {
     });
   };
 
+  //UpdateQuestion
+  const updateQuestion = async (questionId, data) => {
+    api
+      .patch(`/questions/${questionId}`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then(() => getAllQuestions());
+  };
+
   //deletar uma questão
-  const deleteQuestion = async () => {};
+  const deleteQuestion = async (questionId) => {
+    api.delete(
+      `/questions/${questionId}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  };
 
   return (
     <QuestionContext.Provider
-      value={{ questions, setQuestions, createQuestion, getAllQuestions, deleteQuestion }}
+      value={{
+        questions,
+        setQuestions,
+        createQuestion,
+        getAllQuestions,
+        updateQuestion,
+        deleteQuestion,
+      }}
     >
       {children}
     </QuestionContext.Provider>

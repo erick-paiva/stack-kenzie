@@ -1,9 +1,9 @@
-import { Button, HStack, Input, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { BiCommentDots, BiCommentEdit } from "react-icons/bi";
+import { BiCommentEdit } from "react-icons/bi";
 import { useAnswers, useAuth } from "../../providers/hooks";
 
-function AddAnswer({ postId }) {
+function AddAnswer({ postId, getData }) {
   const [value, setValue] = useState("");
   const handleChange = (event) => setValue(event.target.value);
   const { user } = useAuth();
@@ -19,27 +19,28 @@ function AddAnswer({ postId }) {
       hour: 8,
       minutes: 21,
     },
-    comment: value,
+    body: value,
   };
 
   const handleSubmit = () => {
-    createAnswer(data);
+    createAnswer(data, getData);
+    setValue("");
   };
   return (
-    <div>
+    <Box m="auto">
       <Input
         value={value}
         onChange={handleChange}
         placeholder="Escreva sua resposta"
         size="sm"
       />
-      <Button variant={"ButtonBorderedSmall"}>
+      <Button variant={"ButtonBorderedSmall"} onClick={handleSubmit}>
         <HStack alignItems={"flex-end"}>
           <Text mr="5px">Responder </Text>
           <BiCommentEdit fontSize="20px" />
         </HStack>
       </Button>
-    </div>
+    </Box>
   );
 }
 
