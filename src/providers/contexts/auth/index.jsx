@@ -2,12 +2,15 @@ import { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../../../services/api";
 import { useUsers } from "../../hooks";
+import { useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
+
+  const toast = useToast();
 
   const { users, setUsers } = useUsers();
   const history = useHistory();
@@ -40,7 +43,16 @@ const AuthProvider = ({ children }) => {
         setUser(response.data.user);
         history.push("/dashboard");
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        toast({
+          title: "Falha no login.",
+          description: "Senha ou e-mail errados",
+          duration: 3000,
+          isClosable: true,
+          variant: "error",
+          // containerStyle: { background: "red" },
+        });
+      });
   };
 
   //Função Cadastrar

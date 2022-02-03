@@ -15,7 +15,6 @@ const composeProviders =
       props.children
     );
 
-//Após importar o provider, adicione ele na função aqui.
 export const AllProviders = composeProviders(
   ThemeProvider,
   BrowserRouter,
@@ -26,14 +25,3 @@ export const AllProviders = composeProviders(
   CommentProvider,
   TagProvider
 );
-//ATENÇÃO => A FUNÇÃO LER O PROVIDER DA DIREITA PARA ESQUERDA.
-
-/* 
-Exemplo de como será plubicado:
-
-<AuthProvider>
-  <QuestionProvider>
-      {children}
-  </QuestionProvider>
-</AuthProvider>
-*/
