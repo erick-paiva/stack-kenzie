@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";

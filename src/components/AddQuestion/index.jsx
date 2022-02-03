@@ -2,7 +2,7 @@ import { Box, Button, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { InputChakra } from "../InputChakra";
 import { TextAreaChakra } from "../TextAreaChakra";
 
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { useAuth, useQuestions } from "../../providers/hooks";
 import ModalChakra from "../ModalChakra";
 import AddTag from "../AddQuestionTags";

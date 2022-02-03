@@ -1,5 +1,5 @@
 import { Button, Grid, GridItem, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
 import { api } from "../../services/api";
 import Avatar from "../Avatar";

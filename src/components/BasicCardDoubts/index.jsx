@@ -29,6 +29,7 @@ export default function BasicCardDoubts({
   );
   const [isMobile] = useMediaQuery("(max-width: 900px)");
 
+  console.log(user, question)
   return (
     <ContainerBase>
       {isMobile ? (
