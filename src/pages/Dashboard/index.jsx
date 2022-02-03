@@ -173,6 +173,7 @@ export default function Dashboard() {
               w="100%"
               overflowY="scroll"
               sx={scroll}
+              paddingRight={3}
             >
               {(questionFilter.length > 0 ||
               nameSearch ||
