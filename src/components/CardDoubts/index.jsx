@@ -359,7 +359,12 @@ export default function CardDoubts({ question, disable = false }) {
           <GridItem colSpan={10} colStart={2} mb="10px">
             {!!answers &&
               answers.map((ele, key) => (
-                <CardAnswer key={key} answer={ele} user={ele.userId} callback={getData} />
+                <CardAnswer
+                  key={key}
+                  answer={ele}
+                  user={ele.userId}
+                  callback={getData}
+                />
               ))}
           </GridItem>
           <GridItem

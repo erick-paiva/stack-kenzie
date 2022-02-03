@@ -1,12 +1,10 @@
 import { Box, Button, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { InputChakra } from "../InputChakra";
 import { TextAreaChakra } from "../TextAreaChakra";
-
 import { useState } from "react";
 import { useAuth, useQuestions } from "../../providers/hooks";
 import ModalChakra from "../ModalChakra";
 import AddTag from "../AddQuestionTags";
-
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +27,6 @@ export default function AddQuestion() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //Fix - Yup verica não pode em branco
   const QuestionSchema = yup.object().shape({
     titleQuestion: yup.string().required("Campo Obrigatório!"),
     bodyQuestion: yup.string().required("Campo Obrigatório!"),
@@ -42,7 +39,6 @@ export default function AddQuestion() {
   } = useForm({ resolver: yupResolver(QuestionSchema) });
 
   const handleClick = ({ titleQuestion, bodyQuestion }) => {
-    // console.log(titleQuestion, bodyQuestion);
     const date = getHours();
     createQuestion({
       userId: user.id,

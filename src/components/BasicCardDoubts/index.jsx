@@ -25,7 +25,7 @@ export default function BasicCardDoubts({
   comments,
   user,
 }) {
-  const [liked] = useState(
+  const [liked, setLiked] = useState(
     question.question.likes.some((ele) => ele.userId === user.id)
   );
   const [isMobile] = useMediaQuery("(max-width: 700px)");
@@ -74,20 +74,32 @@ export default function BasicCardDoubts({
               ))}
             </Flex>
             <Flex m="auto" w="fit-content">
-              {(question.userId === user.id || userProvider.coach) ? (
+              {question.userId === user.id || userProvider.coach ? (
                 <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                   Deletar
                 </Button>
               ) : (
                 <>
                   {liked ? (
-                    <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                    <Button
+                      onClick={(e) => {
+                        deslike(e);
+                        setLiked(false);
+                      }}
+                      variant="ButtonLikeOn"
+                    >
                       <HStack alignItems={"flex-end"}>
                         <Text>Curtiu</Text> <BiLike fontSize="20px" />
                       </HStack>
                     </Button>
                   ) : (
-                    <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                    <Button
+                      onClick={(e) => {
+                        like(e);
+                        setLiked(true);
+                      }}
+                      variant="ButtonLikeOff"
+                    >
                       <HStack alignItems={"flex-end"}>
                         <Text>Curtir</Text> <BiLike fontSize="20px" />
                       </HStack>
@@ -149,20 +161,32 @@ export default function BasicCardDoubts({
                 m={"0 0 10px 0"}
               />
 
-{(question.userId === user.id || userProvider.coach) ? (
+              {question.userId === user.id || userProvider.coach ? (
                 <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                   Deletar
                 </Button>
               ) : (
                 <>
                   {liked ? (
-                    <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                    <Button
+                      onClick={(e) => {
+                        deslike(e);
+                        setLiked(false);
+                      }}
+                      variant="ButtonLikeOn"
+                    >
                       <HStack alignItems={"flex-end"}>
                         <Text>Curtiu</Text> <BiLike fontSize="20px" />
                       </HStack>
                     </Button>
                   ) : (
-                    <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                    <Button
+                      onClick={(e) => {
+                        like(e);
+                        setLiked(true);
+                      }}
+                      variant="ButtonLikeOff"
+                    >
                       <HStack alignItems={"flex-end"}>
                         <Text>Curtir</Text> <BiLike fontSize="20px" />
                       </HStack>

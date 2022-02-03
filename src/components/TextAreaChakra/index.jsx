@@ -2,8 +2,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-
-  Input as ChakraInput,
   InputLeftElement,
   InputGroup,
   Textarea,

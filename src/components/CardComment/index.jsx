@@ -55,15 +55,11 @@ export default function CardComment({ comment, answerBody, user, callback }) {
           </Text>
         </GridItem>
       </Grid>
-      {(userProvider.id === comment.userId || userProvider.coach) && 
-          <Button
-            mt="20px"
-            variant="ButtonBorderedSmall"
-            onClick={deleteComment}
-          >
-            Deletar
-          </Button>
-        }
+      {(userProvider.id === comment.userId || userProvider.coach) && (
+        <Button mt="20px" variant="ButtonBorderedSmall" onClick={deleteComment}>
+          Deletar
+        </Button>
+      )}
     </ContainerBase>
   );
 }

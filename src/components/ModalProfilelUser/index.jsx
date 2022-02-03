@@ -145,9 +145,6 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
             </Button>
           </VStack>
         </ModalBody>
-        {/* <ModalFooter>
-          
-        </ModalFooter> */}
       </ModalContent>
     </Modal>
   );
