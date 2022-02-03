@@ -35,7 +35,6 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
 
   const {
     register,
-    formState: { errors },
     handleSubmit,
   } = useForm({ resolver: yupResolver(formSchema) });
 
