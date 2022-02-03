@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   Grid,
   GridItem,
   Text,
+  useDisclosure,
   useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
@@ -17,6 +19,7 @@ import AddQuestion from "../../components/AddQuestion";
 import DropDownButton from "../../components/DropDownButton";
 
 import DisplayTags from "../../components/DisplayTags";
+import ModalChakra from "../../components/ModalChakra";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -35,7 +38,7 @@ const scroll = {
 };
 
 export default function Dashboard() {
-  const { questions, getAllQuestions } = useQuestions();
+  const { questions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
   const [option, setOption] = useState(0);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
@@ -81,6 +84,8 @@ export default function Dashboard() {
       setQuestionFilter(questions);
     }
   }, [tagSelected, nameSearch, questions]);
+
+  const {isOpen, onOpen, onClose} = useDisclosure()
   return (
     <>
       {isMobile ? (
@@ -104,19 +109,26 @@ export default function Dashboard() {
                     <Flex>
                       <DropDownButton
                         itens={["Data", "Curtidas"]}
-                        setOption={setOption}
                         setArray={setQuestionFilter}
                         array={questionFilter}
                       />
-                      <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                      <Button ml="20px" variant={"ButtonBorderedSmall"} onClick={onOpen}>
                         Tags
                       </Button>
+                      <ModalChakra isOpen={isOpen} onClose={onClose} >
+                        <Center mb="20px">
+
+                        <DisplayTags
+                          handleTagClick={handleTagClick}
+                          tagsSelected={tagSelected}
+                        />
+                        </Center>
+                      </ModalChakra>
                     </Flex>
                   ) : (
                     <>
                       <DropDownButton
                         itens={["Data", "Curtidas"]}
-                        setOption={setOption}
                         setArray={setQuestionFilter}
                         array={questionFilter}
                       />

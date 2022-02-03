@@ -1,7 +1,7 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 
-function DisplayStatus({ answers, question, likes, comments, m, date }) {
+function DisplayStatus({ answers, question, likes, comments, m }) {
   const { day, month, year } = question.date;
 
   return (
