@@ -9,6 +9,7 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useAuth } from "../../providers/hooks";
@@ -24,7 +25,7 @@ import { useHistory } from "react-router-dom";
 const ModalProfileUser = ({ isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
   const [module, setModule] = useState(user.module);
-  const history = useHistory()
+  const history = useHistory();
   const formSchema = yup.object().shape({
     name: yup.string(),
     email: yup.string().email("Precisa ser um E-mail"),
@@ -32,6 +33,8 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
     linkedin: yup.string(),
     image: yup.string(),
   });
+
+  console.log(user);
 
   const {
     register,
@@ -72,8 +75,8 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
   const logOut = () => {
     localStorage.removeItem("@StackKenzie:accessToken");
     localStorage.removeItem("@StackKenzie:user");
-    history.push("/")
-  }
+    history.push("/");
+  };
 
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
@@ -83,7 +86,12 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody paddingX="30px">
           <CardPerfil user={user} />
-          <VStack spacing="4" as="form" onSubmit={handleSubmit(editProfile)}>
+          <VStack
+            mb="20px"
+            spacing="4"
+            as="form"
+            onSubmit={handleSubmit(editProfile)}
+          >
             <InputChakra
               placeholder="seu nome"
               label="Nome do usuário"
@@ -115,27 +123,23 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
               value={module}
               borderRadius="6px"
               border="1px  #E2E8F0"
-              defaultValue="1"
+              defaultValue={user.module}
             >
+              <Text>Módulo</Text>
               <Stack
-                spacing={14}
+                spacing={4}
                 direction="row"
                 m="8px"
                 ml="10px"
                 color="theme.colors"
               >
-                <Radio value={"Q1"}>Q1</Radio>
-                <Radio value={"Q2"}>Q2</Radio>
-                <Radio value={"Q3"}>Q3</Radio>
-                <Radio value={"Q4"}>Q4</Radio>
+                <Radio value={"M1"}>M1</Radio>
+                <Radio value={"M2"}>M2</Radio>
+                <Radio value={"M3"}>M3</Radio>
+                <Radio value={"M4"}>M4</Radio>
               </Stack>
             </RadioGroup>
-            <Button
-              //   onClick={onClose}
-              variant="ButtonFilledBlue"
-              w="100%"
-              type="submit"
-            >
+            <Button variant="ButtonFilledBlue" w="100%" type="submit">
               ATUALIZAR
             </Button>
             <Button variant="ButtonBorderedWhite" w="100%" onClick={logOut}>
