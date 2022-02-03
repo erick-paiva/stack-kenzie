@@ -11,7 +11,6 @@ import {
   Portal,
 } from "@chakra-ui/react";
 
-import { Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, Portal } from "@chakra-ui/react";
 
 
 export default function PopoverChakra({ jsx, children }) {
