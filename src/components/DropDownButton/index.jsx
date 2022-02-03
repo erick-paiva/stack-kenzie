@@ -11,29 +11,24 @@ import { BsChevronDown } from "react-icons/bs";
 
 export default function DropDownButton({ itens, setArray, array }) {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
+
+  const verificaData = (a,b) => {
+    const dataA = new Date(`${a.date.month}-${a.date.day}-${a.date.year}`)
+    const dataB = new Date(`${b.date.month}-${b.date.day}-${b.date.year}`)
+    if(dataA < dataB){
+      return 1
+    }
+    if(dataA > dataB){
+      return -1
+    }
+    return 0
+  }
   const setItem = (option) => {
     if (option === 0) {
       setArray(
         array
           .slice()
-          .sort((a, b) => {
-            if (a.date.month > b.date.month) {
-              if (a.date.day > b.date.day) {
-                if (a.date.hour > b.date.hour) {
-                  return -1;
-                }
-              }
-            }
-            if (a.date.month < b.date.month) {
-              if (a.date.day < b.date.day) {
-                if (a.date.hour < b.date.hour) {
-                  return 1;
-                }
-              }
-            }
-            return 0;
-          })
-          .reverse()
+          .sort(verificaData)
       );
     }
 
@@ -45,7 +40,6 @@ export default function DropDownButton({ itens, setArray, array }) {
       );
     }
   };
-
   return (
     <Menu>
       <MenuButton

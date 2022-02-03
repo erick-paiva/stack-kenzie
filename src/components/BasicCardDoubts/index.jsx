@@ -13,6 +13,7 @@ import DisplayStatus from "../DisplayStatus";
 import { BiLike } from "react-icons/bi";
 import Avatar from "../Avatar";
 import ContainerBase from "../ContainerBase/Index";
+import { useAuth } from "../../providers/hooks";
 export default function BasicCardDoubts({
   question,
   ImgDefault,
@@ -28,7 +29,7 @@ export default function BasicCardDoubts({
     question.question.likes.some((ele) => ele.userId === user.id)
   );
   const [isMobile] = useMediaQuery("(max-width: 700px)");
-
+  const { user: userProvider } = useAuth();
   return (
     <ContainerBase>
       {isMobile ? (
@@ -73,7 +74,7 @@ export default function BasicCardDoubts({
               ))}
             </Flex>
             <Flex m="auto" w="fit-content">
-              {question.userId === user.id ? (
+              {(question.userId === user.id || userProvider.coach) ? (
                 <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                   Deletar
                 </Button>
@@ -148,7 +149,7 @@ export default function BasicCardDoubts({
                 m={"0 0 10px 0"}
               />
 
-{question.userId === user.id ? (
+{(question.userId === user.id || userProvider.coach) ? (
                 <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                   Deletar
                 </Button>
