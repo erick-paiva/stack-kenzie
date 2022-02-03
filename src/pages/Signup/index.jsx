@@ -9,7 +9,7 @@ export default function SignUp() {
   return (
     <Flex height={"100vh"} justifyContent={"center"}>
       {isMobile ? (
-        <Flex m="10px">
+        <Flex alignItems={"center"}>
           <FormSignUp />
         </Flex>
       ) : (

@@ -130,7 +130,13 @@ export default function Dashboard() {
               </VStack>
 
               <GridItem rowSpan={6}>
-                <Box sx={scroll} overflowY="auto" h="60vh" w="100%">
+                <Box
+                  sx={scroll}
+                  overflowY="auto"
+                  h="60vh"
+                  w="100%"
+                  paddingRight={"10px"}
+                >
                   {(questionFilter.length > 0 ||
                   nameSearch ||
                   tagSelected.length > 0

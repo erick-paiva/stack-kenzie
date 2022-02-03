@@ -8,7 +8,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-function ModalChakra({ children, title, buttonText, isOpen, onClose, onOpen }) {
+function ModalChakra({
+  children,
+  title,
+  buttonText,
+  isOpen,
+  onClose,
+  onOpen,
+  size,
+}) {
   return (
     <>
       {buttonText && (
@@ -17,7 +25,7 @@ function ModalChakra({ children, title, buttonText, isOpen, onClose, onOpen }) {
         </Button>
       )}
 
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onClose} size={size}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>

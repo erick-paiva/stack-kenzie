@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Text,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import { InputChakra } from "../InputChakra";
 import { TextAreaChakra } from "../TextAreaChakra";
 
@@ -67,7 +59,7 @@ export default function AddQuestion() {
   return (
     <ModalChakra
       title="Fazer uma pergunta"
-      buttonText="Fazer uma pergunta"
+      buttonText="FAZER UMA PERGUNTA"
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
@@ -95,9 +87,10 @@ export default function AddQuestion() {
         />
         <Box w="100%">
           <Text>Tags</Text>
-          <HStack display="flex" flexWrap={"wrap"}>
+          <VStack spacing={"10px"}>
             <Box
-              w="68%"
+              minH="40px"
+              w="100%"
               display={"flex"}
               flexWrap={"wrap"}
               border="1px solid"
@@ -106,24 +99,11 @@ export default function AddQuestion() {
               p="0 5px 5px"
             >
               {tagSelected.map((element) => (
-                <Flex
-                  border="1px solid"
-                  borderRadius="6px"
-                  borderColor="gray.200"
-                  color="grayTag"
-                  h="fitContent"
-                  w="fitContent"
-                  mt="7px"
-                  alignItems="center"
-                  p="0 5px"
-                  ml="4px"
-                >
-                  {element}
-                </Flex>
+                <Button variant={"TagButton"}>{element}</Button>
               ))}
             </Box>
             <AddTag tagSelected={tagSelected} setTagSelected={setTagSelected} />
-          </HStack>
+          </VStack>
         </Box>
         <Button type="submit" variant="ButtonFilledBlue">
           ENVIAR PERGUNTA
