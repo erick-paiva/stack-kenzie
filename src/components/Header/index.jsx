@@ -46,10 +46,9 @@ export function Header({ setNameSearch }) {
             <InputChakra
               m="auto"
               placeholder="Pesquise sua dúvida"
-              border="2px solid red"
-              defaultBorder="blue"
               h="50px"
               maxW="500px"
+              width="100%"
               onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
             />
 
@@ -61,12 +60,10 @@ export function Header({ setNameSearch }) {
         )}
       </Flex>
       {isMobile && (
-        <Flex width="82%" justifyContent="center">
+        <Flex justifyContent="center" paddingX={"50px"} width="100%">
           <InputChakra
             mt="15px"
             placeholder="Pesquise sua dúvida"
-            border="2px solid red"
-            defaultBorder="blue"
             h="50px"
             onChange={(e) => setNameSearch(e.currentTarget.value.trim())}
           />
