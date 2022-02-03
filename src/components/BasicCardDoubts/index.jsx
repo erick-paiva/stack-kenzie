@@ -24,12 +24,11 @@ export default function BasicCardDoubts({
   comments,
   user,
 }) {
-  const [liked, setLiked] = useState(
+  const [liked] = useState(
     question.question.likes.some((ele) => ele.userId === user.id)
   );
   const [isMobile] = useMediaQuery("(max-width: 700px)");
 
-  console.log(user, question)
   return (
     <ContainerBase>
       {isMobile ? (
@@ -149,30 +148,26 @@ export default function BasicCardDoubts({
                 m={"0 0 10px 0"}
               />
 
-              {liked ? (
-                <Button
-                  onClick={(e) => {
-                    deslike(e);
-                    setLiked(!liked);
-                  }}
-                  variant="ButtonLikeOn"
-                >
-                  <HStack alignItems={"center"}>
-                    <Text>Curtiu</Text> <BiLike fontSize="20px" />
-                  </HStack>
+{question.userId === user.id ? (
+                <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
+                  Deletar
                 </Button>
               ) : (
-                <Button
-                  onClick={(e) => {
-                    like(e);
-                    setLiked(!liked);
-                  }}
-                  variant="ButtonLikeOff"
-                >
-                  <HStack alignItems={"center"}>
-                    <Text>Curtir</Text> <BiLike fontSize="20px" />
-                  </HStack>
-                </Button>
+                <>
+                  {liked ? (
+                    <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
+                      <HStack alignItems={"flex-end"}>
+                        <Text>Curtiu</Text> <BiLike fontSize="20px" />
+                      </HStack>
+                    </Button>
+                  ) : (
+                    <Button onClick={(e) => like(e)} variant="ButtonLikeOff">
+                      <HStack alignItems={"flex-end"}>
+                        <Text>Curtir</Text> <BiLike fontSize="20px" />
+                      </HStack>
+                    </Button>
+                  )}
+                </>
               )}
             </Center>
           </GridItem>

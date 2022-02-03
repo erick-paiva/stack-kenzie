@@ -23,7 +23,7 @@ const QuestionProvider = ({ children }) => {
 
   //Criar uma questão
   const createQuestion = async (data) => {
-    api.post("/questions", data, tokenBearer).then(() => {
+    api.post("/questions", data, tokenBearer).then((resp) => {
       toast({
         containerStyle: {
           background: "#48BB78",
@@ -36,7 +36,8 @@ const QuestionProvider = ({ children }) => {
         duration: 2000,
         isClosable: true,
       });
-      getAllQuestions();
+      // getAllQuestions();
+      setQuestions([...questions, resp.data])
     });
   };
 

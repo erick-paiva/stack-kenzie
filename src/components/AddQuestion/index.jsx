@@ -99,7 +99,7 @@ export default function AddQuestion() {
               p="0 5px 5px"
             >
               {tagSelected.map((element) => (
-                <Button variant={"TagButton"}>{element}</Button>
+                <Button variant={"TagButton"} key={element}>{element}</Button>
               ))}
             </Box>
             <AddTag tagSelected={tagSelected} setTagSelected={setTagSelected} />

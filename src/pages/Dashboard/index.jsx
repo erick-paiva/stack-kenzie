@@ -244,7 +244,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
                     <Button ml="20px" variant={"ButtonBorderedSmall"}>
                       Tags
@@ -255,7 +257,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
                     <DisplayTags
                       handleTagClick={handleTagClick}
