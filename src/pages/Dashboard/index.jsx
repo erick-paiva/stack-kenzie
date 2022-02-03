@@ -40,7 +40,7 @@ const scroll = {
 export default function Dashboard() {
   const { questions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
-  const [option, setOption] = useState(0);
+
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
   const [questionFilter, setQuestionFilter] = useState([]);
@@ -230,7 +230,6 @@ export default function Dashboard() {
                   <Flex>
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
-                      setOption={setOption}
                       setArray={setQuestionFilter}
                       array={questionFilter}
                     />
@@ -242,7 +241,6 @@ export default function Dashboard() {
                   <>
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
-                      setOption={setOption}
                       setArray={setQuestionFilter}
                       array={questionFilter}
                     />
