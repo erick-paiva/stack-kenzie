@@ -4,9 +4,8 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
-  useBreakpointValue,
+  useMediaQuery,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -27,18 +26,15 @@ export default function BasicCardDoubts({
   const [liked, setLiked] = useState(
     question.question.likes.some((ele) => ele.userId === user.id)
   );
-  const is800px = useBreakpointValue({ base: false, md: true });
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   return (
     <Flex
       minH="200px"
-      // minW="320px"
-      // maxW="600px"
       borderRadius="6px"
       alignItems="center"
       boxShadow="0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)"
       padding="15px 20px"
-      // onClick={() => history}
       boxSize="border-box"
       cursor="pointer"
       justifyContent="space-between"
@@ -53,15 +49,20 @@ export default function BasicCardDoubts({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar userCreator={ImgDefault}  />
-        {!is800px && (
+        <Avatar sm userCreator={ImgDefault} />
+        {!isMobile && (
           <VStack spacing="2" color="primary">
             {question.userId === user.id && (
               <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                 Deletar
               </Button>
             )}
-            <DisplayStatus answers={answers} question={question} likes={likes} comments={comments} />
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={likes}
+              comments={comments}
+            />
           </VStack>
         )}
       </Flex>
@@ -103,14 +104,19 @@ export default function BasicCardDoubts({
         flexDirection="column"
         alignItems="flex-start"
       >
-        {is800px && (
+        {isMobile && (
           <Box color="primary">
             {question.userId === user.id && (
               <Button variant="ButtonBorderedSmall" onClick={deleteQuestion}>
                 Deletar
               </Button>
             )}
-            <DisplayStatus answers={answers} question={question} likes={likes} comments={comments.length}/>
+            <DisplayStatus
+              answers={answers}
+              question={question}
+              likes={likes}
+              comments={comments.length}
+            />
           </Box>
         )}
 
@@ -120,10 +126,10 @@ export default function BasicCardDoubts({
               deslike(e);
               setLiked(false);
             }}
-            variant="ButtonFilledSmall"
+            variant="ButtonLikeOn"
           >
             <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+              <Text mr="5px">Curtiu </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
@@ -132,7 +138,7 @@ export default function BasicCardDoubts({
               like(e);
               setLiked(true);
             }}
-            variant="ButtonBorderedSmall"
+            variant="ButtonLikeOff"
           >
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />

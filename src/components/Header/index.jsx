@@ -2,12 +2,11 @@ import {
   Box,
   Flex,
   Image,
-  useBreakpointValue,
   useDisclosure,
   useMediaQuery,
 } from "@chakra-ui/react";
 import Logo from "../../assets/logoKenzieStack.svg";
-import imgDefault from "../../assets/user_sign.png";
+
 import { InputChakra } from "../InputChakra";
 import ModalProfileUser from "../ModalProfilelUser";
 import Avatar from "../Avatar";
@@ -21,11 +20,13 @@ export function Header({ setNameSearch }) {
   return (
     <Flex
       w="100%"
+      p="20px"
+      h="100%"
       flexDirection="column"
       alignItems="center"
       justifyContent={"center"}
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.1)"
-      h={["180px", "180px", "126px"]}
+      position="sticky"
     >
       <Flex
         w="100%"
@@ -37,12 +38,8 @@ export function Header({ setNameSearch }) {
 
         {isMobile ? (
           <Box onClick={onOpen} cursor="pointer">
-            <Avatar userCreator={user} />
-            <ModalProfileUser
-              onOpen={onOpen}
-              isOpen={isOpen}
-              onClose={onClose}
-            />
+            <Avatar userCreator={user} sm noName />
+            <ModalProfileUser isOpen={isOpen} onClose={onClose} />
           </Box>
         ) : (
           <>
@@ -57,12 +54,8 @@ export function Header({ setNameSearch }) {
             />
 
             <Box onClick={onOpen} cursor="pointer">
-              <Avatar userCreator={user} sm />
-              <ModalProfileUser
-                onOpen={onOpen}
-                isOpen={isOpen}
-                onClose={onClose}
-              />
+              <Avatar userCreator={user} sm noName />
+              <ModalProfileUser isOpen={isOpen} onClose={onClose} />
             </Box>
           </>
         )}

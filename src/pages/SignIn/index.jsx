@@ -10,6 +10,7 @@ export default function SignIn() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [loginVisible, setLoginVisible] = useState(true);
   return (
+
     <>
       {isMobile && loginVisible ? (
         <Flex mx="10" mt="50px">
@@ -28,7 +29,6 @@ export default function SignIn() {
             </Flex>
           )}
         </>
-      )}
-    </>
+
   );
 }

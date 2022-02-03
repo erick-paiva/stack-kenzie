@@ -21,7 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CardPerfil from "../CardPerfil";
 import { useHistory } from "react-router-dom";
 
-const ModalProfileUser = ({ onOpen, isOpen, onClose }) => {
+const ModalProfileUser = ({ isOpen, onClose }) => {
   const { user, accessToken, setUser } = useAuth();
   const [module, setModule] = useState(user.module);
   const history = useHistory()

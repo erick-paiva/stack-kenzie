@@ -20,11 +20,13 @@ const AnswerProvider = ({ children }) => {
   }, []);
 
   //Criar uma questão
-  const createAnswer = async (data) => {
+  const createAnswer = async (data, callback) => {
     api.post("/answers", data, tokenBearer).then(() => {
+      callback()
       toast({
         title: "Resposta adicionada!",
         status: "success",
+
         duration: 9000,
         isClosable: true,
       });

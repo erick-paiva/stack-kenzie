@@ -1,5 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 import { ButtonStyles as Button } from "./components/buttonsStyles";
+import { toastStyles as Toast } from "./components/toastStyles";
 
 export const theme = extendTheme({
   colors: {
@@ -11,6 +12,7 @@ export const theme = extendTheme({
 
   components: {
     Button,
+    Toast,
   },
   fonts: {
     body: "Prompt, Inter, sans-serif",
