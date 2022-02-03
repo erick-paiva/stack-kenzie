@@ -5,6 +5,7 @@ import { useMediaQuery } from "@chakra-ui/media-query";
 
 export default function SignUp() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
+
   return (
     <Flex height={"100vh"} justifyContent={"center"}>
       {isMobile ? (
