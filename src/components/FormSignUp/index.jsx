@@ -1,9 +1,7 @@
 import {
   Button,
-  Heading,
   Text,
   VStack,
-  Image,
   Box,
   FormErrorMessage,
   Radio,
@@ -15,7 +13,6 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Logo from "../../assets/logo1.svg";
 import { useAuth } from "../../providers/hooks";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
@@ -43,8 +40,6 @@ export default function FormSignUp() {
     passwordConfirm: yup
       .string()
       .oneOf([yup.ref("password"), null], "As Senhas devem ser iguais!"),
-
-    //Atenção Inserir o input do slack
   });
 
   const {
@@ -91,7 +86,6 @@ export default function FormSignUp() {
           borderRadius="6px"
           placeholder="email@email.com"
           label="Email"
-          placeholder="email@email.com"
           fontSize="16px"
           border="1px solid #E2E8F0"
           color="#2D3748"

@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
+  GridItem,
   Text,
   useMediaQuery,
   VStack,
@@ -23,9 +25,10 @@ const scroll = {
   "&::-webkit-scrollbar-track": {
     width: "30px",
     borderRadius: "50px",
+    border: "1px solid rgba(0,0,0,0.08)",
   },
   "&::-webkit-scrollbar-thumb": {
-    border: "3px solid #0001FF",
+    border: "1px solid #0001FF",
     background: "white",
     borderRadius: "50px",
   },
@@ -79,82 +82,163 @@ export default function Dashboard() {
     }
   }, [tagSelected, nameSearch, questions]);
   return (
-    <Box>
-      <Header setNameSearch={setNameSearch} />
+    <>
+      {isMobile ? (
+        <Grid h="100vh" templateRows="repeat(8, 1fr)" gap={5}>
+          <GridItem rowSpan={1}>
+            <Header setNameSearch={setNameSearch} />
+          </GridItem>
 
-      <Flex
-        justifyContent={"center"}
-        m={"50px"}
-        flexDir={isMobile && "column-reverse"}
-        alignItems={isMobile && "center"}
-      >
-        <Box
-          maxWidth={isMobile && "340px"}
-          h="75vh"
-          w="100%"
-          overflowY="auto"
-          overflowX="hidden"
-          sx={scroll}
+          <GridItem margin="auto" rowSpan={1}>
+            <Box maxWidth={isMobile && "85vw"} h="100%" w="100%">
+              <VStack
+                alignItems={"center"}
+                spacing={"20px"}
+                maxW="320px"
+                margin="auto"
+              >
+                <AddQuestion />
+
+                <Box margin={"20px"} w="320px">
+                  {isMobile ? (
+                    <Flex>
+                      <DropDownButton
+                        itens={["Data", "Curtidas"]}
+                        setOption={setOption}
+                        setArray={setQuestionFilter}
+                        array={questionFilter}
+                      />
+                      <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                        Tags
+                      </Button>
+                    </Flex>
+                  ) : (
+                    <>
+                      <DropDownButton
+                        itens={["Data", "Curtidas"]}
+                        setOption={setOption}
+                        setArray={setQuestionFilter}
+                        array={questionFilter}
+                      />
+                      <DisplayTags
+                        handleTagClick={handleTagClick}
+                        tagsSelected={tagSelected}
+                      />
+                    </>
+                  )}
+                </Box>
+              </VStack>
+
+              <GridItem rowSpan={6}>
+                <Box sx={scroll} overflowY="auto" h="60vh" w="100%">
+                  {(questionFilter.length > 0 ||
+                  nameSearch ||
+                  tagSelected.length > 0
+                    ? questionFilter
+                    : questions
+                  ).map((ele) => (
+                    <CardDoubts question={ele} key={ele.id} />
+                  ))}
+
+                  {questionFilter.length === 0 && (
+                    <Text
+                      textAlign={"center"}
+                      color="primary"
+                      fontWeight="bold"
+                      fontSize="24px"
+                    >
+                      Resultado não encontrado
+                    </Text>
+                  )}
+                </Box>
+              </GridItem>
+            </Box>
+          </GridItem>
+        </Grid>
+      ) : (
+        <Grid
+          h="100vh"
+          templateRows="repeat(8, 1fr)"
+          templateColumns="repeat(4, 1fr)"
+          gap={5}
         >
-          {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
-            ? questionFilter
-            : questions
-          ).map((ele) => (
-            <CardDoubts question={ele} key={ele.id} />
-          ))}
+          <GridItem rowSpan={1} colSpan={5}>
+            <Header setNameSearch={setNameSearch} />
+          </GridItem>
 
-          {questionFilter.length === 0 && (
-            <Text
-              textAlign={"center"}
-              color="primary"
-              fontWeight="bold"
-              fontSize="24px"
+          <GridItem rowSpan={7} colSpan={3} marginLeft={12}>
+            <Box
+              maxWidth={isMobile && "340px"}
+              h="100%"
+              w="100%"
+              overflowY="scroll"
+              sx={scroll}
+              paddingRight={3}
             >
-              Resultado não encontrado
-            </Text>
-          )}
-        </Box>
+              {(questionFilter.length > 0 ||
+              nameSearch ||
+              tagSelected.length > 0
+                ? questionFilter
+                : questions
+              ).map((ele) => (
+                <CardDoubts question={ele} key={ele.id} />
+              ))}
 
-        <VStack
-          alignItems={"flex-start"}
-          spacing={"20px"}
-          ml={isMobile ? "0px" : "20px"}
-          mb="20px"
-          maxW="320px"
-          h="fit-content"
-        >
-          <AddQuestion />
+              {questionFilter.length === 0 && (
+                <Text
+                  textAlign={"center"}
+                  color="primary"
+                  fontWeight="bold"
+                  fontSize="24px"
+                >
+                  Resultado não encontrado
+                </Text>
+              )}
+            </Box>
+          </GridItem>
+          <GridItem rowSpan={7} colSpan={1} marginRight={12}>
+            <VStack
+              alignItems={"flex-start"}
+              spacing={"20px"}
+              ml={isMobile ? "0px" : "20px"}
+              mb="20px"
+              maxW="320px"
+              h="fit-content"
+            >
+              <AddQuestion />
 
-          <Box margin={"20px"} w="320px">
-            {isMobile ? (
-              <Flex>
-                <DropDownButton
-                  itens={["Data", "Curtidas"]}
-                  setOption={setOption}
-                  setArray={setQuestionFilter}
-                  array={questionFilter}
-                />
-                <Button ml="20px" variant={"ButtonBorderedSmall"}>
-                  Tags
-                </Button>
-              </Flex>
-            ) : (
-              <>
-                <DropDownButton
-                  itens={["Data", "Curtidas"]}
-                  setOption={setOption}
-                  setArray={setQuestionFilter}
-                  array={questionFilter}
-                />
-                <DisplayTags
-                  handleTagClick={handleTagClick}
-                  tagsSelected={tagSelected}
-                />
-              </>
-            )}
-          </Box>
-        </VStack>
-      </Flex>
-    </Box>
+              <Box margin={"20px"} w="320px">
+                {isMobile ? (
+                  <Flex>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setOption={setOption}
+                      setArray={setQuestionFilter}
+                      array={questionFilter}
+                    />
+                    <Button ml="20px" variant={"ButtonBorderedSmall"}>
+                      Tags
+                    </Button>
+                  </Flex>
+                ) : (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setOption={setOption}
+                      setArray={setQuestionFilter}
+                      array={questionFilter}
+                    />
+                    <DisplayTags
+                      handleTagClick={handleTagClick}
+                      tagsSelected={tagSelected}
+                    />
+                  </>
+                )}
+              </Box>
+            </VStack>
+          </GridItem>
+        </Grid>
+      )}
+    </>
   );
 }

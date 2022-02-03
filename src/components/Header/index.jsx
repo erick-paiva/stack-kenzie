@@ -21,10 +21,12 @@ export function Header({ setNameSearch }) {
     <Flex
       w="100%"
       p="20px"
+      h="100%"
       flexDirection="column"
       alignItems="center"
       justifyContent={"center"}
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.1)"
+      position="sticky"
     >
       <Flex
         w="100%"
@@ -37,10 +39,7 @@ export function Header({ setNameSearch }) {
         {isMobile ? (
           <Box onClick={onOpen} cursor="pointer">
             <Avatar userCreator={user} sm noName />
-            <ModalProfileUser
-              isOpen={isOpen}
-              onClose={onClose}
-            />
+            <ModalProfileUser isOpen={isOpen} onClose={onClose} />
           </Box>
         ) : (
           <>
@@ -56,10 +55,7 @@ export function Header({ setNameSearch }) {
 
             <Box onClick={onOpen} cursor="pointer">
               <Avatar userCreator={user} sm noName />
-              <ModalProfileUser
-                isOpen={isOpen}
-                onClose={onClose}
-              />
+              <ModalProfileUser isOpen={isOpen} onClose={onClose} />
             </Box>
           </>
         )}

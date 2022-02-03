@@ -23,8 +23,9 @@ const CommentProvider = ({ children }) => {
   }, []);
 
   //Criar uma questão
-  const createComment = async (data) => {
+  const createComment = async (data, callback) => {
     api.post("/comments", data, tokenBearer).then(() => {
+      callback()
       toast({
         title: "Comentário adicionado!",
         status: "success",

@@ -126,10 +126,10 @@ export default function BasicCardDoubts({
               deslike(e);
               setLiked(false);
             }}
-            variant="ButtonFilledSmall"
+            variant="ButtonLikeOn"
           >
             <HStack alignItems={"flex-end"}>
-              <Text mr="5px">Curtido </Text> <BiLike fontSize="20px" />
+              <Text mr="5px">Curtiu </Text> <BiLike fontSize="20px" />
             </HStack>
           </Button>
         ) : (
@@ -138,7 +138,7 @@ export default function BasicCardDoubts({
               like(e);
               setLiked(true);
             }}
-            variant="ButtonBorderedSmall"
+            variant="ButtonLikeOff"
           >
             <HStack alignItems={"flex-end"}>
               <Text mr="5px">Curtir </Text> <BiLike fontSize="20px" />

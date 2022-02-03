@@ -24,9 +24,8 @@ function AddComment({ postId, getData }) {
   };
 
   const handleSubmit = () => {
-    createComment(data);
-    getData()
-
+    createComment(data, getData);
+    
   };
 
   return (
