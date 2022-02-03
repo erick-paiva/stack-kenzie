@@ -1,4 +1,4 @@
-import { Button, HStack, Input, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BiCommentEdit } from "react-icons/bi";
 import { useAnswers, useAuth } from "../../providers/hooks";
@@ -23,11 +23,11 @@ function AddAnswer({ postId, getData }) {
   };
 
   const handleSubmit = () => {
-    createAnswer(data,getData)
-    setValue("")
+    createAnswer(data, getData);
+    setValue("");
   };
   return (
-    <div>
+    <Box m="auto">
       <Input
         value={value}
         onChange={handleChange}
@@ -40,7 +40,7 @@ function AddAnswer({ postId, getData }) {
           <BiCommentEdit fontSize="20px" />
         </HStack>
       </Button>
-    </div>
+    </Box>
   );
 }
 
