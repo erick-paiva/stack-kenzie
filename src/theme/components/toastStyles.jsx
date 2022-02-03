@@ -6,5 +6,13 @@ export const toastStyles = {
       color: "white",
       fontFamily: "Roboto, Inter, sans-serif",
     },
+    error: {
+      variant: "solid",
+      containerStyle: {
+        background: "red",
+        color: "white",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
   },
 };

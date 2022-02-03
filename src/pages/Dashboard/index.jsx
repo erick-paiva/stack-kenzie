@@ -85,7 +85,7 @@ export default function Dashboard() {
     }
   }, [tagSelected, nameSearch, questions]);
 
-  const {isOpen, onOpen, onClose} = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       {isMobile ? (
@@ -111,18 +111,21 @@ export default function Dashboard() {
                       setArray={setQuestionFilter}
                       array={questionFilter}
                     />
-                    <Button ml="20px" variant={"ButtonBorderedSmall"} onClick={onOpen}>
-                        Tags
-                      </Button>
-                    <ModalChakra isOpen={isOpen} onClose={onClose} >
-                        <Center mb="20px">
-
+                    <Button
+                      ml="20px"
+                      variant={"ButtonBorderedSmall"}
+                      onClick={onOpen}
+                    >
+                      Tags
+                    </Button>
+                    <ModalChakra isOpen={isOpen} onClose={onClose}>
+                      <Center mb="20px">
                         <DisplayTags
                           handleTagClick={handleTagClick}
                           tagsSelected={tagSelected}
                         />
-                        </Center>
-                      </ModalChakra>
+                      </Center>
+                    </ModalChakra>
                   </>
                 ) : (
                   <>
