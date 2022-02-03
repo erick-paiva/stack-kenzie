@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import CardDoubts from "../../components/CardDoubts";
 import { Header } from "../../components/Header";
 import { useQuestions } from "../../providers/hooks";
@@ -244,7 +244,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
                     <Button ml="20px" variant={"ButtonBorderedSmall"}>
                       Tags
@@ -255,7 +257,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
                     <DisplayTags
                       handleTagClick={handleTagClick}

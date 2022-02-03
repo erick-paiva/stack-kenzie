@@ -1,11 +1,11 @@
 import { Button, Grid, GridItem, Text, useToast } from "@chakra-ui/react";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/hooks";
 import { api } from "../../services/api";
 import Avatar from "../Avatar";
 import ContainerBase from "../ContainerBase/Index";
 
-export default function CardAnswer({ comment, answerBody, user, callback }) {
+export default function CardAnswer({ answer, user, callback }) {
   const [userComment, setUserComment] = useState({});
   const { accessToken, user: userProvider } = useAuth();
   const toast = useToast();
@@ -14,9 +14,9 @@ export default function CardAnswer({ comment, answerBody, user, callback }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const deleteComment = () => {
+  const deleteAnswer = () => {
     api
-      .delete(`/answers/${comment.id}`, {
+      .delete(`/answers/${answer.id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then(() => {
@@ -61,13 +61,12 @@ export default function CardAnswer({ comment, answerBody, user, callback }) {
         )}
         <GridItem colSpan={12} rowSpan={1}>
           <Text fontSize="16px" fontWeight="400" lineHeight="24px">
-            {!!comment?.comment && comment.comment}
-            {!!answerBody && answerBody}
+            {!!answer.body && answer.body}
           </Text>
         </GridItem>
       </Grid>
-      {!!comment && userProvider.id === comment.userId && (
-        <Button mt="20px" variant="ButtonBorderedSmall" onClick={deleteComment}>
+      {!!answer.body && userProvider.id === user && (
+        <Button mt="20px" variant="ButtonBorderedSmall" onClick={deleteAnswer}>
           Deletar
         </Button>
       )}

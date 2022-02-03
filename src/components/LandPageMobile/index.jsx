@@ -1,7 +1,5 @@
-import { Button, Text, VStack, Box, StackDivider } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-//import { useAuth } from "../../providers/hooks";
-//import ContainerBase from "../ContainerBase/Index";
 import LogoBlue from "../LogoBlue";
 import HeroCall from "../HeroCall";
 

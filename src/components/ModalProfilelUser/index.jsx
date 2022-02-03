@@ -34,7 +34,6 @@ const ModalProfileUser = ({ isOpen, onClose }) => {
     image: yup.string(),
   });
 
-  console.log(user);
 
   const {
     register,
