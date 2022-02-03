@@ -24,7 +24,6 @@ import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
 
 export default function CardDoubts({ question, disable = false }) {
-  const { getAllQuestions } = useQuestions();
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
   const [update, setUptade] = useState(true);
@@ -46,6 +45,7 @@ export default function CardDoubts({ question, disable = false }) {
     },
     tags: question.tags,
   };
+  const { day, month, year } = questionUpdate.date
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -69,7 +69,6 @@ export default function CardDoubts({ question, disable = false }) {
     api
       .get(`/users/${question.userId}`)
       .then((resp) => setUserCreator(resp.data));
-    getAllQuestions();
   };
   // useEffect(() => {
   //   setTimeout(() => {
@@ -189,6 +188,9 @@ export default function CardDoubts({ question, disable = false }) {
               likes={likes.length}
               comments={comments.length}
             />
+            <Text>
+              {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
+            </Text>
           </Flex>
           <Box>
             <Heading>{question?.question.title}</Heading>
@@ -279,6 +281,9 @@ export default function CardDoubts({ question, disable = false }) {
               likes={likes.length}
               comments={comments.length}
             />
+            <Text>
+              {`${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`}
+            </Text>
             {liked ? (
               <Button onClick={(e) => deslike(e)} variant="ButtonFilledSmall">
                 <HStack alignItems={"flex-end"}>
@@ -319,12 +324,7 @@ export default function CardDoubts({ question, disable = false }) {
                 answers.map((ele, key) => (
                   <CardComment
                     key={key}
-                    question={question}
-                    ImgDefault={ImgDefault}
-                    deleteQuestion={deleteQuestion}
                     answerBody={ele.body}
-                    deslike={deslike}
-                    like={like}
                     user={ele.userId}
                   />
                 ))}
@@ -362,13 +362,9 @@ export default function CardDoubts({ question, disable = false }) {
                     comments.map((ele, key) => (
                       <CardComment
                         key={key}
-                        question={questionUpdate}
-                        ImgDefault={ImgDefault}
-                        deleteQuestion={deleteQuestion}
-                        deslike={deslike}
-                        like={like}
-                        comments={ele.comment}
+                        comment={ele}
                         user={ele.userId}
+                        callback={getData}
                       />
                     ))}
                 </Flex>
