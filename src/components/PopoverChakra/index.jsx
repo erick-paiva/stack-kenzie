@@ -1,3 +1,4 @@
+
 import {
   Popover,
   PopoverArrow,
@@ -10,6 +11,9 @@ import {
   Portal,
 } from "@chakra-ui/react";
 
+import { Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverTrigger, Portal } from "@chakra-ui/react";
+
+
 export default function PopoverChakra({ jsx, children }) {
   return (
     <Popover>
@@ -17,10 +21,12 @@ export default function PopoverChakra({ jsx, children }) {
       <Portal>
         <PopoverContent>
           <PopoverArrow />
+
           <PopoverHeader></PopoverHeader>
           <PopoverCloseButton />
           <PopoverBody>{children}</PopoverBody>
           <PopoverFooter>This is the footer</PopoverFooter>
+
         </PopoverContent>
       </Portal>
     </Popover>
