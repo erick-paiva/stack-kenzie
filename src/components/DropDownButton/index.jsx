@@ -6,19 +6,11 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/media-query";
 import { BsChevronDown } from "react-icons/bs";
-import { useEffect, useState } from "react/cjs/react.development";
-import { useQuestions } from "../../providers/hooks";
 
 export default function DropDownButton({ itens, setArray, array }) {
-
-
-  // useEffect(() => {
-  //   setItem(option)
-  //   console.log("alterou")
-  // },[questions,option])
-  // console.log(option, "opt")
-
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
   const setItem = (option) => {
     if (option === 0) {
       setArray(
@@ -54,18 +46,14 @@ export default function DropDownButton({ itens, setArray, array }) {
     }
   };
 
-  // useEffect(() => {
-  //   setItem(option)
-  // },[option,array])
   return (
     <Menu>
       <MenuButton
         as={Button}
-        rightIcon={<BsChevronDown />}
+        rightIcon={!isMobile && <BsChevronDown />}
         variant="ButtonBorderedSmall"
-        mb="20px"
       >
-        Ordenar por
+        Ordenar
       </MenuButton>
       <MenuList>
         {itens.map((ele, index) => (

@@ -94,28 +94,27 @@ export default function Dashboard() {
             <Header setNameSearch={setNameSearch} />
           </GridItem>
 
-          <GridItem margin="auto" rowSpan={1}>
-            <Box maxWidth={isMobile && "85vw"} h="100%" w="100%">
-              <VStack
-                alignItems={"center"}
-                spacing={"20px"}
-                maxW="320px"
-                margin="auto"
-              >
-                <AddQuestion />
+          <GridItem rowSpan={1} paddingX={"70px"} m="auto" h="100%" w="100%">
+            <VStack
+              alignItems={"center"}
+              spacing={"20px"}
+              w="100%"
+              margin="auto"
+            >
+              <AddQuestion />
 
-                <Box margin={"20px"} w="320px">
-                  {isMobile ? (
-                    <Flex>
-                      <DropDownButton
-                        itens={["Data", "Curtidas"]}
-                        setArray={setQuestionFilter}
-                        array={questionFilter}
-                      />
-                      <Button ml="20px" variant={"ButtonBorderedSmall"} onClick={onOpen}>
+              <Flex width={"100%"} justifyContent={"space-between"}>
+                {isMobile ? (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={questionFilter}
+                    />
+                    <Button ml="20px" variant={"ButtonBorderedSmall"} onClick={onOpen}>
                         Tags
                       </Button>
-                      <ModalChakra isOpen={isOpen} onClose={onClose} >
+                    <ModalChakra isOpen={isOpen} onClose={onClose} >
                         <Center mb="20px">
 
                         <DisplayTags
@@ -124,53 +123,49 @@ export default function Dashboard() {
                         />
                         </Center>
                       </ModalChakra>
-                    </Flex>
-                  ) : (
-                    <>
-                      <DropDownButton
-                        itens={["Data", "Curtidas"]}
-                        setArray={setQuestionFilter}
-                        array={questionFilter}
-                      />
-                      <DisplayTags
-                        handleTagClick={handleTagClick}
-                        tagsSelected={tagSelected}
-                      />
-                    </>
-                  )}
-                </Box>
-              </VStack>
+                  </>
+                ) : (
+                  <>
+                    <DropDownButton
+                      itens={["Data", "Curtidas"]}
+                      setArray={setQuestionFilter}
+                      array={questionFilter}
+                    />
 
-              <GridItem rowSpan={6}>
-                <Box
-                  sx={scroll}
-                  overflowY="auto"
-                  h="60vh"
-                  w="100%"
-                  paddingRight={"10px"}
-                >
-                  {(questionFilter.length > 0 ||
-                  nameSearch ||
-                  tagSelected.length > 0
-                    ? questionFilter
-                    : questions
-                  ).map((ele) => (
-                    <CardDoubts question={ele} key={ele.id} />
-                  ))}
+                    <DisplayTags
+                      handleTagClick={handleTagClick}
+                      tagsSelected={tagSelected}
+                    />
+                  </>
+                )}
+              </Flex>
+            </VStack>
+          </GridItem>
+          <GridItem
+            rowSpan={6}
+            sx={scroll}
+            overflowY="auto"
+            h="100%"
+            w="100%"
+            paddingRight={"10px"}
+          >
+            {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
+              ? questionFilter
+              : questions
+            ).map((ele) => (
+              <CardDoubts question={ele} key={ele.id} />
+            ))}
 
-                  {questionFilter.length === 0 && (
-                    <Text
-                      textAlign={"center"}
-                      color="primary"
-                      fontWeight="bold"
-                      fontSize="24px"
-                    >
-                      Resultado não encontrado
-                    </Text>
-                  )}
-                </Box>
-              </GridItem>
-            </Box>
+            {questionFilter.length === 0 && (
+              <Text
+                textAlign={"center"}
+                color="primary"
+                fontWeight="bold"
+                fontSize="24px"
+              >
+                Resultado não encontrado
+              </Text>
+            )}
           </GridItem>
         </Grid>
       ) : (
