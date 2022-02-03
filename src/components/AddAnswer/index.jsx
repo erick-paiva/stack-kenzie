@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BiCommentEdit } from "react-icons/bi";
 import { useAnswers, useAuth } from "../../providers/hooks";
 
-function AddAnswer({ postId }) {
+function AddAnswer({ postId, getData }) {
   const [value, setValue] = useState("");
   const handleChange = (event) => setValue(event.target.value);
   const { user } = useAuth();
@@ -23,7 +23,7 @@ function AddAnswer({ postId }) {
   };
 
   const handleSubmit = () => {
-    createAnswer(data);
+    createAnswer(data, getData);
   };
   return (
     <div>
