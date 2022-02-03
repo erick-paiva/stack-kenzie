@@ -7,7 +7,6 @@ import {
   ModalCloseButton,
   Flex,
 } from "@chakra-ui/react";
-import AddAnswer from "../AddAnswer";
 import AddComment from "../AddComment";
 import BasicCardDoubts from "../BasicCardDoubts";
 
