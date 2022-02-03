@@ -160,7 +160,6 @@ export default function Dashboard() {
             w="100%"
             paddingRight={"10px"}
           >
-            
             {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
               ? questionFilter
               : questions
@@ -202,7 +201,7 @@ export default function Dashboard() {
               overflowY="scroll"
               sx={scroll}
               paddingRight={3}
-            >  
+            >
               {(questionFilter.length > 0 ||
               nameSearch ||
               tagSelected.length > 0

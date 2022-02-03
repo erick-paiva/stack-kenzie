@@ -22,9 +22,9 @@ const DisplayTags = ({ handleTagClick, tagsSelected }) => {
         bg="white"
         borderRadius="6px"
       >
-        {tags.map((tag,i) => (
+        {tags.map((tag, i) => (
           <Button
-            key={tag+i}
+            key={tag + i}
             variant={
               tagsSelected?.some((ele) => ele === tag)
                 ? "TagButtonOn"

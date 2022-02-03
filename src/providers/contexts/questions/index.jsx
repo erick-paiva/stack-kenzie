@@ -37,7 +37,7 @@ const QuestionProvider = ({ children }) => {
         isClosable: true,
       });
       // getAllQuestions();
-      setQuestions([...questions, resp.data])
+      setQuestions([...questions, resp.data]);
     });
   };
 
@@ -48,8 +48,29 @@ const QuestionProvider = ({ children }) => {
     });
   };
 
+  //UpdateQuestion
+  const updateQuestion = async (questionId, data) => {
+    api
+      .patch(`/questions/${questionId}`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then(() => getAllQuestions());
+  };
+
   //deletar uma questão
-  const deleteQuestion = async () => {};
+  const deleteQuestion = async (questionId) => {
+    api.delete(
+      `/questions/${questionId}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  };
 
   return (
     <QuestionContext.Provider
@@ -58,6 +79,7 @@ const QuestionProvider = ({ children }) => {
         setQuestions,
         createQuestion,
         getAllQuestions,
+        updateQuestion,
         deleteQuestion,
       }}
     >

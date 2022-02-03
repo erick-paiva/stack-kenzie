@@ -44,11 +44,30 @@ const CommentProvider = ({ children }) => {
   const getAllComments = async () => {
     api.get("/comments").then((response) => {
       SetComments(response.data);
+      console.log("todo os comements: ", response.data);
     });
   };
 
   //deletar uma questão
-  const deleteComment = async () => {};
+  const deleteComment = async (commentId) => {
+    api
+      .delete(`/comments/${commentId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(() => {
+        toast({
+          containerStyle: {
+            background: "#E53E3E",
+            color: "whiter",
+            borderRadius: "8px",
+          },
+          title: "Comentário deletado!",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <CommentContext.Provider

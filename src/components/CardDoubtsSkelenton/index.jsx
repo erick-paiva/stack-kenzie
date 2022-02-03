@@ -20,27 +20,24 @@ export default function CardDoubtsSkelenton({ amount }) {
           w="100%"
           alignItems="center"
           key={ele}
-          flexDirection={ isMobile ? "column" : "row"}
+          flexDirection={isMobile ? "column" : "row"}
           justifyContent="space-between"
         >
-        
-
           {!isMobile && (
-              <>
-                <SkeletonCircle size="12" />
-            <VStack marginX="20px" w="70%">
-              <Skeleton height="20px" w="100%" mb="10px" />
-              <SkeletonText
-                mt="4"
-                height="70px"
-                noOfLines={3}
-                spacing="4"
-                w="100%"
-              />
-              <Skeleton height="20px" w="100%" />
-              
-            </VStack>
-            <VStack w="30%">
+            <>
+              <SkeletonCircle size="12" />
+              <VStack marginX="20px" w="70%">
+                <Skeleton height="20px" w="100%" mb="10px" />
+                <SkeletonText
+                  mt="4"
+                  height="70px"
+                  noOfLines={3}
+                  spacing="4"
+                  w="100%"
+                />
+                <Skeleton height="20px" w="100%" />
+              </VStack>
+              <VStack w="30%">
                 <Skeleton height="30px" w="100%" />
                 <SkeletonText
                   mt="4"

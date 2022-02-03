@@ -51,7 +51,25 @@ const AnswerProvider = ({ children }) => {
   };
 
   //deletar uma questão
-  const deleteAnswer = async () => {};
+  const deleteAnswer = async (answerId) => {
+    api
+      .delete(`/answers/${answerId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then(() => {
+        toast({
+          containerStyle: {
+            background: "#E53E3E",
+            color: "whiter",
+            borderRadius: "8px",
+          },
+          title: "Resposta deletada!",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <AnswerContext.Provider

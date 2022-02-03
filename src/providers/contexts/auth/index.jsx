@@ -44,33 +44,30 @@ const AuthProvider = ({ children }) => {
         history.push("/dashboard");
         toast({
           containerStyle: {
-            background:"#48BB78",
+            background: "#48BB78",
             color: "whiter",
-            borderRadius: "8px"
-
-          }, 
-          title: 'Logado com sucesso',
+            borderRadius: "8px",
+          },
+          title: "Logado com sucesso",
           description: `Bem-vindo ${response.data.user.name}`,
-          status: 'success',
+          status: "success",
           duration: 2000,
           isClosable: true,
-        })
-        
+        });
       })
       .catch((err) => {
         toast({
           containerStyle: {
-            background:"#E53E3E",
+            background: "#E53E3E",
             color: "whiter",
-            borderRadius: "8px"
-
-          }, 
-          title: 'Senha ou email invalidos!',
+            borderRadius: "8px",
+          },
+          title: "Senha ou email invalidos!",
           description: "Tente ou senha ou email",
-          status: 'success',
+          status: "success",
           duration: 2000,
           isClosable: true,
-        })
+        });
       });
   };
 
@@ -87,9 +84,16 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  //Update profile
+  const updateProfile = async (userId, data) => {
+    api.patch(`/users/${userId}`, data, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ accessToken, user, setUser, signIn, signUp }}
+      value={{ accessToken, user, setUser, signIn, signUp, updateProfile }}
     >
       {children}
     </AuthContext.Provider>
