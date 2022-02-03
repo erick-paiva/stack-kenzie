@@ -42,6 +42,20 @@ export const ButtonStyles = {
       },
       fontFamily: "Roboto, Inter, sans-serif",
     },
+    ButtonFilledSmall: {
+      size: "sm",
+      variant: "solid",
+      bg: "primary",
+      color: "white",
+      maxWidth: "150px",
+      width: "100%",
+      height: "30px",
+      _hover: {
+        bg: blacken("primary", 20),
+        transform: "scale(1.02)",
+      },
+      fontFamily: "Roboto, Inter, sans-serif",
+    },
     ButtonLikeOff: {
       size: "lg",
       variant: "solid",
@@ -68,20 +82,6 @@ export const ButtonStyles = {
       width: "90px",
       height: "30px",
       margin: "auto",
-      _hover: {
-        bg: blacken("primary", 20),
-        transform: "scale(1.02)",
-      },
-      fontFamily: "Roboto, Inter, sans-serif",
-    },
-    ButtonFilledSmall: {
-      size: "sm",
-      variant: "solid",
-      bg: "primary",
-      color: "white",
-      maxWidth: "150px",
-      width: "100%",
-      height: "30px",
       _hover: {
         bg: blacken("primary", 20),
         transform: "scale(1.02)",

@@ -25,6 +25,22 @@ import Avatar from "../Avatar";
 import ModalProfileUsers from "../ModalProfileUsers";
 import ContainerBase from "../ContainerBase/Index";
 
+const scroll = {
+  "&::-webkit-scrollbar": {
+    width: "25px",
+  },
+  "&::-webkit-scrollbar-track": {
+    width: "30px",
+    borderRadius: "50px",
+    border: "1px solid rgba(0,0,0,0.08)",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    border: "1px solid #0001FF",
+    background: "white",
+    borderRadius: "50px",
+  },
+};
+
 export default function CardDoubts({ question, disable = false }) {
   const [answers, setAnswers] = useState([]);
   const [comments, setComments] = useState([]);
@@ -46,7 +62,6 @@ export default function CardDoubts({ question, disable = false }) {
     },
     tags: question.tags,
   };
-  const { day, month, year } = questionUpdate.date;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -55,7 +70,7 @@ export default function CardDoubts({ question, disable = false }) {
     onClose: onCloseUsers,
   } = useDisclosure();
 
-  const [isMobile] = useMediaQuery("(max-width: 1100px)");
+  const [isMobile] = useMediaQuery("(max-width: 900px)");
 
   const getData = () => {
     api.get(`/answers?postId=${question?.id}`).then((resp) => {
@@ -167,8 +182,8 @@ export default function CardDoubts({ question, disable = false }) {
       m="0px 0px 20px 0px"
     >
       {isMobile ? (
-        <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(6, 1fr)">
-          <GridItem rowSpan={2} colSpan={3}>
+        <Grid templateColumns="repeat(12, 1fr)" templateRows="repeat(3, 1fr)">
+          <GridItem rowSpan={1} colSpan={3}>
             <Flex justifyContent={"space-between"} mb="20px">
               <Box
                 onClick={(e) => {
@@ -182,11 +197,12 @@ export default function CardDoubts({ question, disable = false }) {
           </GridItem>
 
           <GridItem
-            rowSpan={2}
-            colSpan={3}
-            colStart={10}
-            justifyContent={"flex-end"}
+            rowSpan={1}
+            colSpan={5}
+            colStart={8}
             display={"flex"}
+            alignItems={"flex-end"}
+            flexDir={"column"}
           >
             <DisplayStatus
               answers={answers}
@@ -196,13 +212,10 @@ export default function CardDoubts({ question, disable = false }) {
             />
           </GridItem>
 
-          <GridItem rowSpan={4} colSpan={12}>
-            <Text>
-              {`${day.toString().padStart(2, "0")}/${month
-                .toString()
-                .padStart(2, "0")}/${year}`}
-            </Text>
-            <Heading>{question?.question.title}</Heading>
+          <GridItem rowSpan={2} colSpan={12}>
+            <Heading mb="10px" size="lg">
+              {question?.question.title}
+            </Heading>
             <Text
               noOfLines={4}
               fontSize="16px"
@@ -297,11 +310,7 @@ export default function CardDoubts({ question, disable = false }) {
                 comments={comments.length}
                 m={"0 0 10px 0"}
               />
-              <Text>
-                {`${day.toString().padStart(2, "0")}/${month
-                  .toString()
-                  .padStart(2, "0")}/${year}`}
-              </Text>
+
               {liked ? (
                 <Button onClick={(e) => deslike(e)} variant="ButtonLikeOn">
                   <HStack alignItems={"center"}>
@@ -320,78 +329,67 @@ export default function CardDoubts({ question, disable = false }) {
         </Grid>
       )}
 
-      <ModalChakra title={"Modal pergunta"} isOpen={isOpen} onClose={onClose}>
-        <Flex flexDirection={"column"}>
-          <BasicCardDoubts
-            question={questionUpdate}
-            ImgDefault={userCreator}
-            deleteQuestion={deleteQuestion}
-            answers={answers}
-            deslike={deslike}
-            like={like}
-            likes={likes.length}
-            comments={comments.length}
-            user={user}
-          />
-          <Box width={"95%"}>
-            <Flex flexDirection={"column"} alignItems={"center"} width={"100%"}>
-              {user?.coach && (
-                <AddAnswer postId={question.id} getData={getData} />
-              )}
-
-              {!!answers &&
-                answers.map((ele, key) => (
+      <ModalChakra
+        size={isMobile ? "sm" : "4xl"}
+        title={questionUpdate.question.title}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <Grid autoRows templateColumns={"repeat(12,1fr)"}>
+          <GridItem colSpan={12} mb="10px">
+            <BasicCardDoubts
+              question={questionUpdate}
+              ImgDefault={userCreator}
+              deleteQuestion={deleteQuestion}
+              answers={answers}
+              deslike={deslike}
+              like={like}
+              likes={likes.length}
+              comments={comments.length}
+              user={user}
+            />
+          </GridItem>
+          <GridItem colSpan={8} mb="10px">
+            {user?.coach && (
+              <AddAnswer postId={question.id} getData={getData} />
+            )}
+          </GridItem>
+          <GridItem colSpan={10} colStart={2} mb="10px">
+            {!!answers &&
+              answers.map((ele, key) => (
+                <CardComment
+                  key={key}
+                  answerBody={ele.body}
+                  user={ele.userId}
+                />
+              ))}
+          </GridItem>
+          <GridItem colSpan={8} colStart={3} mb="20px">
+            <Box
+              maxHeight={"400px"}
+              width={"100%"}
+              overflowY="auto"
+              p={"10px"}
+              flexDirection={"column"}
+              padding={"10px"}
+              justifyContent={"center"}
+              sx={scroll}
+            >
+              {!!comments &&
+                comments.map((ele, key) => (
                   <CardComment
                     key={key}
-                    answerBody={ele.body}
+                    comment={ele}
                     user={ele.userId}
+                    callback={getData}
                   />
                 ))}
-            </Flex>
-            <Flex>
-              <Box
-                maxHeight={"400px"}
-                width={"100%"}
-                overflowY="auto"
-                p={"10px"}
-                flexDirection={"column"}
-                padding={"10px"}
-                justifyContent={"center"}
-                sx={{
-                  "&::-webkit-scrollbar": {
-                    width: "25px",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    width: "30px",
-                    borderRadius: "50px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    border: "3px solid #0001FF",
-                    background: "white",
-                    borderRadius: "50px",
-                  },
-                }}
-              >
-                <Flex
-                  flexDirection={"column"}
-                  alignItems={"flex-end"}
-                  width={"100%"}
-                >
-                  {!!comments &&
-                    comments.map((ele, key) => (
-                      <CardComment
-                        key={key}
-                        comment={ele}
-                        user={ele.userId}
-                        callback={getData}
-                      />
-                    ))}
-                </Flex>
-              </Box>
-            </Flex>
-          </Box>
-        </Flex>
-        <AddComment postId={question.id} getData={getData} />
+            </Box>
+          </GridItem>
+          <GridItem colSpan={8} colStart={3} mb="10px">
+            <AddComment postId={question.id} getData={getData} />
+          </GridItem>
+        </Grid>
       </ModalChakra>
 
       <ModalProfileUsers

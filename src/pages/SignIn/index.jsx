@@ -10,25 +10,25 @@ export default function SignIn() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [loginVisible, setLoginVisible] = useState(true);
   return (
-    <>
+    <Flex height={"100vh"} justifyContent={"center"}>
       {isMobile && loginVisible ? (
-        <Flex mx="10" mt="50px">
+        <Flex alignItems={"center"} w="300px">
           <LandPageMobile setLoginVisible={setLoginVisible} />
         </Flex>
       ) : (
         <>
           {isMobile ? (
-            <Flex alignItems={"center"} mt="50px" w="380px" h="588px" mx="auto">
+            <Flex alignItems={"center"} w="300px">
               <FormSignIn />
             </Flex>
           ) : (
-            <Flex alignItems={"center"} mt="50px" w="900px" mx="auto">
+            <Flex alignItems={"center"} w="900px">
               <FormSignIn />
               <HeroCall />
             </Flex>
           )}
         </>
       )}
-    </>
+    </Flex>
   );
 }
