@@ -13,15 +13,13 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-//import Logo from "../../assets/logo1.svg";
 import { useAuth } from "../../providers/hooks";
 import { useState } from "react";
 import { InputChakra } from "../InputChakra";
 import ContainerBase from "../ContainerBase/Index";
 import LogoBlue from "../LogoBlue";
 
-export default function FormSignUp({setLandingPageVisible}) {
-  
+export default function FormSignUp() {
   const { signUp } = useAuth();
   const [value, setValue] = useState("");
 
@@ -42,8 +40,6 @@ export default function FormSignUp({setLandingPageVisible}) {
     passwordConfirm: yup
       .string()
       .oneOf([yup.ref("password"), null], "As Senhas devem ser iguais!"),
-
-    //Atenção Inserir o input do slack
   });
 
   const {
@@ -60,7 +56,6 @@ export default function FormSignUp({setLandingPageVisible}) {
       module: data.module,
       password: data.password,
     });
-    
   };
 
   return (

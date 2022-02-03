@@ -3,11 +3,9 @@ import FormSignUp from "../../components/FormSignUp";
 import HeroCall from "../../components/HeroCall";
 import { useMediaQuery } from "@chakra-ui/media-query";
 
-
-
 export default function SignUp() {
   const [isMobile] = useMediaQuery("(max-width: 900px)");
-  
+
   return (
     <>
       {isMobile ? (
