@@ -29,7 +29,6 @@ export default function FormSignIn() {
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const handleSignIn = (data) => {
-    console.log(data);
     signIn(data.email, data.password);
   };
 

@@ -11,7 +11,7 @@ import { InputChakra } from "../InputChakra";
 import { TextAreaChakra } from "../TextAreaChakra";
 
 import { useState } from "react/cjs/react.development";
-import { useAuth, useQuestions, useTags } from "../../providers/hooks";
+import { useAuth, useQuestions } from "../../providers/hooks";
 import ModalChakra from "../ModalChakra";
 import AddTag from "../AddQuestionTags";
 
@@ -34,8 +34,6 @@ export default function AddQuestion() {
   };
 
   const [tagSelected, setTagSelected] = useState([]);
-
-  const { tags } = useTags();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
