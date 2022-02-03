@@ -9,7 +9,11 @@ import { InputChakra } from "../InputChakra";
 import ContainerBase from "../ContainerBase/Index";
 import LogoBlue from "../LogoBlue";
 
+import {useState} from "react"
+
 export default function FormSignIn() {
+
+  const [landingPageVisible, setLandingPageVisible] = useState(true);
   const { signIn } = useAuth();
 
   const history = useHistory();
@@ -31,6 +35,7 @@ export default function FormSignIn() {
   const handleSignIn = (data) => {
     console.log(data);
     signIn(data.email, data.password);
+    
   };
 
   return (
