@@ -20,6 +20,7 @@ import DropDownButton from "../../components/DropDownButton";
 
 import DisplayTags from "../../components/DisplayTags";
 import ModalChakra from "../../components/ModalChakra";
+import CardDoubtsSkelenton from "../../components/CardDoubtsSkelenton";
 
 const scroll = {
   "&::-webkit-scrollbar": {
@@ -40,7 +41,7 @@ const scroll = {
 export default function Dashboard() {
   const { questions } = useQuestions();
   const [nameSearch, setNameSearch] = useState("");
-
+  const [notFound, setNotFound] = useState(false);
   const [isMobile] = useMediaQuery("(max-width: 900px)");
   const [tagSelected, setTagSelected] = useState([]);
   const [questionFilter, setQuestionFilter] = useState([]);
@@ -63,6 +64,7 @@ export default function Dashboard() {
                 .includes(nameSearch.toLowerCase()) ||
               ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
           ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
       setQuestionFilter(filter);
     } else if (nameSearch) {
       const filter =
@@ -73,17 +75,19 @@ export default function Dashboard() {
               .includes(nameSearch.toLowerCase()) ||
             ele.question.body.toLowerCase().includes(nameSearch.toLowerCase())
         ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
       setQuestionFilter(filter);
     } else if (tagSelected.length > 0) {
       const filter =
         questions.filter((ele) =>
           tagSelected.every((e) => ele.tags.includes(e))
         ) || [];
+      filter.length === 0 ? setNotFound(true) : setNotFound(false);
       setQuestionFilter(filter);
     } else {
       setQuestionFilter(questions);
     }
-  }, [tagSelected, nameSearch, questions]);
+  }, [tagSelected, nameSearch]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -109,7 +113,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
                     <Button
                       ml="20px"
@@ -132,7 +138,9 @@ export default function Dashboard() {
                     <DropDownButton
                       itens={["Data", "Curtidas"]}
                       setArray={setQuestionFilter}
-                      array={questionFilter}
+                      array={
+                        questionFilter.length > 0 ? questionFilter : questions
+                      }
                     />
 
                     <DisplayTags
@@ -152,6 +160,7 @@ export default function Dashboard() {
             w="100%"
             paddingRight={"10px"}
           >
+            
             {(questionFilter.length > 0 || nameSearch || tagSelected.length > 0
               ? questionFilter
               : questions
@@ -159,7 +168,7 @@ export default function Dashboard() {
               <CardDoubts question={ele} key={ele.id} />
             ))}
 
-            {questionFilter.length === 0 && (
+            {notFound && (
               <Text
                 textAlign={"center"}
                 color="primary"
@@ -168,6 +177,9 @@ export default function Dashboard() {
               >
                 Resultado não encontrado
               </Text>
+            )}
+            {questions.length === 0 && (
+              <CardDoubtsSkelenton amount={[0, 1, 2, 3, 4, 5]} />
             )}
           </GridItem>
         </Grid>
@@ -190,7 +202,7 @@ export default function Dashboard() {
               overflowY="scroll"
               sx={scroll}
               paddingRight={3}
-            >
+            >  
               {(questionFilter.length > 0 ||
               nameSearch ||
               tagSelected.length > 0
@@ -200,7 +212,7 @@ export default function Dashboard() {
                 <CardDoubts question={ele} key={ele.id} />
               ))}
 
-              {questionFilter.length === 0 && (
+              {notFound && (
                 <Text
                   textAlign={"center"}
                   color="primary"
@@ -209,6 +221,9 @@ export default function Dashboard() {
                 >
                   Resultado não encontrado
                 </Text>
+              )}
+              {questions.length === 0 && (
+                <CardDoubtsSkelenton amount={[0, 1, 2, 3, 4, 5]} />
               )}
             </Box>
           </GridItem>
